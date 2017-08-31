@@ -1,0 +1,16 @@
+<!--<hierarchical-selector  data="question.options"-->
+<!--multi-select="false"-->
+<!--on-selection-changed="question.answer = wizServ.probcodeSelected(items)">-->
+<!--</hierarchical-selector>-->
+<!--&lt;!&ndash;  We need a hidden input type here to track the return of the heirarchical selector-->
+<!--as this third party directive doesn't support ng-required &ndash;&gt;-->
+<input type="hidden"
+       name="q_{{question.pk_qid}}"
+       ng-model="question.answer"
+       ng-required="question.flg_mandatory == 1"
+       disable-valid-styling="true"
+       required-err-type="wizardMultiSelect" />
+
+<bti-tree-selector on-select="wizServ.probcodeSelected" ng-model="question.answer" class="form-control" data="question.options">
+
+</bti-tree-selector>

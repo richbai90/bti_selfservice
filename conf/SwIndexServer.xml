@@ -1,0 +1,16 @@
+<Config>
+	<InstallPath type="string" value="C:\Program Files (x86)\Hornbill\Supportworks Server"/>
+	<Database>
+		<SwSqlGlobalRootAccountMsl type="string" value="root"/>
+		<SwSqlGlobalRootPasswordMsl type="string" value="okTSU8d8I6vBwXAXx3ScSCn0Vm6wKvVHzzJ26TotnZIS57z5Xvc=" encrypt="1"/>
+	</Database>
+	<Logging>
+		<LogFileName type="string" value="C:\Program Files (x86)\Hornbill\Supportworks Server\log\SwIndexServer.log"/>
+	</Logging>
+	<Settings>
+		<IndexBaseDir type="string" value="C:\Program Files (x86)\Hornbill\Supportworks Server\knowledgebase"/>
+		<TcpPort type="dword" value="5003"/>
+		<InactivityTimeout type="dword" value="30"/>
+		<IndexRebuildTime type="string" value="23:30"/>
+	</Settings>
+</Config>

@@ -1,0 +1,54 @@
+FK_CONFIG_TYPE,TYPE_DISPLAY,PK_CONFIG_TYPE,SERVICE,Customer,Analyst,PK_AUTO_ID,DataForm
+,Account Services,Account Services,Account Password Reset/Unlock,y,y,3000,101
+,Account Services,Account Services,Office 365 Group Request,y,y,3001,102
+,Account Services,Account Services,One Way Transfer Account Request,y,y,3002,103
+,Account Services,Account Services,Data Transfer,y,y,3003,104
+,Account Services,Account Services,Account Deactivation,n,y,3004,105
+,Account Services,Account Services,Account Disable,n,y,3005,106
+,Account Services,Account Services,Additional Access Request,n,y,3006,107
+,Account Services,Account Services,Privileged Account Request,n,y,3007,108
+,Account Services,Account Services,Standard Account Request,n,y,3008,109
+,Hardware,Hardware,Desktop Request,n,y,3010,111
+,Hardware,Hardware,Laptop Request,n,y,3011,112
+,Hardware,Hardware,Periperal Device Request,n,y,3012,113
+,Hardware,Hardware,Reimage Workstation,n,y,3013,114
+,Hardware,Hardware,Sandbox,n,y,3014,115
+,Desktop Applications,Desktop Applications,Browsers Plug-ins,y,y,3016,117
+,Desktop Applications,Desktop Applications,Microsoft Visio,y,y,3017,118
+,Desktop Applications,Desktop Applications,Microsoft Project,y,y,3018,119
+,Desktop Applications,Desktop Applications,Camtasia,y,y,3019,120
+,Desktop Applications,Desktop Applications,Acrobat Pro,y,y,3020,121
+,Desktop Applications,Desktop Applications,Adobe Flash,y,y,3021,122
+,Desktop Applications,Desktop Applications,Google Earth Pro,y,y,3022,123
+,Desktop Applications,Desktop Applications,Gnome,y,y,3023,124
+,Desktop Applications,Desktop Applications,MatLab,y,y,3024,125
+,Desktop Applications,Desktop Applications,NetZoom Visio Stencils,y,y,3025,126
+,OSN Tools,OSN Tools,AgileCraft,n,y,3027,127
+,OSN Tools,OSN Tools,AWS Console,n,y,3028,128
+,OSN Tools,OSN Tools,Splunk,n,y,3029,129
+,OSN Tools,OSN Tools,Supportworks - Webclient,n,y,3030,130
+,OSN Tools,OSN Tools,Nagios,n,y,3031,131
+,OSN Tools,OSN Tools,Ciscoworks,n,y,3032,132
+,OSN Tools,OSN Tools,Solarwinds,n,y,3033,133
+,OSN Tools,OSN Tools,PuTTY,n,y,3034,134
+MTG,Windows,MTG->Windows,Certificate Request,n,y,3036,136
+MTG,Windows,MTG->Windows,Domain Name,n,y,3037,137
+MTG,Windows,MTG->Windows,Domain Controller,n,y,3038,138
+MTG,Network  ,MTG->Network  ,Firewall,n,y,3040,140
+MTG,Network  ,MTG->Network  ,ISP,n,y,3041,141
+MTG,Network  ,MTG->Network  ,MPLS,n,y,3042,142
+MTG,Network  ,MTG->Network  ,Router/Switch,n,y,3043,143
+MTG,Server,MTG->Server,Virtual - AWS,n,y,3045,145
+MTG,Server,MTG->Server,Virtual - VMWare,n,y,3046,146
+MTG,Server,MTG->Server,Physical,n,y,3047,147
+MTG,Server,MTG->Server,Terminate Server,n,y,3048,148
+MTG,Storage,MTG->Storage,AWS S3,n,y,3050,150
+MTG,Storage,MTG->Storage,AWS Glacier,n,y,3051,151
+MTG,Storage,MTG->Storage,Physical,n,y,3052,152
+MTG,Operating System,MTG->Operating System,HyperVisor (VMWare),n,y,3054,154
+MTG,Operating System,MTG->Operating System,LInux,n,y,3055,155
+MTG,Operating System,MTG->Operating System,Windows,n,y,3056,156
+MTG,Field Only,MTG->Field Only,Facitlity (Non Tech),n,y,3058,158
+MTG,Field Only,MTG->Field Only,Local Sub System,n,y,3059,159
+MTG,Field Only,MTG->Field Only,Environmnet,n,y,3060,160
+,MTG,MTG,Security Audit,n,y,3061,161

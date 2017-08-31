@@ -1,0 +1,12 @@
+FK_CONFIG_TYPE,TYPE_DISPLAY,PK_CONFIG_TYPE,SERVICE,Customer,Analyst,PK_AUTO_ID,DataForm
+,Account Services,Account Services,,,,,
+,Hardware,Hardware,,,,,
+,Desktop Applications,Desktop Applications,,,,,
+,OSN Tools,OSN Tools,,,,,
+,MTG,MTG,,,,,
+MTG,Windows,MTG->Windows,,,,,
+MTG,Network  ,MTG->Network  ,,,,,
+MTG,Server,MTG->Server,,,,,
+MTG,Storage,MTG->Storage,,,,,
+MTG,Operating System,MTG->Operating System,,,,,
+MTG,Field Only,MTG->Field Only,,,,,

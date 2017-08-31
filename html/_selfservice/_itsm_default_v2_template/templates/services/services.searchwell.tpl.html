@@ -1,0 +1,56 @@
+<div class="well well-sm request-filters">
+  <div class="row">
+    <!--<div class="col-xs-12 col-sm-8">-->
+      <!--<div class = "input-group">-->
+        <!--<input  role="button"-->
+                <!--type = "text"-->
+                <!--class = "form-control input-button"-->
+                <!--readonly-->
+                <!--placeholder="Click to filter by Category"-->
+                <!--ng-model="custServices.category"-->
+                <!--ng-click="openCategoryTree()">-->
+         <!--<span class = "input-group-btn">-->
+           <!--<button class = "btn btn-default"-->
+               <!--type = "button"-->
+               <!--ng-click="clearCategory()"-->
+               <!--ng-if="custServices.category != ''">-->
+             <!--<span class="fa fa-fw fa-times"></span>-->
+           <!--</button>-->
+           <!--<button class = "btn btn-default"-->
+               <!--type = "button"-->
+               <!--ng-click="openCategoryTree()"-->
+               <!--ng-if="custServices.category == ''">-->
+             <!--<span class="fa fa-fw fa-search"></span>-->
+           <!--</button>-->
+         <!--</span>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="col-xs-12">
+      <div class="input-group">
+        <input  type="text"
+                class="form-control"
+                ng-model="custServices.search"
+                ng-model-options="{ debounce: 400 }"
+                placeholder="Search...">
+        <span class = "input-group-btn">
+           <button class = "btn btn-default"
+                   type = "button"
+                   ng-click="clearSearch()">
+              <span class="fa fa-fw fa-search" ng-class="{'fa-times': custServices.search != '' }"></span>
+           </button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <dir-pagination-controls
+            max-size="5"
+            direction-links="true"
+            boundary-links="true"
+            on-page-change="getNextPage(newPageNumber)"
+            pagination-id="servicePage">
+      </dir-pagination-controls>
+    </div>
+  </div>
+</div>

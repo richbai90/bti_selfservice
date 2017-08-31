@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<espGlobalParameters>
+	<folder>
+		<name>Active Folder Pages</name>
+		<params>
+			<param>
+				<name>_default</name>
+				<value>&amp;[app.webroot]/clisupp/default.php</value>
+			</param>
+			<param>
+				<name>userdb.keysearch</name>
+				<value>&amp;[app.webroot]/clisupp/details/itsmf/swcust.php</value>
+			</param>
+			<param>
+				<name>userdb.site</name>
+				<value>&amp;[app.webroot]/clisupp/details/itsmf/swsite.php</value>
+			</param>
+			<param>
+				<name>userdb.costcenter</name>
+				<value>&amp;[app.webroot]/clisupp/details/itsmf/swcostcent.php</value>
+			</param>
+			<param>
+				<name>equipmnt.equipid</name>
+				<value>&amp;[app.webroot]/clisupp/details/itsmf/swasset.php</value>
+			</param>
+			<param>
+				<name>equipmnt.site</name>
+				<value>&amp;[app.webroot]/clisupp/details/itsmf/swsite.php</value>
+			</param>
+			<param>
+				<name>equipmnt.manufactur</name>
+				<value>&amp;[app.webroot]/clisupp/details/itsmf/swmanufact.php</value>
+			</param>
+			<param>
+				<name>equipmnt.supplier</name>
+				<value>&amp;[app.webroot]/clisupp/details/itsmf/swsupplier.php</value>
+			</param>
+			<param>
+				<name>equipmnt.costcenter</name>
+				<value>&amp;[app.webroot]/clisupp/details/itsmf/swcostcent.php</value>
+			</param>
+			<param>
+				<name>opencall.callref</name>
+				<value>&amp;[app.webroot]/clisupp/details/itsmf/swcall.php</value>
+			</param>
+			<param>
+				<name>company.pk_company_id</name>
+				<value>&amp;[app.webroot]/clisupp/details/itsmf/sworg.php</value>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Assignment Tree</name>
+		<params>
+			<param>
+				<name>AnalystFilter</name>
+			</param>
+			<param>
+				<name>GroupFilter</name>
+			</param>
+			<param>
+				<name>TpmFilter</name>
+			</param>
+			<param>
+				<name>TpmContractFilter</name>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Call Action Forms</name>
+		<params>
+			<param>
+				<name>UpdateCallForm</name>
+				<value>EfUpdateCallForm</value>
+			</param>
+			<param>
+				<name>HoldCallForm</name>
+				<value>EfHoldCallForm</value>
+			</param>
+			<param>
+				<name>ResolveCloseCallForm</name>
+				<value>itsmfEfResolveCloseCallForm</value>
+			</param>
+			<param>
+				<name>CancelCallForm</name>
+				<value>EfCancelCallForm</value>
+			</param>
+			<param>
+				<name>IssueForm</name>
+				<value>EfNewIssueForm</value>
+			</param>
+			<param>
+				<name>AcceptCallForm</name>
+				<value>EfAcceptCallForm</value>
+			</param>
+			<param>
+				<name>CompleteWorkItemForm</name>
+				<value>EfCompleteWorkItemForm</value>
+			</param>
+			<param>
+				<name>LogResolveCloseCallForm</name>
+				<value>EfLogResolveCloseCallForm</value>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Call Profile Editor</name>
+		<params>
+			<param>
+				<name>Attribute1</name>
+				<value>Attribute 1:</value>
+			</param>
+			<param>
+				<name>Attribute2</name>
+				<value>Attribute 2:</value>
+			</param>
+			<param>
+				<name>Attribute3</name>
+				<value>Attribute 3:</value>
+			</param>
+			<param>
+				<name>Attribute4</name>
+				<value>Attribute 4:</value>
+			</param>
+			<param>
+				<name>Attribute5</name>
+				<value>Attribute 5:</value>
+			</param>
+			<param>
+				<name>Attribute6</name>
+				<value>Attribute 6:</value>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Close Call Form</name>
+		<params>
+			<param>
+				<name>ProfileCodeFilter</name>
+			</param>
+			<param>
+				<name>ResolveProfileFilter</name>
+			</param>
+			<param>
+				<name>CloseProfileFilter</name>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Email Audit Trail</name>
+		<params>
+			<param>
+				<name>StoreEmailAuditTrail</name>
+				<value>1</value>
+			</param>
+			<param>
+				<name>IncludeAttachmentsInMessage</name>
+				<value>1</value>
+			</param>
+			<param>
+				<name>MoveToDeletedItems</name>
+				<value>0</value>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Global Call Settings</name>
+		<params>
+			<param>
+				<name>GetCallByReferenceFilter</name>
+			</param>
+			<param>
+				<name>LogCallConfirmMsg</name>
+				<value>&amp;[app.webroot]/clisupp/CallConfirm.xml</value>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Group Properties</name>
+		<params>
+			<param>
+				<name>Attribute1</name>
+				<value>Attribute 1:</value>
+			</param>
+			<param>
+				<name>Attribute2</name>
+				<value>Attribute 2:</value>
+			</param>
+			<param>
+				<name>Attribute3</name>
+				<value>Attribute 3:</value>
+			</param>
+			<param>
+				<name>Attribute4</name>
+				<value>Attribute 4:</value>
+			</param>
+			<param>
+				<name>Attribute5</name>
+				<value>Attribute 5:</value>
+			</param>
+			<param>
+				<name>Attribute6</name>
+				<value>Attribute 6:</value>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>My Calls View</name>
+		<params>
+			<param>
+				<name>AvailableColumns</name>
+				<value>h_formattedcallref,h_condition,status,callclass,owner,suppgroup,cust_name,logdatex,respondbyx,fixbyx,probcode,priority,costcenter,site,postcode,contact,callref</value>
+			</param>
+			<param>
+				<name>Filter</name>
+				<value>(status &lt; 16 AND status &lt;&gt; 7)</value>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Views</name>
+		<folder>
+			<name>Supportworks Today</name>
+			<params>
+				<param>
+					<name>Type</name>
+					<value>webpage</value>
+				</param>
+				<param>
+					<name>IconTitle</name>
+					<value>Supportworks Today</value>
+				</param>
+				<param>
+					<name>ViewTitle</name>
+					<value>Supportworks Today</value>
+				</param>
+				<param>
+					<name>Icon</name>
+					<value>9</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+				<param>
+					<name>Url</name>
+					<value>&amp;[app.webroot]/clisupp/swtoday/itsmf/index.php</value>
+				</param>
+				<param>
+					<name>LeftUrl</name>
+					<value>&amp;[app.webroot]/clisupp/swtoday/itsmf/index-left.php</value>
+				</param>
+			</params>
+		</folder>
+		<folder>
+			<name>Helpdesk View</name>
+			<folder>
+				<name>Team View</name>
+				<params>
+					<param>
+						<name>AnalystFilter</name>
+					</param>
+					<param>
+						<name>GroupFilter</name>
+					</param>
+					<param>
+						<name>TpmFilter</name>
+					</param>
+					<param>
+						<name>TpmContractFilter</name>
+					</param>
+				</params>
+			</folder>
+			<folder>
+				<name>Top</name>
+				<folder>
+					<name>Incident View</name>
+					<folder>
+						<name>Filters</name>
+						<params>
+							<param>
+								<name>Active</name>
+								<value>(status &lt; 16 AND status &lt;&gt; 7)  AND ( &apos;&amp;[session.analystid]&apos;=&apos;&apos; OR owner = &apos;&amp;[session.analystid]&apos; ) AND ( &apos;&amp;[session.groupid]&apos; = &apos;&apos; OR suppgroup =  &apos;&amp;[session.groupid]&apos;)</value>
+							</param>
+							<param>
+								<name>Escalated</name>
+								<value>(status &gt; 8 AND status &lt; 12) AND  ( &apos;&amp;[session.analystid]&apos;=&apos;&apos; OR owner = &apos;&amp;[session.analystid]&apos;)  AND ( &apos;&amp;[session.groupid]&apos; = &apos;&apos; OR suppgroup =  &apos;&amp;[session.groupid]&apos;)</value>
+							</param>
+						</params>
+					</folder>
+					<params>
+						<param>
+							<name>AvailableColumns</name>
+							<value>h_formattedcallref, status, itsm_title, escalation,cust_name, priority,  itsm_impact_level, itsm_urgency_level, probcode, h_condition, companyname, site, costcenter, owner,suppgroup,logdatex,respondbyx,fixbyx, callclass,callref</value>
+						</param>
+						<param>
+							<name>Filter</name>
+							<value>(status &lt; 16 AND status &lt;&gt; 7)  and callclass = &apos;Incident&apos;  and appcode = &apos;ITSMF&apos;</value>
+						</param>
+						<param>
+							<name>TabName</name>
+							<value>All Viewable Incidents</value>
+						</param>
+						<param>
+							<name>TabNameCalls</name>
+							<value>%1&apos;s Incidents (%5)</value>
+						</param>
+						<param>
+							<name>TabNameGroup</name>
+							<value>%2&apos;s Incidents (%5)</value>
+						</param>
+						<param>
+							<name>TabNameMyCalls</name>
+							<value>My Incidents (%5)</value>
+						</param>
+						<param>
+							<name>TabNameMyGroup</name>
+							<value>My Group&apos;s Incidents (%5)</value>
+						</param>
+						<param>
+							<name>TabNameShowFilter</name>
+							<value>No</value>
+						</param>
+						<param>
+							<name>Type</name>
+							<value>CallList</value>
+						</param>
+						<param>
+							<name>Visible</name>
+							<value>Yes</value>
+						</param>
+						<param>
+							<name>ScriptName</name>
+							<value>cm_incidents</value>
+						</param>
+						<param>
+							<name>FilterLabel</name>
+							<value>Filter: </value>
+						</param>
+						<param>
+							<name>ApplyContextFilter</name>
+							<value>Yes</value>
+						</param>
+					</params>
+				</folder>
+				<folder>
+					<name>My Tasks View</name>
+					<params>
+						<param>
+							<name>VisibleColumns</name>
+							<value>taskid, opencall.h_formattedcallref, calltasks.status, calltasks.priority, calltasks.type, calltasks.analystid, calltasks.assigndatex, calltasks.compltbyx, calltasks.details, opencall.cust_name,calltasks.callref</value>
+						</param>
+						<param>
+							<name>Filter</name>
+							<value>opencall.appcode=&apos;ITSMF&apos;</value>
+						</param>
+						<param>
+							<name>TabName</name>
+							<value>All Viewable Work Items</value>
+						</param>
+						<param>
+							<name>TabNameTasks</name>
+							<value>%1&apos;s Work Items</value>
+						</param>
+						<param>
+							<name>TabNameGroup</name>
+							<value>%2&apos;s Work Items</value>
+						</param>
+						<param>
+							<name>TabNameMyTasks</name>
+							<value>My Work Items</value>
+						</param>
+						<param>
+							<name>TabNameMyGroup</name>
+							<value>My Group&apos;s Work Items</value>
+						</param>
+						<param>
+							<name>Type</name>
+							<value>TaskList</value>
+						</param>
+						<param>
+							<name>Visible</name>
+							<value>Yes</value>
+						</param>
+					</params>
+				</folder>
+			</folder>
+			<folder>
+				<name>Bottom</name>
+				<folder>
+					<name>Issues View</name>
+					<params>
+						<param>
+							<name>TabName</name>
+							<value>Issues (Problems and Known Errors)</value>
+						</param>
+						<param>
+							<name>Type</name>
+							<value>IssuesList</value>
+						</param>
+						<param>
+							<name>Visible</name>
+							<value>No</value>
+						</param>
+						<param>
+							<name>Filter</name>
+							<value>appcode=&apos;ITSMF&apos;</value>
+						</param>
+					</params>
+				</folder>
+				<folder>
+					<name>Problems</name>
+					<folder>
+						<name>Filters</name>
+						<params>
+							<param>
+								<name>Unidentified</name>
+								<value>prb_state = &apos;Unidentified&apos;</value>
+							</param>
+							<param>
+								<name>Identified</name>
+								<value>prb_state = &apos;Identified&apos;</value>
+							</param>
+							<param>
+								<name>Known Errors</name>
+								<value>flg_ke=1</value>
+							</param>
+							<param>
+								<name>Known Error (Workaround)</name>
+								<value>prb_state = &apos;Known Error (Workaround)&apos; and flg_ke=1</value>
+							</param>
+							<param>
+								<name>Known Error (Fixed)</name>
+								<value>prb_state = &apos;Known Error (Fixed)&apos; and flg_ke=1</value>
+							</param>
+						</params>
+					</folder>
+					<params>
+						<param>
+							<name>AvailableColumns</name>
+							<value>h_formattedcallref, prb_state, itsm_title, priority,itsm_impact_level, itsm_urgency_level, status, probcode, h_condition, companyname, site, costcenter, owner, suppgroup, logdatex, respondbyx, fixbyx, callclass,callref</value>
+						</param>
+						<param>
+							<name>Filter</name>
+							<value>(status &lt; 16 AND status &lt;&gt; 7)  and callclass = &apos;Problem&apos; and appcode=&apos;ITSMF&apos;</value>
+						</param>
+						<param>
+							<name>TabName</name>
+							<value>All Viewable Problems and Known Errors</value>
+						</param>
+						<param>
+							<name>TabNameCalls</name>
+							<value>%1&apos;s Problems and Known Errors (%5)</value>
+						</param>
+						<param>
+							<name>TabNameGroup</name>
+							<value>%2&apos;s Problems and Known Errors (%5)</value>
+						</param>
+						<param>
+							<name>TabNameMyCalls</name>
+							<value>My Problems and Known Errors (%5)</value>
+						</param>
+						<param>
+							<name>TabNameMyGroup</name>
+							<value>My Group&apos;s Problems and Known Errors (%5)</value>
+						</param>
+						<param>
+							<name>Type</name>
+							<value>CallList</value>
+						</param>
+						<param>
+							<name>Visible</name>
+							<value>Yes</value>
+						</param>
+						<param>
+							<name>ScriptName</name>
+							<value>cm_problems</value>
+						</param>
+						<param>
+							<name>FilterLabel</name>
+							<value>Filter:</value>
+						</param>
+						<param>
+							<name>ApplyContextFilter</name>
+							<value>Yes</value>
+						</param>
+					</params>
+				</folder>
+				<folder>
+					<name>Change Requests</name>
+					<folder>
+						<name>Filters</name>
+						<params>
+							<param>
+								<name>Pending authorisation</name>
+								<value>(status &lt; 16 AND status &lt;&gt; 7)  AND ( &apos;&amp;[session.analystid]&apos;=&apos;&apos; OR owner = &apos;&amp;[session.analystid]&apos; ) AND ( &apos;&amp;[session.groupid]&apos; = &apos;&apos; OR suppgroup =  &apos;&amp;[session.groupid]&apos;) and flg_requiresauth = 1 and flg_authorised &lt;1</value>
+							</param>
+							<param>
+								<name>Authorised</name>
+								<value>(status &lt; 16 AND status &lt;&gt; 7)  AND ( &apos;&amp;[session.analystid]&apos;=&apos;&apos; OR owner = &apos;&amp;[session.analystid]&apos; ) AND ( &apos;&amp;[session.groupid]&apos; = &apos;&apos; OR suppgroup =  &apos;&amp;[session.groupid]&apos;) and flg_requiresauth = 1 and flg_authorised =1</value>
+							</param>
+							<param>
+								<name>Rejected</name>
+								<value>(status &lt; 16 AND status &lt;&gt; 7)  AND ( &apos;&amp;[session.analystid]&apos;=&apos;&apos; OR owner = &apos;&amp;[session.analystid]&apos; ) AND ( &apos;&amp;[session.groupid]&apos; = &apos;&apos; OR suppgroup =  &apos;&amp;[session.groupid]&apos;) and flg_requiresauth = 1 and flg_authorised =2</value>
+							</param>
+						</params>
+					</folder>
+					<params>
+						<param>
+							<name>AvailableColumns</name>
+							<value>h_formattedcallref, status, itsm_title, cust_name, priority,  itsm_impact_level, itsm_urgency_level, probcode, h_condition, companyname, site, costcenter, owner,suppgroup,logdatex,respondbyx,fixbyx, callclass,callref</value>
+						</param>
+						<param>
+							<name>Filter</name>
+							<value>(status &lt; 16 AND status &lt;&gt; 7)  and callclass = &apos;Change Request&apos; and appcode=&apos;ITSMF&apos;</value>
+						</param>
+						<param>
+							<name>TabName</name>
+							<value>All Viewable Change Requests</value>
+						</param>
+						<param>
+							<name>TabNameCalls</name>
+							<value>%1&apos;s Change Requests (%5)</value>
+						</param>
+						<param>
+							<name>TabNameGroup</name>
+							<value>%2&apos;s Change Requests (%5)</value>
+						</param>
+						<param>
+							<name>TabNameMyCalls</name>
+							<value>My Change Requests (%5)</value>
+						</param>
+						<param>
+							<name>TabNameMyGroup</name>
+							<value>My Group&apos;s Change Requests (%5)</value>
+						</param>
+						<param>
+							<name>Type</name>
+							<value>CallList</value>
+						</param>
+						<param>
+							<name>Visible</name>
+							<value>Yes</value>
+						</param>
+						<param>
+							<name>ScriptName</name>
+							<value>cm_rfcs</value>
+						</param>
+						<param>
+							<name>FilterLabel</name>
+							<value>Filter:</value>
+						</param>
+						<param>
+							<name>ApplyContextFilter</name>
+							<value>Yes</value>
+						</param>
+					</params>
+				</folder>
+				<folder>
+					<name>Watched Calls View</name>
+					<params>
+						<param>
+							<name>TabName</name>
+							<value>Watched Calls</value>
+						</param>
+						<param>
+							<name>Type</name>
+							<value>WatchedCallsList</value>
+						</param>
+						<param>
+							<name>Visible</name>
+							<value>Yes</value>
+						</param>
+						<param>
+							<name>ScriptName</name>
+							<value>cm_watchcalls</value>
+						</param>
+						<param>
+							<name>AvailableColumns</name>
+							<value>h_formattedcallref,h_condition,status,callclass,owner,suppgroup,cust_name,logdatex,respondbyx,fixbyx,probcode,priority,costcenter,site,postcode,contact,callref</value>
+						</param>
+					</params>
+				</folder>
+			</folder>
+			<params>
+				<param>
+					<name>Type</name>
+					<value>helpdesk</value>
+				</param>
+				<param>
+					<name>IconTitle</name>
+					<value>Service Desk</value>
+				</param>
+				<param>
+					<name>ViewTitle</name>
+					<value>Service Desk</value>
+				</param>
+				<param>
+					<name>Icon</name>
+					<value>3</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+				<param>
+					<name>CallStatusGraphFilter</name>
+					<value>(status &lt; 16 AND status &lt;&gt; 7) and appcode = &apos;ITSMF&apos;</value>
+				</param>
+			</params>
+		</folder>
+		<folder>
+			<name>Change Schedule</name>
+			<params>
+				<param>
+					<name>Type</name>
+					<value>webpage</value>
+				</param>
+				<param>
+					<name>IconTitle</name>
+					<value>Change Schedule</value>
+				</param>
+				<param>
+					<name>ViewTitle</name>
+					<value>Change Schedule</value>
+				</param>
+				<param>
+					<name>Icon</name>
+					<value>14</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+				<param>
+					<name>Url</name>
+					<value>&amp;[app.webroot]/clisupp/swtoday/itsmf/fsc.php</value>
+				</param>
+			</params>
+		</folder>
+		<folder>
+			<name>Calendar View</name>
+			<params>
+				<param>
+					<name>Type</name>
+					<value>calendar</value>
+				</param>
+				<param>
+					<name>IconTitle</name>
+					<value>Calendar</value>
+				</param>
+				<param>
+					<name>ViewTitle</name>
+					<value>Calendar</value>
+				</param>
+				<param>
+					<name>Icon</name>
+					<value>12</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+			</params>
+		</folder>
+		<folder>
+			<name>E-Mail</name>
+			<params>
+				<param>
+					<name>Type</name>
+					<value>mail</value>
+				</param>
+				<param>
+					<name>IconTitle</name>
+					<value>E-Mail</value>
+				</param>
+				<param>
+					<name>Icon</name>
+					<value>2</value>
+				</param>
+				<param>
+					<name>View Title</name>
+					<value>E-Mail</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+				<param>
+					<name>InitialMailbox</name>
+				</param>
+			</params>
+		</folder>
+		<folder>
+			<name>Database Entity Views</name>
+			<params>
+				<param>
+					<name>Type</name>
+					<value>autodbev</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+			</params>
+		</folder>
+		<folder>
+			<name>Search For Calls View</name>
+			<params>
+				<param>
+					<name>SearchColumns</name>
+					<value>h_formattedcallref, cust_id, cust_name,companyname, site, priority, callclass</value>
+				</param>
+				<param>
+					<name>ResultColumns</name>
+					<value>h_formattedcallref, callclass, status, cust_name, companyname,site, priority, logdatex, assigndatx, closedatex, fixbyx, respondbyx, compltdatx,callref</value>
+				</param>
+				<param>
+					<name>TableName</name>
+					<value>opencall</value>
+				</param>
+				<param>
+					<name>DefSearchoptions</name>
+					<value>1</value>
+				</param>
+				<param>
+					<name>DefMaxSearchResults</name>
+					<value>100</value>
+				</param>
+				<param>
+					<name>Type</name>
+					<value>callsearch</value>
+				</param>
+				<param>
+					<name>IconTitle</name>
+					<value>Search For Requests</value>
+				</param>
+				<param>
+					<name>ViewTitle</name>
+					<value>Search for Requests</value>
+				</param>
+				<param>
+					<name>Icon</name>
+					<value>10</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+				<param>
+					<name>SearchTitle</name>
+					<value>Search For Requests</value>
+				</param>
+				<param>
+					<name>WildcardSearch</name>
+					<value>both</value>
+				</param>
+			</params>
+		</folder>
+		<folder>
+			<name>Database Search View</name>
+			<params>
+				<param>
+					<name>Type</name>
+					<value>dbsearch</value>
+				</param>
+				<param>
+					<name>IconTitle</name>
+					<value>Database Searches</value>
+				</param>
+				<param>
+					<name>ViewTitle</name>
+					<value>Database Searches</value>
+				</param>
+				<param>
+					<name>Icon</name>
+					<value>6</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+			</params>
+		</folder>
+		<folder>
+			<name>My Library View</name>
+			<params>
+				<param>
+					<name>Type</name>
+					<value>library</value>
+				</param>
+				<param>
+					<name>IconTitle</name>
+					<value>My Library</value>
+				</param>
+				<param>
+					<name>ViewTitle</name>
+					<value>My Library</value>
+				</param>
+				<param>
+					<name>Icon</name>
+					<value>15</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+			</params>
+		</folder>
+		<folder>
+			<name>KnowledgeBase View</name>
+			<params>
+				<param>
+					<name>Type</name>
+					<value>knowledgebase</value>
+				</param>
+				<param>
+					<name>IconTitle</name>
+					<value>KnowledgeBase</value>
+				</param>
+				<param>
+					<name>ViewTitle</name>
+					<value>KnowledgeBase</value>
+				</param>
+				<param>
+					<name>Icon</name>
+					<value>4</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+			</params>
+		</folder>
+		<folder>
+			<name>Report View</name>
+			<params>
+				<param>
+					<name>Type</name>
+					<value>reports</value>
+				</param>
+				<param>
+					<name>IconTitle</name>
+					<value>Management Information and Reporting</value>
+				</param>
+				<param>
+					<name>ViewTitle</name>
+					<value>Management Information and Reporting</value>
+				</param>
+				<param>
+					<name>Icon</name>
+					<value>5</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+				<param>
+					<name>Filter</name>
+				</param>
+			</params>
+		</folder>
+		<folder>
+			<name>Dashboard and Trending</name>
+			<params>
+				<param>
+					<name>Type</name>
+					<value>webpage</value>
+				</param>
+				<param>
+					<name>IconTitle</name>
+					<value>Dashboard and Trending</value>
+				</param>
+				<param>
+					<name>ViewTitle</name>
+					<value>Dashboard and Trending</value>
+				</param>
+				<param>
+					<name>Icon</name>
+					<value>14</value>
+				</param>
+				<param>
+					<name>Visible</name>
+					<value>Yes</value>
+				</param>
+				<param>
+					<name>Url</name>
+					<value>&amp;[app.webroot]/clisupp/trending/index.php</value>
+				</param>
+				<param>
+					<name>LeftUrl</name>
+					<value>&amp;[app.webroot]/clisupp/trending/left-index.php</value>
+				</param>
+			</params>
+		</folder>
+		<params>
+			<param>
+				<name>StartupView</name>
+				<value>Supportworks Today</value>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Team View</name>
+		<params>
+			<param>
+				<name>AnalystFilter</name>
+			</param>
+			<param>
+				<name>GroupFilter</name>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Watched Calls View</name>
+		<params>
+			<param>
+				<name>AvailableColumns</name>
+				<value>h_formattedcallref,h_condition,status,callclass,owner,suppgroup,cust_name,logdatex,respondbyx,fixbyx,probcode,priority,costcenter,site,postcode,contact,callref</value>
+			</param>
+			<param>
+				<name>Filter</name>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Application Settings</name>
+		<folder>
+			<name>Incident</name>
+		</folder>
+		<folder>
+			<name>Problem</name>
+		</folder>
+		<folder>
+			<name>Change</name>
+		</folder>
+		<params>
+			<param>
+				<name>version</name>
+				<value>2.0.0</value>
+			</param>
+			<param>
+				<name>SupportExternalCompanies</name>
+				<value>1</value>
+			</param>
+			<param>
+				<name>DefaultCompanyID</name>
+				<value>Public</value>
+			</param>
+			<param>
+				<name>HideCompanyField</name>
+				<value>1</value>
+			</param>
+			<param>
+				<name>Dataset</name>
+				<value>ITSMF</value>
+			</param>
+			<param>
+				<name>DatasetFilterList</name>
+				<value>&apos;ITSMF&apos;</value>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>My Tasks View</name>
+		<params>
+			<param>
+				<name>VisibleColumns</name>
+				<value>taskid, calltasks.callref, calltasks.status, calltasks.priority, calltasks.type, calltasks.analystid, calltasks.assigndatex, calltasks.compltbyx, calltasks.details, opencall.cust_name</value>
+			</param>
+			<param>
+				<name>Filter</name>
+			</param>
+		</params>
+	</folder>
+	<folder>
+		<name>Third Party SLAs</name>
+		<params>
+			<param>
+				<name>Enable</name>
+				<value>True</value>
+			</param>
+			<param>
+				<name>DisplayHoldOption</name>
+				<value>True</value>
+			</param>
+			<param>
+				<name>SecondsBeforeFixTimeToComeOffHold</name>
+				<value>600</value>
+			</param>
+		</params>
+	</folder>
+</espGlobalParameters>

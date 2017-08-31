@@ -1,0 +1,54 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <wss-page-header title="Services" icon="fa-cogs">
+                <span class="hidden-xs">These are your Services. This is the subtitle for Tablets and Desktops</span>
+                <span class="hidden-sm hidden-md hidden-lg">These are your Services.</span>
+            </wss-page-header>
+        </div>
+    </div>
+
+    <!--Tabs to go here-->
+    <!--<div class="row">-->
+    <!--<div class="col-xs-12">-->
+    <!--<div>-->
+    <!--<uib-tabset>-->
+    <!--<uib-tab-->
+    <!--heading="My Favourite Services"-->
+    <!--select="setServiceListSelect('fav')">-->
+    <!--</uib-tab>-->
+    <!--<uib-tab-->
+    <!--heading="My Subscribed Services"-->
+    <!--select="setServiceListSelect('cust')">-->
+    <!--</uib-tab>-->
+    <!--<uib-tab-->
+    <!--heading="Services I Own"-->
+    <!--select="setServiceListSelect('own')">-->
+    <!--</uib-tab>-->
+    <!--<uib-tab-->
+    <!--heading="Add Services"-->
+    <!--select="setServiceListSelect('unsub')">-->
+    <!--</uib-tab>-->
+    <!--</uib-tabset>-->
+    <!--<small class="hidden-xs">&nbsp;</small>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+
+    <!-- Output filtered list of Services -->
+    <bti-service-display ng-init="getAllCustServices()" categories="getCatTreeData"
+                         ng-show="custServices.serviceArray.length > 0 && custServices.servicesLoading == false">
+
+    </bti-service-display>
+    <div class="row">
+        <div class="col-xs-12">
+            <sw-spinner is-loading="custServices.servicesLoading == true" message="Loading..."></sw-spinner>
+            <div ng-if="custServices.serviceArray.length == 0 && custServices.servicesLoading == false">
+                <div class="alert alert-info">
+                    <p class="text-center">No services found!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

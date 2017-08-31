@@ -1,0 +1,16 @@
+<Config>
+	<LogFile type="string" value="C:\Program Files (x86)\Hornbill\Supportworks Server\log\SwExchangeMC.log"/>
+	<ResolveUsingAddressOnly type="dword" value="0"/>
+	<DeliveryRetries type="dword" value="10"/>
+	<ExchangeProfile type="string" value=""/>
+	<ExchangePassword type="string" value=""/>
+	<ResolverAddressContainer type="string" value="Global Address List"/>
+	<ImportAddressContainer type="string" value="Global Address List"/>
+	<SwSqlGlobalRootAccountMsl type="string" value="root"/>
+	<SwSqlGlobalRootPasswordMsl type="string" value="Nhc1e3se0inejip1kb9tDGybRmBKKwjILsIHkPmezM10i9O/48A=" encrypt="1"/>
+	<DataDirectory type="string" value="C:\Program Files (x86)\Hornbill\Supportworks Server\data"/>
+	<DeliveryDirectory type="string" value="C:\Program Files (x86)\Hornbill\Supportworks Server\postbox\delivery"/>
+	<DefaultSharedMailbox type="string" value="_helpdesk"/>
+	<MessagePrefix value="MX"/>
+	<Config value="C:\Program Files (x86)\Hornbill\Supportworks Server\bin\exchcfg.exe"/>
+</Config>
