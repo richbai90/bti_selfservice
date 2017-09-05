@@ -1,0 +1,25 @@
+<div>
+  <div class="modal-header">
+      <h4 class="modal-title">Filter by Category</h4>
+  </div>
+  <div class="modal-body">
+    <div ng-show="modalLoading == false">
+      <abn-tree tree-data       = "swtreedata"
+                tree-control    = "swtreecontrol"
+                icon-leaf       = ""
+                icon-expand     = "fa fa-plus"
+                icon-collapse   = "fa fa-minus"
+                on-select       = "my_tree_handler(branch)"
+                expand-level    = "0"></abn-tree>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <sw-spinner is-loading="modalLoading == true" message="Loading..."></sw-spinner>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+      <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div>
+</div>

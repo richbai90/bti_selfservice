@@ -1,0 +1,154 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button"
+              class="navbar-toggle"
+              data-toggle="collapse"
+              data-target=".navbar-collapse"
+              ng-if="!activePage('login') && !activePage('loginmanual') && !activePage('loginsso') && !activePage('new_password')">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+      <span class="navbar-brand">
+        <a ui-sref="home">
+          <img ng-src="{{brandLogo}}">
+        </a>
+      </span>
+    </div>
+
+    <div class="navbar-collapse collapse" ng-if="!activePage('login') && !activePage('loginmanual') && !activePage('loginsso') && !activePage('new_password')">
+      <ul class="nav navbar-nav navbar-left">
+
+        <!-- HOME - just for the mobile drop-down -->
+        <li ui-sref-active="active" class="hidden-sm hidden-md hidden-lg"
+            uib-tooltip="Dashboard"
+            tooltip-placement="auto bottom"
+            tooltip-popup-close-delay="200">
+          <a ui-sref="home">
+            <span class="fa fa-home fa-lg fa-fw"></span>
+            Home
+           </a>
+        </li>
+
+        <!-- Services -->
+        <li ui-sref-active="active"
+            uib-tooltip="Services"
+            tooltip-placement="auto bottom"
+            tooltip-popup-close-delay="200">
+          <a ui-sref="services">
+            <i class="fa fa-cogs fa-lg fa-fw"></i>
+            <span class="hidden-sm hidden-md hidden-lg"> Services</span>
+          </a>
+        </li>
+
+        <!-- Requests -->
+        <li ng-class="{active: $state.includes('requests')}"
+            uib-tooltip="Requests"
+            tooltip-placement="auto bottom"
+            tooltip-popup-close-delay="200">
+          <a ui-sref="requests.myrequests">
+            <i class="fa fa-tasks fa-lg fa-fw"></i>
+            <span class="hidden-sm hidden-md hidden-lg"> Requests</span>
+          </a>
+        </li>
+
+		<!-- Knowledgebase -->
+        <li ui-sref-active="active"
+            uib-tooltip="Knowledge"
+            tooltip-placement="auto bottom"
+            tooltip-popup-close-delay="200">
+          <a ui-sref="knowledge">
+            <i class="fa fa-binoculars fa-lg fa-fw"></i>
+            <span class="hidden-sm hidden-md hidden-lg"> Knowledge</span>
+          </a>
+        </li>
+
+        <!-- Authorisations -->
+        <li ng-class="{active: $state.includes('requestsauth')}"
+            uib-tooltip="Authorisations"
+            tooltip-placement="auto bottom"
+            tooltip-popup-close-delay="200">
+          <a ui-sref="requestsauth.myauths">
+            <i class="fa fa-check-square-o fa-lg fa-fw"></i>
+            <span class="hidden-sm hidden-md hidden-lg"> Authorise </span>
+            <span ng-if="sessServ.numAuths>0" class="badge">{{ sessServ.numAuths }}</span>
+            <span ng-if="sessServ.numAuths==0" class="badge"></span>
+          </a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right"
+          ng-if="!activePage('login')">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" >
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-user fa-stack-lg"></i>
+              <i class="fa fa-caret-down fa-stack-1x"></i>
+            </span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a ui-sref="profile">
+                <i class="fa fa-user fa-lg fa-fw"></i>
+                <span> My Profile</span>
+              </a>
+            </li>
+            <li>
+              <a role="button" href="docs/document.html" target="_blank">
+                <i class="fa fa-question fa-lg fa-fw"></i>
+                <span> Help</span>
+               </a>
+            </li>
+            <li>
+              <a role="button" href="#" ng-click="logoff()">
+                <i class="fa fa-power-off fa-lg fa-fw"></i>
+                <span> Logout</span>
+               </a>
+            </li>
+            <li>
+              <div class="row visible-sm">
+                <div class="col-sm-12">
+                  <div class="input-group navbar-input-group"  ng-controller="GlobalSearchCtrl">
+                    <input  type="text"
+                      class="form-control"
+                      placeholder="Search..."
+                      ng-model="searchService.globalSearchString"
+                      ng-keyup="$event.keyCode == 13 && doSearch()"/>
+                      <div class="input-group-btn">
+                        <button class="btn btn-default"
+                                ng-click="doSearch()"
+                                type="button">
+                        <i class="fa fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </li>
+          </ul>
+
+        </li>
+
+      </ul>
+      <div class="hidden-sm">
+        <div class="navbar-form pull-right" ng-controller="GlobalSearchCtrl">
+          <div  class="input-group navbar-input-group">
+            <input  type="text"
+                    class="form-control"
+                    placeholder="Search..."
+                    ng-model="searchService.globalSearchString"
+                    ng-keyup="$event.keyCode == 13 && doSearch()"/>
+              <div class="input-group-btn">
+                <button class="btn btn-default"
+                        ng-click="doSearch()"
+                        type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div >
+  </div>
+</nav>

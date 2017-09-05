@@ -1,0 +1,36 @@
+{
+  "name": "NgHierarchicalSelector",
+  "version": "0.4.3",
+  "homepage": "http://lukemurray.github.io/NgHierarchicalSelector/",
+  "authors": [
+    "Luke Murray"
+  ],
+  "keywords": [
+    "tree",
+    "control",
+    "hierarchical",
+    "hierarchy",
+    "selection",
+    "angular",
+    "angularjs"
+  ],
+  "description": "Angular JS Tree/Hierarchical selector control",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.4.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.4.3",
+    "commit": "e993eefef78b6906c1f47992bebf7628bbd3da68"
+  },
+  "_source": "https://github.com/lukemurray/NgHierarchicalSelector.git",
+  "_target": "^0.4.3",
+  "_originalSource": "NgHierarchicalSelector",
+  "_direct": true
+}

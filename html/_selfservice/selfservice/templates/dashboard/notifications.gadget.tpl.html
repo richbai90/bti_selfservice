@@ -1,0 +1,30 @@
+<div ng-controller="NotificationCtrl">
+    <div class="panel panel-default" ng-if="notifArray.length != 0">
+        <div class="panel-heading">
+            <strong>Notifications</strong>
+        </div>
+        <div class="panel-body">
+			<div>
+				<sw-spinner is-loading="notifications.notificationsLoading == true" message="Loading..."></sw-spinner>
+			</div>
+            <ul class="list-group">
+                <li class="list-group-item"
+                            ng-repeat="(key, value) in notifArray track by $index">
+                    <table>
+                        <tr>
+                            <td>
+                                <i     class="fa fa-fw fa-2x"
+                                    ng-class="value['class']=='Amber' ? 'fa-arrow-circle-right' : value['class']=='Red' ? 'fa-arrow-circle-down' : 'fa-arrow-circle-up'"
+                                    ng-style="{color: value['class']=='Amber' ? '#FFC663' : value['class']}">
+                                </i>
+                            </td>
+                            <td>
+                                <span ng-bind-html="value['description']"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

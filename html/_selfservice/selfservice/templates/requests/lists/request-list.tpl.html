@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <div  class="table-responsive">
+      <table  class="table table-hover table-responsive vertical-align">
+        <thead>
+          <tr>
+            <!--Build Table Headers from data-->
+            <th ng-click="custRequests.setOrder(value, $index)"
+                ng-repeat="(key, value) in custRequests.outputConfigObject[requestPage].columns track by $index"
+                ng-if="value['hidden'] === false && value['location'] == 'table'">
+              {{value['display']}}
+              <span ng-if="custRequests.outputConfigObject[requestPage].sortColumn == $index && custRequests.outputConfigObject[requestPage].sortOrder" class="fa fa-fw fa-sort-asc"></span>
+              <span ng-if="custRequests.outputConfigObject[requestPage].sortColumn == $index && !custRequests.outputConfigObject[requestPage].sortOrder" class="fa fa-fw fa-sort-desc"></span>
+            </th>
+            <!--Table Admin Button-->
+            <div  class="hover-btn hidden-xs"
+                  ng-if="isWssAdmin == true && showCog == true">
+              <span class="fa fa-cog fa-lg"
+                    role="button"
+                    ng-click="openTableAdminModal()">
+              </span>
+            </div>
+            <!--END Table Admin Button-->
+          </tr>
+        </thead>
+        <tbody ng-show="custRequests.loadingRequests == false">
+          <!--Output row data-->
+          <tr dir-paginate="request in custRequests.requestArray | itemsPerPage:custRequests.outputConfigObject[requestPage].rowsPerPage"
+              pagination-id="requestPage"
+              total-items="custRequests.totalRequests"
+              ng-click="custRequests.selectRequest(request)"
+              ng-style="{'background-color': request.h_formattedcallref == custRequests.selectedRequest.h_formattedcallref ? '#F5F5F5' : ''}"
+              current-page="custRequests.pageNo">
+            <td class="td-overflow"
+                ng-repeat="(key, value) in custRequests.outputConfigObject[requestPage].columns"
+                ng-if="value['hidden'] === false && value['location'] == 'table'">
+              <div ng-if="value['conversion'] == ''">
+                <span ng-bind-html="request[value['column']]"></span>
+              </div>
+              <div ng-if="value['conversion'] != ''">
+                  <span ng-bind-html="request[value['column']] | picker : value['conversion']"></span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <sw-spinner is-loading="custRequests.loadingRequests == true" message="Loading..."></sw-spinner>
+
+    <div  class="alert alert-info"
+          ng-show="custRequests.requestArray.length == 0 && custRequests.loadingRequests == false">
+      <p class="text-center">No requests found!</p>
+    </div>
+  </div>
+  <div class="col-md-4 hidden-sm">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <strong>Request Details</strong>
+      </div>
+      <div class="panel-body">
+        <dl>
+          <div>
+            <div ng-repeat="(key, value) in custRequests.outputConfigObject[requestPage].columns" ng-if="value['hidden'] === false && value['location'] === 'details'">
+              <dt>{{value['display']}}</dt>
+              <dd ng-if="value['conversion'] == ''">
+                <span class="dl-keep-nl" ng-bind-html="custRequests.selectedRequest[value['column']]"></span>
+              </dd>
+              <dd ng-if="value['conversion'] != ''">
+                <span class="dl-keep-nl" ng-bind-html="custRequests.selectedRequest[value['column']] | picker:value['conversion']"></span>
+              </dd>
+            </div>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>

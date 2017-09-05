@@ -1,0 +1,29 @@
+<div class="input-group">
+  <input  role="button"
+          readonly
+          date-range-picker
+          options="{linkedCalendars: false,
+                    showDropdowns: false,
+                    cancelClass: 'btn-danger',
+                    'locale': {
+                     'format': 'DD/MM/YYYY',
+                     'separator': ' to '
+                    }
+                  }"
+          name="q_{{question.pk_qid}}"
+          type="text"
+          class="form-control date-picker  input-button"
+          value="{{quesion.data}}"
+          ng-model="question.answer"
+          ng-required="question.flg_mandatory == 1"
+          required-err-type="wizardDateRangeSelect"
+          disable-valid-styling="true"/>
+  <span class = "input-group-btn">
+    <button class = "btn btn-default" type="button" ng-if="question.answer ==''" ng-disabled="true">
+      <i class="fa fa-calendar fa-fw"></i>
+    </button>
+    <button class = "btn btn-default" type="button" ng-if="question.answer !=''" ng-click="question.answer = ''">
+      <i class="fa fa-times fa-fw"></i>
+    </button>
+  </span>
+</div>

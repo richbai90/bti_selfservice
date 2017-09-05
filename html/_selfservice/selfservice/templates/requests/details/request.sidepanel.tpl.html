@@ -1,0 +1,152 @@
+<uib-accordion close-others="accStatus.closeOthers">
+  <uib-accordion-group is-open="accStatus.detailsOpen">
+    <uib-accordion-heading>
+      Request Details
+      <i  class="fa fa-fw"
+          ng-class="{'fa-chevron-down': accStatus.detailsOpen, 'fa-chevron-right': !accStatus.detailsOpen}"></i>
+      <button type="button"
+        class="btn btn-success btn-sm btn-sm-accordion pull-right"
+        ng-click="requestList()">
+        <span class="fa fa-chevron-left"></span>
+        Back
+      </button>
+    </uib-accordion-heading>
+    <dl class="dl-horizontal">
+      <dt>Customer</dt>
+      <dd>{{requestService.requestDetails.cust_name}}</dd>
+      <dt>Site</dt>
+      <dd>{{requestService.requestDetails.site}}</dd>
+      <dt>Organisation</dt>
+      <dd>{{requestService.requestDetails.companyname}}</dd>
+    </dl>
+    <hr/>
+    <dl class="dl-horizontal">
+      <div ng-if="(requestService.requestDetails.probcodedesc)">
+        <dt>Category</dt>
+        <dd>{{requestService.requestDetails.probcodedesc}}</dd>
+      </div>
+      <dt>Description Preview</dt>
+      <dd>
+        <span class="dl-keep-nl">{{requestService.requestDetails.prob_text | stripTags | ellipsesString}}</span>
+      </dd>
+    </dl>
+    <hr/>
+    <dl class="dl-horizontal">
+      <dt>Status</dt>
+      <dd>{{requestService.requestDetails.status | callStatus}}</dd>
+      <dt>SLA</dt>
+      <dd>{{requestService.requestDetails.itsm_slaname}}</dd>
+      <dt>Priority</dt>
+      <dd>{{requestService.requestDetails.priority}}</dd>
+      <dt>Logged By</dt>
+      <dd>{{requestService.requestDetails.loggedby}}</dd>
+      <dt>Owned By</dt>
+      <dd>{{requestService.requestDetails.owner}}</dd>
+      <dt>Support Group</dt>
+      <dd>{{requestService.requestDetails.suppgroup}}</dd>
+    </dl>
+    <hr/>
+    <dl class="dl-horizontal">
+      <dt>Log Date</dt>
+      <dd>{{requestService.requestDetails.logdate}}</dd>
+      <dt>Respond By</dt>
+      <dd>{{requestService.requestDetails.respondby}}</dd>
+      <dt>Fix By</dt>
+      <dd>{{requestService.requestDetails.fixby}}</dd>
+    </dl>
+  </uib-accordion-group>
+  <uib-accordion-group ng-if="showBPM()" is-open="accStatus.bpmOpen">
+    <uib-accordion-heading>
+      Business Process Details
+      <i  class="fa fa-fw"
+          ng-class="{'fa-chevron-down': accStatus.bpmOpen, 'fa-chevron-right': !accStatus.bpmOpen}"></i>
+    </uib-accordion-heading>
+    <div class="row">
+      <div class="col-xs-12">
+        <h6><strong>Process Information</strong></h6>
+        <div class="table-responsive">
+          <table class="table table-striped table-condensed">
+            <tr ng-repeat="bpmDetail in workflowObject.bpmDetails">
+              <th width="20%">
+                {{bpmDetail.title}}
+              </th>
+              <td>
+                {{bpmDetail.value}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div ng-show="workflowObject.workflowHasProgression">
+          <h6><strong>Progress {{workflowObject.progressPerc}}%</strong></h6>
+          <uib-progress max="1000" animate="true">
+            <uib-bar  ng-repeat="bar in workflowObject.workflowProgression.progressBarData track by $index"
+            value="bar.value"
+            type="{{bar.type}}"
+            uib-tooltip="{{bar.title}}"
+            tooltip-placement="auto top"
+            tooltip-popup-close-delay="300">
+              <span ng-hide="bar.value < 5">{{bar.percent}}%</span>
+            </uib-bar>
+          </uib-progress>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-lg-8 col-lg-offset-2">
+        <timeline>
+          <timeline-event ng-repeat="event in workflowObject.workflowProgression.progressBarData"
+                          side="alternate">
+            <timeline-badge class="{{event.badgeClass}}"
+                            uib-tooltip="{{event.badgeTooltip}}"
+                            tooltip-placement="auto top"
+                            tooltip-popup-close-delay="300">
+              <i class="{{event.badgeIconClass}}"></i>
+            </timeline-badge>
+            <timeline-panel class="{{event.badgeClass}}">
+              <timeline-heading>
+                <h4>{{event.title}}</h4>
+              </timeline-heading>
+              <p>
+                {{event.content}}
+              </p>
+              <p>
+                Constitutes <strong>{{event.percent}}%</strong> of this Business Process.
+              </p>
+            </timeline-panel>
+          </timeline-event>
+        </timeline>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div ng-repeat="message in workflowObject.workflowProgression.progressMessages track by $index ">
+          <h6><strong ng-bind-html="message.message"></strong></h6>
+        </div>
+      </div>
+    </div>
+  </uib-accordion-group>
+
+  <uib-accordion-group ng-if="showBPM()" is-open="accStatus.extDataOpen">
+    <uib-accordion-heading>
+      Extended Workflow Information
+      <i  class="fa fa-fw"
+          ng-class="{'fa-chevron-down': accStatus.extDataOpen, 'fa-chevron-right': !accStatus.extDataOpen}"></i>
+    </uib-accordion-heading>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="alert alert-info" ng-if="!showExtData()">
+           <p class="text-center">
+             There is no extended workflow information stored against this request!
+           </p>
+        </div>
+        <dl class="dl-horizontal" ng-if="showExtData()">
+          <div ng-repeat="extColumn in workflowObject.extendedData track by $index">
+            <dt>{{extColumn.displayName}}</dt>
+            <dd>{{extColumn.recordValue}}</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </uib-accordion-group>
+
+</uib-accordion>

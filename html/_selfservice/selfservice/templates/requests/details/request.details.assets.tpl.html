@@ -1,0 +1,43 @@
+<div class="table-responsive">
+  <table class="table table-hover table-striped table-responsive">
+    <thead>
+      <tr>
+        <!--Build Table Headers from data-->
+        <th ng-repeat="(key, value) in requestService.assetConfigObject.columns track by $index" ng-if="value['hidden'] === false">
+          {{value['display']}}
+        </th>
+        <!--Table Admin Button-->
+        <div  class="hover-btn hidden-xs"
+              ng-if="isWssAdmin == true">
+          <span class="fa fa-cog fa-lg"
+                role="button"
+                ng-click="openTableAdminModal()">
+          </span>
+        </div>
+        <!--END Table Admin Button-->
+      </tr>
+    </thead>
+    <tbody ng-show="!loadingAssets">
+      <!--Output row data-->
+      <tr ng-repeat="asset in requestService.requestAssets">
+        <td class="td-overflow"
+            ng-repeat="(key, value) in requestService.assetConfigObject.columns"
+            ng-if="value['hidden'] === false">
+          <div ng-if="value['conversion'] == ''">
+            <span ng-bind-html="asset[value['column']]"></span>
+          </div>
+          <div ng-if="value['conversion'] != ''">
+              <span ng-bind-html="asset[value['column']] | picker : value['conversion']"></span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<sw-spinner is-loading="loadingAssets" message="Loading..."></sw-spinner>
+<div ng-show="requestService.requestAssets.length == 0">
+  <div  class="alert alert-info"
+        ng-show="!loadingAssets">
+    <p class="text-center">No affected items found!</p>
+  </div>
+</div>

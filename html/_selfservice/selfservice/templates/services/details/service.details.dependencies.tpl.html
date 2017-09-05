@@ -1,0 +1,74 @@
+<div>
+  <div class="panel-group call-diary-panels">
+    <div  class="panel panel-default">
+      <div class="panel-heading">
+        Parent
+      </div>
+      <div class="panel-body service-information" ng-if="parentDependencies.length != 0">
+            <table  class="table table-striped table-responsive">
+                <thead>
+                                          <tr>
+                                              <th><span><strong>Service</strong></span></th>
+                                              <th><span><strong>Description</strong></span></th>
+                                          </tr>
+                </thead>
+
+                <tbody>
+                                          <tr ng-repeat="parent in parentDependencies">
+                                            <td>
+                                                <span>{{parent.fk_parent_itemtext}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{parent.parentdesc}}</span>
+                                            </td>
+                                          </tr>
+                </tbody>
+            </table>
+      </div>
+
+      <div class="panel-body fixed-panel" ng-if="parentDependencies.length == 0">
+          <div  class="alert alert-info">
+              <p class="text-center">No dependencies found!</p>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-group call-diary-panels">
+    <div  class="panel panel-default">
+      <div class="panel-heading">
+        Child
+      </div>
+      <div class="panel-body fixed-panel" ng-if="childDependencies.length != 0">
+
+            <table class="table table-striped table-responsive">
+                <thead>
+                                          <tr>
+                                              <th><span><strong>Service</strong></span></th>
+                                              <th><span><strong>Description</strong></span></th>
+                                          </tr>
+                </thead>
+
+                <tbody>
+                                          <tr ng-repeat="child in childDependencies">
+                                            <td>
+                                                <span>{{child.fk_parent_itemtext}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{child.parentdesc}}</span>
+                                            </td>
+                                          </tr>
+                </tbody>
+            </table>
+      </div>
+
+      <div class="panel-body fixed-panel" ng-if="childDependencies.length == 0">
+          <div  class="alert alert-info">
+              <p class="text-center">No dependencies found!</p>
+          </div>
+      </div>
+
+    </div>
+  </div>
+  <sw-spinner is-loading="loadingDiary" message="Loading..."></sw-spinner>
+</div>

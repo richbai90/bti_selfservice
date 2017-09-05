@@ -1,0 +1,103 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <wss-page-header title="{{wizardDetails.title}}" icon="fa-life-ring"><span ng-bind-html="wizardDetails.description"></span>
+      </wss-page-header>
+    </div>
+  </div>
+  <form name="wizParentForm"
+        novalidate>
+    <div class="row">
+      <div class="col-xs-12">
+        <!-- Pager for nested ng-forms -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <ul class="pager panel-heading-pager">
+              <li class="previous"
+              ng-class="{disabled: !hasPrevious()}">
+              <a ng-click="goToPrevious()"><i class="fa fa-arrow-circle-left"></i> Previous</a>
+              </li>
+              <li class="next"
+              ng-class="{disabled: !hasNext()}">
+                <a ng-click="goToNext()">Next <i class="fa fa-arrow-circle-right"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="panel-body">
+            <!-- Main Form -->
+            <sw-spinner is-loading="stageLoading == true" message="Loading..."></sw-spinner>
+
+              <div ng-repeat="(key, stageDetails) in wizDataServ.wizardStages">
+                <ng-form  name="stageForm_{{key}}"
+                          ng-show="isCurrentStage(key)">
+                  <div ng-repeat="question in stageDetails.questions">
+                    <div  class="form-group"
+                          ng-class="{ 'has-error' : stageForm_{{key}}.$dirty && stageForm_{{key}}.q_{{question.pk_qid}}.$invalid }"
+                          ng-init="initQuestion(question)"
+                          ng-if="question.flg_hidden == 0">
+                      <label for="q_{{question.pk_qid"
+                              ng-class="{ 'text-danger' : stageForm_{{key}}.$dirty && stageForm_{{key}}.q_{{question.pk_qid}}.$invalid }">
+                        <span ng-bind-html="question.question"
+							  ng-style="{color: (!boolSLASelected && question.pk_qid=='QSLA') || stageForm_{{key}}.q_{{question.pk_qid}}.$invalid ? 'red' : 'black'}"></span>
+                      </label>
+                      <wizard-question question="question"></wizard-question>
+                    </div>
+                  </div>
+                </ng-form>
+              </div>
+              <button type="button"
+                      class="btn btn-success form-control"
+                      ng-if="showSubmit"
+                      ng-click="raiseRequest()"
+                      ladda="requestLogging">
+              Submit</button>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!--&lt;!&ndash; Answers in an accordian &ndash;&gt;-->
+      <!--<div class="col-xs-12 col-sm-6 col-md-5">-->
+        <!--<uib-accordion ng-if="wizDataServ.dataForm.callclass == 'Service Request' && wizDataServ.dataForm.subscription.permis_price == '1'">-->
+          <!--<uib-accordion-group is-open="true">-->
+            <!--<uib-accordion-heading>Service Costs Total Estimate: <strong>{{wizDataServ.dataForm.prices.total | currency:''}}</strong></uib-accordion-heading>-->
+            <!--<dl class="dl-horizontal">-->
+              <!--<dt>Basic Cost:</dt>-->
+              <!--<dd>{{wizDataServ.dataForm.prices.basic | currency:""}}</dd>-->
+              <!--<dt>Customisation:</dt>-->
+              <!--<dd>{{wizDataServ.dataForm.prices.customisation | currency:""}}</dd>-->
+              <!--<dt>Optional:</dt>-->
+              <!--<dd>{{wizDataServ.dataForm.prices.optional | currency:""}}</dd>-->
+              <!--<dt>Service Level:</dt>-->
+              <!--<dd>{{wizDataServ.dataForm.prices.servicelevel | currency:""}}</dd>-->
+            <!--</dl>-->
+          <!--</uib-accordion-group>-->
+        <!--</uib-accordion>-->
+
+        <!--<uib-accordion close-others="oneAtATime">-->
+          <!--<uib-accordion-group  heading="{{stageDetailsAcc.title}}"-->
+                                <!--is-open="isCurrentStage(stageDetailsAcc.currentKey)"-->
+                                <!--panel-class="panel-default"-->
+                                <!--ng-repeat="stageDetailsAcc in wizDataServ.wizardStages"-->
+                                <!--ng-click="setStage(stageDetailsAcc.currentKey)">-->
+            <!--<div  ng-repeat="questionAcc in stageDetailsAcc.questions"-->
+                  <!--ng-if="questionAcc.flg_hidden == 0">-->
+              <!--<dt><span ng-bind-html="questionAcc.question"></span></dt>-->
+              <!--<dl ng-if="answeredQuestion(questionAcc)">-->
+                <!--<div ng-if="questionAcc.qfilter == ''">-->
+                  <!--<span>{{questionAcc.answer}}</span>-->
+                <!--</div>-->
+                <!--<div ng-if="questionAcc.qfilter != ''">-->
+                    <!--<span>{{questionAcc.answer  | picker : questionAcc.qfilter}}</span>-->
+                <!--</div>-->
+              <!--</dl>-->
+              <!--<dl ng-if="!answeredQuestion(questionAcc)">Awaiting Answer...</dl>-->
+            <!--</div>-->
+          <!--</uib-accordion-group>-->
+        <!--</uib-accordion>-->
+      <!--</div>-->
+    </div>
+  </form>
+</div>

@@ -1,0 +1,375 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <wss-page-header title="{{service_name}}" icon="fa-wrench">
+      </wss-page-header>
+    </div>
+  </div>
+
+
+<div class="row">
+  <!-- STATIC INFORMATION
+          1- SERVICE GENERAL INFORMATION
+          2- BUSINESS OVERVIEW
+          3- TABS
+  -->
+  <div class="col-xs-12 col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading clearfix">
+            General Information
+          </div>
+
+          <div class="panel-body">
+              <dl class="dl-horizontal ng-scope">
+                <dt>Description</dt>
+                <dd class="ng-binding" ng-bind-html="serviceInformation.vsb_description"></dd>
+
+                <dt>Features</dt>
+                <dd class="ng-binding" ng-bind-html="serviceInformation.vsb_key_features"></dd>
+              </dl>
+          </div>
+        </div>
+
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Business Overview
+          </div>
+
+          <div class="panel-body">
+
+              <!-- First row first cell -->
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                  <dl class="dl-horizontal ng-scope">
+                      <dt>Service Id : </dt>
+                      <dd class="ng-binding">{{serviceInformation.service_name}}</dd>
+
+                      <dt>Service Type : </dt>
+                      <dd class="ng-binding">{{serviceInformation.service_type | serviceType}}</dd>
+
+                      <dt>Service Category   : </dt>
+                      <dd class="ng-binding">{{serviceInformation.catalog_type}}</dd>
+                    </dl>
+              </div>
+
+              <!-- First row second cell -->
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                  <dl class="dl-horizontal ng-scope">
+                      <dt>Status Portfolio : </dt>
+                      <dd class="ng-binding">{{serviceInformation.status_portfolio}}</dd>
+
+                      <dt>Status Lifecycle : </dt>
+                      <dd class="ng-binding">{{serviceInformation.status_lifecycle}}</dd>
+
+                      <dt>Operational Status : </dt>
+                      <dd class="ng-binding">{{serviceInformation.fk_status_level}}</dd>
+                  </dl>
+              </div>
+
+              <!-- Second row first cell -->
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                  <dl class="dl-horizontal ng-scope">
+                      <dt>Users Actual   : </dt>
+                      <dd class="ng-binding">{{serviceInformation.users_actual}}</dd>
+
+                      <dt>Users Projected : </dt>
+                      <dd class="ng-binding">{{serviceInformation.users_projected}}</dd>
+
+                      <dt>Users Difference   : </dt>
+                      <dd class="ng-binding">{{serviceInformation.users_difference}}</dd>
+
+                      <dt>Users Maximum    : </dt>
+                      <dd class="ng-binding">{{serviceInformation.users_maximum}}</dd>
+                  </dl>
+              </div>
+
+              <!-- Second row second cell -->
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                  <dl class="dl-horizontal ng-scope">
+                      <dt>Owner It : </dt>
+                      <dd class="ng-binding">{{serviceInformation.owner_it}}</dd>
+
+                      <dt>Owner Business : </dt>
+                      <dd class="ng-binding">{{serviceInformation.owner_business}}</dd>
+
+                      <dt>Flg Invisible Public : </dt>
+                      <dd class="ng-binding">{{serviceInformation.flg_invisible_public}}</dd>
+                  </dl>
+              </div>
+
+
+          </div>
+        </div>
+
+        <!-- It works
+        <div class="panel panel-warning">
+          <div class="panel-heading clearfix">
+            <strong>Cost Summary</strong>
+          </div>
+
+          <div class="panel-body">
+              <table class="col-xs-12 col-sm-12">
+                <tr>
+                  <td>
+                    <dl class="dl-horizontal ng-scope">
+                      <dt>Cost Request : </dt>
+                      <dd class="ng-binding">{{costGeneral.cost_request}}</dd>
+                    </dl>
+                  </td>
+
+                  <td>
+                    <dl class="dl-horizontal ng-scope">
+                      <dt>Total Request Last Week : </dt>
+                      <dd class="ng-binding">{{costWeek}}</dd>
+                    </dl>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <dl class="dl-horizontal ng-scope">
+                      <dt>Total Request Last Month: </dt>
+                      <dd class="ng-binding">{{costMonth}}</dd>
+                    </dl>
+                  </td>
+
+                  <td>
+                    <dl class="dl-horizontal ng-scope">
+                      <dt>Total Request Last Year : </dt>
+                      <dd class="ng-binding">{{costYear}}</dd>
+                    </dl>
+                  </td>
+                </tr>
+              </table>
+          </div>
+        </div>-->
+
+        <div id="tabs-cost-services">
+          <!--<uib-tabset>
+                <uib-tab
+                    heading="Dependencies"
+                    select="setServiceListSelect('depend')">
+                          <div class="panel panel-default ng-scope">
+                              <div class="panel-heading ng-binding">
+                                  Parent
+                              </div>
+
+                              <div class="panel-body fixed-panel">
+                                  <table  class="table table-striped table-responsive">
+                                      <thead>
+                                        <tr>
+                                            <th><span><strong>Service</strong></span></th>
+                                            <th><span><strong>Description</strong></span></th>
+                                        </tr>
+                                      </thead>
+
+                                      <tbody>
+                                        <tr ng-repeat="parent in parentDependencies">
+                                          <td>
+                                              <span>{{parent.fk_parent_itemtext}}</span>
+                                          </td>
+                                          <td>
+                                              <span>{{parent.parentdesc}}</span>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+
+                          <div ng-if="parentDependencies.length == 0">
+                            <p class="text-center">No parent dependencies found!</p>
+                          </div>
+
+                </uib-tab>
+                <uib-tab
+                    heading="Service Options"
+                    select="setServiceListSelect('option')">
+                </uib-tab>
+                <uib-tab
+                    heading="Service Levels"
+                    select="setServiceListSelect('level')">
+                </uib-tab>
+          </uib-tabset>
+          <small class="hidden-xs">&nbsp;</small>-->
+          <!-- Tabs -->
+          <uib-tabset active="activeJustified" justified="true">
+
+            <!-- Diary Tab -->
+            <uib-tab index="0" heading="Dependencies" select="setServiceListSelect('depend')">
+              <div ng-if="parentDependencies!=null || childDependencies!=null" ng-include="'templates/services/details/service.details.dependencies.tpl.html'"></div>
+              <!--<div ng-include="'templates/services/details/service.details.dependencies.tpl.html'"></div>-->
+            </uib-tab>
+
+            <!-- Assets Tab -->
+            <uib-tab  index="1" heading="Service Options" select="setServiceListSelect('opts')">
+              <div ng-include src="'templates/services/details/service.details.options.tpl.html'"></div>
+            </uib-tab>
+
+            <!-- Components Tab -->
+            <uib-tab  index="2" heading="Service Levels" select="setServiceListSelect('levls')">
+              <div ng-include src="'templates/services/details/service.details.levels.tpl.html'"></div>
+            </uib-tab>
+          </uib-tabset>
+        </div>
+  </div>
+
+
+  <div class="col-xs-12 col-sm-6">
+
+     <!-- BEGINNING COST SUMMARY -->
+          <div>
+            <uib-accordion close-others="accStatus.closeOthers">
+              <uib-accordion-group is-open="accStatus.detailsOpen">
+                <uib-accordion-heading>
+                     Cost Summary
+                  <i  class="fa fa-fw" ng-class="{'fa-chevron-down': accStatus.detailsOpen, 'fa-chevron-right': !accStatus.detailsOpen}"></i>
+                </uib-accordion-heading>
+
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                   <dl class="dl-horizontal">
+                    <dt>Cost Request : </dt>
+                    <dd class="ng-binding">{{costGeneral.cost_request}}</dd>
+                    <dt>Total Last Week : </dt>
+                    <dd class="ng-binding">{{costWeek}}</dd>
+                  </dl>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>Total Last Month: </dt>
+                    <dd class="ng-binding">{{costMonth}}</dd>
+                    <dt>Total Last Year : </dt>
+                    <dd class="ng-binding">{{costYear}}</dd>
+                  </dl>
+                </div>
+              </uib-accordion-group>
+            </uib-accordion>
+          </div>
+      <!-- END COST SUMMARY -->
+
+      <!-- BEGINNING REQUEST COST BREAKDOWN -->
+          <div>
+            <uib-accordion close-others="accStatus.closeOthers">
+              <uib-accordion-group is-open="accStatus.detailsOpen">
+                <uib-accordion-heading>
+                     Request Cost Breakdown
+                  <i  class="fa fa-fw" ng-class="{'fa-chevron-down': accStatus.detailsOpen, 'fa-chevron-right': !accStatus.detailsOpen}"></i>
+                </uib-accordion-heading>
+
+               <div class="col-xs-12 col-sm-12 col-md-12" ng-if="requestCostBreakdown.length != 0 && windowWidth>768">
+                     <table class="col-md-12 table-bordered table-condensed cf">
+                      <thead class="cf">
+                        <tr>
+                          <th>Description </th>
+                          <th>Quantity</th>
+                          <th>Unit Cost</th>
+                          <th>Include</th>
+                          <th>Total Cost</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="requestCost in requestCostBreakdown">
+                          <td>{{requestCost.description}}</td>
+                          <td>{{requestCost.units}}</td>
+                          <td>{{requestCost.total_cost_for_item}}</td>
+                          <td>{{requestCost.flg_include | generalMatch}}</td>
+                          <td>{{requestCost.total_unit_cost}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+               </div>
+
+               <div class="col-xs-12 col-sm-12 col-md-12" ng-if="requestCostBreakdown.length != 0 && windowWidth<=768">
+                     <table class="col-md-12 table-bordered table-condensed cf">
+                      <thead class="cf">
+                        <tr>
+                          <th>Description </th>
+                          <th>Quantity</th>
+                          <th>Total Cost</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="requestCost in requestCostBreakdown">
+                          <td>{{requestCost.description}}</td>
+                          <td>{{requestCost.units}}</td>
+                          <td>{{requestCost.total_unit_cost}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+               </div>
+
+               <div class="col-xs-12 col-sm-12 col-md-12" ng-if="requestCostBreakdown.length == 0">
+                     <div class="alert alert-info">
+                        <p class="text-center">No cost found!</p>
+                     </div>
+               </div>
+
+              </uib-accordion-group>
+            </uib-accordion>
+          </div>
+      <!-- END REQUEST COST BREAKDOWN -->
+
+      <!-- BEGINNING SERVICE COST BREAKDOWN -->
+          <div>
+            <uib-accordion close-others="accStatus.closeOthers">
+              <uib-accordion-group is-open="accStatus.detailsOpen">
+                <uib-accordion-heading>
+                     Service Cost Breakdown
+                  <i  class="fa fa-fw" ng-class="{'fa-chevron-down': accStatus.detailsOpen, 'fa-chevron-right': !accStatus.detailsOpen}"></i>
+                </uib-accordion-heading>
+
+                <div class="col-xs-12 col-sm-12 col-md-12" ng-if="costServiceCostBreakdown.length!= 0 && windowWidth>768">
+                     <table class="col-md-12 table-bordered table-condensed cf">
+                      <thead class="cf">
+                        <tr>
+                          <th>Description </th>
+                          <th>Quantity</th>
+                          <th>Unit Cost</th>
+                          <th>Include</th>
+                          <th>Total Cost</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="serviceCostBreakdown in costServiceCostBreakdown">
+                          <td>{{serviceCostBreakdown.description}}</td>
+                          <td>{{serviceCostBreakdown.units}}</td>
+                          <td>{{serviceCostBreakdown.total_cost_for_item}}</td>
+                          <td>{{serviceCostBreakdown.flg_include | generalMatch}}</td>
+                          <td>{{serviceCostBreakdown.total_unit_cost}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+
+                 <div class="col-xs-12 col-sm-12 col-md-12" ng-if="costServiceCostBreakdown.length!= 0 && windowWidth<=768">
+                     <table class="col-md-12 table-bordered table-condensed cf">
+                      <thead class="cf">
+                        <tr>
+                          <th>Description </th>
+                          <th>Quantity</th>
+                          <th>Total Cost</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="serviceCostBreakdown in costServiceCostBreakdown">
+                          <td>{{serviceCostBreakdown.description}}</td>
+                          <td>{{serviceCostBreakdown.units}}</td>
+                          <td>{{serviceCostBreakdown.total_unit_cost}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12" ng-if="costServiceCostBreakdown.length==0">
+                     <div class="alert alert-info">
+                        <p class="text-center">No cost found!</p>
+                     </div>
+               </div>
+              </uib-accordion-group>
+            </uib-accordion>
+          </div>
+      <!-- END SERVICE COST BREAKDOWN -->
+    </div>
+  </div>
+</div>

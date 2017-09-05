@@ -1,0 +1,8 @@
+<select name="q_{{question.pk_qid}}"
+        class="form-control"
+        ng-model="question.answer"
+        ng-options="option.discol for option in question.options"
+        ng-required="question.flg_mandatory == 1"
+        required-err-type="wizardSingleSelect"
+        disable-valid-styling="true">
+</select>

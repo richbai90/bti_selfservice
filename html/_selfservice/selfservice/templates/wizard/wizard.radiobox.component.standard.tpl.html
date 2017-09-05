@@ -1,0 +1,28 @@
+<div ng-repeat="option in question.options track by $index">
+  <div  class="radio  radio-primary">
+    <input  id="q_{{question.pk_qid}}_{{$index}}_{{option.keycol}}"
+            type="radio"
+            class="fa fa-check-square-o fa-2x"
+            ng-model="question.answer[option.keycol]"
+            ng-value="option"
+            ng-change="wizServ.componentChange(option)"
+            disable-valid-styling="true">
+    <label for="q_{{question.pk_qid}}_{{$index}}">
+      <span ng-bind-html="option.discol"></span> <span ng-if="wizServ.dataForm.subscription.permis_price == '1'">[{{option.componentoptions.price | currency:""}}]</span>
+    </label>
+  </div>
+  <div  class="radio radio-primary"
+        ng-repeat="suboption in option.componentoptions.customComponents.options">
+
+          &nbsp;<input  id="q_{{question.pk_qid}}_{{$index}}_{{option.keycol}}"
+                type="radio"
+                class="fa fa-check-square-o fa-2x"
+                ng-model="question.answer[option.keycol]"
+                ng-value="suboption"
+                ng-change="wizServ.componentChange()"
+                disable-valid-styling="true">
+      <label for="q_{{question.pk_qid}}_{{$index}}">
+          <span ng-bind-html="option.discol"></span> <div class="fa fa-fw fa-arrow-right"></div>  <span ng-bind-html="suboption.discol"></span> <span ng-if="wizServ.dataForm.subscription.permis_price == '1'">[<span ng-if="suboption.componentoptions.price_diff > 0">+</span>{{suboption.componentoptions.price_diff | currency:""}}]</span>
+      </label>
+  </div>
+</div>

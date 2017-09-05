@@ -1,0 +1,88 @@
+<div class="backstretch" backstretch backstretch-images="images" backstretch-duration="5000" backstretch-fade="1">
+	<div class="container-fluid login-page">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-12 login-title">
+					<h1 class="text-center">{{brandTextTitle}}</h1>
+				</div>
+				<div class="col-md-12 login-subtitle">
+					<p class="text-center">{{brandSubTitle}}</p>
+				</div>
+				<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+					<div class="col-xs-12 col-md-12 login-form">
+						<form role="form"
+						ng-submit="login(updateForm.$valid)"
+						name="loginForm"
+						novalidate
+						autocomplete="off">
+
+							<div class="form-group">
+								<label for="username" class="hidden-xs">
+									<span class="fa fa-user fa-fw"></span> Username
+								</label>
+								<div class="left-inner-icon">
+									<i class="fa fa-user fa-fw fa-lg visible-xs"></i>
+									<input 	type="text"
+													class="form-control"
+													ng-model="username"
+													name="username"
+													placeholder="Username"
+													required="required"
+													required-err-type="loginUsernameRequired"
+													focus-element>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="password" class="hidden-xs">
+									<span class="fa fa-key fa-fw"></span> Password
+								</label>
+								<div class="left-inner-icon">
+									<i class="fa fa-key fa-fw fa-lg visible-xs"></i>
+									<input 	type="password"
+													class="form-control"
+													name="password"
+													id="login-password"
+													placeholder="Password">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="form-group hidden-xs">
+										<button type="button"
+														class="btn btn-primary pull-left"
+														ng-click="requestPassword()"
+														ng-disabled="loginForm.$invalid">
+														<span class="fa fa-key"></span> Password Reset
+										</button>
+										<button type="submit"
+											class="btn btn-success pull-right"
+											ladda="loggingIn"
+											ng-disabled="loginForm.$invalid">
+											<span class="fa fa-sign-in"></span> Log In
+										</button>
+									</div>
+									<div class="form-group visible-xs">
+										<button type="submit"
+											class="btn btn-success btn-block"
+											ladda="loggingIn"
+											ng-disabled="loginForm.$invalid">
+											<span class="fa fa-sign-in"></span> Log In
+										</button><br/>
+										<button type="button"
+											class="btn btn-primary btn-block"
+											ng-click="requestPassword()"
+											ng-disabled="loginForm.$invalid">
+											<span class="fa fa-key"></span> Password Reset
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

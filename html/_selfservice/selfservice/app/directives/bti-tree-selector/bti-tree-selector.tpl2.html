@@ -1,0 +1,28 @@
+<div class="row" deep-blur="treeSelector.blur()">
+    <div class="col-xs-12">
+        <div tabindex="0" ng-focus="treeSelector.focus()" class="{{treeSelector.className}}"
+             ng-model="treeSelector.inputModel"
+             style="{{treeSelector.style}}">
+            <bti-bread-crumbs show-top="treeSelector.focused"
+                              navigate="treeSelector.navigate"
+                              current-level="treeSelector.currentLevel"></bti-bread-crumbs>
+        </div>
+    </div>
+    <div tabindex="0" class="col-xs-12" ng-show="treeSelector.focused">
+        <div tabindex="0" class="tree-select">
+            <div tabindex="0" role="button"
+                 ng-mouseover="treeSelector.hover(option.id)" ng-mouseleave="treeSelector.hoverOut()"
+                 ng-repeat="option in treeSelector.options"
+                 ng-class="{focused: treeSelector.category === option.id}"
+                 ng-click="treeSelector.select(option)"
+            >
+                {{option.name}}
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" ng-if="treeSelector.model.$error.completeselect">
+        <div class="alert alert-warning">
+            Please select an option from the lowest available level
+        </div>
+    </div>
+</div>

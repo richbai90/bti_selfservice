@@ -1,0 +1,27 @@
+<div ng-controller="ProfileKBCtrl">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>My Knowledgebase Subscriptions</strong>
+		</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<form novalidate name="kbSubscriptionsForm">
+					<div ng-repeat="(key, kbcat) in kbCatArray track by $index">
+						<input type="checkbox" ng-model="kbcat.subscribed"  /> {{kbcat.name}}
+					</div>
+					<br/>
+					<!-- Submit update button (only enabled when form has been modified) -->
+					<input type="submit" value="Update" ng-class="'btn btn-primary btn-sm'"
+														ng-disabled="kbSubscriptionsForm.$pristine"
+														ng-click="kbSubscriptionsForm.$setPristine();
+																  submitSubsUpdate()"/>
+					<!-- Reset changes button (only enabled when form has been modified) -->													
+					<input type="button" value="Reset" ng-class="'btn btn-danger btn-sm'"
+													   ng-disabled="kbSubscriptionsForm.$pristine"													   
+													   ng-click="kbSubscriptionsForm.$setPristine();
+																 resetCustSubs()"/>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

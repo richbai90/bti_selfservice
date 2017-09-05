@@ -1,0 +1,28 @@
+<ul class = "list-group request-details" ng-show="requestService.requestAttachments.length > 0 && !loadingAttachments">
+  <li  class="list-group-item"
+      ng-repeat="attachment in requestService.requestAttachments track by $index">
+    <div  class="row">
+      <div class="col-xs-12">
+        <i class="fa fa-3x fa-fw {{requestService.getFileIcon(attachment.filename)}} pull-left"></i>
+        <h4 class="list-group-item-heading">{{attachment.filename}}
+          <button type="button"
+                  class="btn btn-primary pull-right"
+                  ng-click="requestService.getCallAttachment(attachment.callref, attachment.filename, attachment.dataid)"
+                  ladda="attachment.dataid == requestService.downloadingAttachment"
+                  uib-tooltip="File Size: {{attachment.sizeu | bytes}}"
+                  tooltip-placement="auto top"
+                  tooltip-popup-close-delay="300">
+            <span class="fa fa-download fa-lg fa-fw"></span>
+          </button></h4>
+        <p class="list-group-item-text">{{attachment.timeadded | unixToDate}} {{attachment.timeadded | unixToTime}}</p>
+      </div>
+    </div>
+  </li>
+</ul>
+<sw-spinner is-loading="loadingAttachments" message="Loading..."></sw-spinner>
+<div ng-show="requestService.requestAttachments.length == 0">
+  <div  class="alert alert-info"
+        ng-show="!loadingAttachments">
+    <p class="text-center">No attachments found!</p>
+  </div>
+</div>

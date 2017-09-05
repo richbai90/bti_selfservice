@@ -1,0 +1,40 @@
+<div class="panel panel-default" ng-if="searchResults.length != 0">
+	<div class="panel-heading">
+		<strong>Knowledgbase Results</strong>
+	</div>
+	<div class="panel-body">
+		<ul class="list-group">
+			<li class="list-group-item"
+					>
+				<table class="table table-hover table-responsive vertical-align" width="100%" style="word-break:break-all">
+					<tr>
+						<th>Reference</th>
+						<th>Title</th>
+					</tr>
+					<tr ng-repeat="(key, article) in searchResults">
+						<td>
+							<!-- Keeping search results/selections in scope so that they can be used if we navigate back -->
+							<a class="btn btn-success btn-sm" ui-sref="kbarticle({	kbRef			: article.docref,
+																					searchResults	: searchResults,
+																					searchCriteria	: searchCriteria,
+																					searchOptions	: {
+																						keywords	: searchCriteria.searchOptions.keywords,
+																						title		: searchCriteria.searchOptions.title,
+																						problem		: searchCriteria.searchOptions.problem,
+																						solution	: searchCriteria.searchOptions.solution },
+																					boolLoadDefaultSearchSettings	: false
+																				})">{{article.docref}}</a>
+						</td>
+						<td>
+							<span ng-bind-html="article.title"></span>
+						</td>
+					</tr>
+				</table>
+			 </li>
+		</ul>
+		<div class="alert alert-info"
+				ng-show="searchResults.length == 0">
+			<p class="text-center">No results.</p>
+		</div>
+	</div>
+</div>

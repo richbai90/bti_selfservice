@@ -1,0 +1,31 @@
+<div ng-controller="RequestNotifServiceCtrl">
+    <div class="panel panel-default" ng-if="notifArray.length != 0">
+        <div class="panel-heading">
+            <strong>Request Notifications</strong>
+        </div>
+        <div class="panel-body">
+			<div>
+				<sw-spinner is-loading="notifications.notificationsLoading == true" message="Loading..."></sw-spinner>
+			</div>
+            <ul class="list-group">
+                <li class="list-group-item"
+                            ng-repeat="(key, value) in notifArray track by $index">
+                    <table>
+                        <tr>
+                            <td>
+								<span class="fa-stack fa-1x">
+								<i class="fa fa-stack-2x"
+									ng-class="value.callclass | requestNotifClass"></i>
+								</span>
+								<strong><span role="button" ng-bind-html="value.h_formattedcallref" uib-tooltip-html="value.status | callStatus | requestNotifStatus: value.callclass"></span></strong>
+                            </td>
+                            <td style="padding-left: 10px">
+                                <span ng-bind-html="value.itsm_title | requestTitle: value.callclass: value.prb_title"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="container-fluid">
+	<!-- ARTICLE HEADER -->
+	<div class="row">
+		<div class="col-md-12">
+			<wss-page-header title="{{article.title}}" icon="fa-book" ng-show="article.docVisibleToCustomers == 'true'">
+				<span>Article ID: {{article.docRef}}</span>
+			</wss-page-header>
+			<!-- Show different header if document is not visible to public -->
+			<div ng-show="article.docVisibleToCustomers == 'false'">
+				<wss-page-header title="{{article.docRef}}" icon="fa-book">
+					<span>You are not able to view this article.</span>
+				</wss-page-header>
+				<button type="button"
+						class="btn btn-success btn-sm"
+						ng-click="goBackToSearchPage()">
+					<span class="fa fa-chevron-left"></span>
+					Back
+				</button>
+			</div>
+		</div>
+	</div>
+	<!-- ARTICLE BODY -->
+	<!-- Only render article body if document is visible to public -->
+	<div ng-if="article.docVisibleToCustomers == 'true'">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>Problem</strong>
+						<button type="button"
+								class="btn btn-success btn-sm btn-sm-accordion pull-right"
+								ng-click="goBackToSearchPage()">
+							<span class="fa fa-chevron-left"></span>
+							Back
+						</button>
+					</div>
+					<div class="panel-body">
+						<span ng-bind-html="article.problem"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>Solution</strong>
+					</div>
+					<div class="panel-body">
+						<span ng-bind-html="article.solution"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>Other Details</strong>
+					</div>
+					<div class="panel-body">
+						<dl class="dl-horizontal">
+							<dt>Created On</dt>
+							<dd>{{article.docDate}}</dd>
+							<dt>Author</dt>
+							<dd>{{article.author}}</dd>
+							<dt>Key Words</dt>
+							<dd>{{article.keywords}}</dd>
+							<dt>Profile</dt>
+							<dd>{{profileInfo}}</dd>
+						</dl>
+						<dl class="dl-horizontal">
+							<dt>Applies To</dt>
+							<dd>{{strRelatedTypes}}</dd>
+						</dl>
+						<dl class="dl-horizontal">
+							<dt>Related Articles</dt>
+							<dd>
+								<div id="relatedArticle" style="display:inline"
+										ng-repeat="(key, relarticle) in arrRelatedArticles">
+									<button type="button"
+												class="btn btn-success btn-sm btn-sm-accordion"
+												ng-click="goToRelatedArticle(relarticle.docref)">
+											({{relarticle.docref}}) {{relarticle.title}}
+									</button>
+								</div>
+								
+							</dd>
+							
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

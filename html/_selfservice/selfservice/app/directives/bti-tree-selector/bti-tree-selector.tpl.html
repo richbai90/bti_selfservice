@@ -1,0 +1,52 @@
+<div class="row" deep-blur="treeSelector.blur()">
+    <div class="col-xs-12">
+        <input ng-class="{'tree-select': treeSelector.focused}" ng-focus="treeSelector.focus()"
+               class="{{treeSelector.class}}" type="text" ng-model="treeSelector.selected"
+               ng-change="treeSelector.filter(treeSelector.selected)"
+               readonly>
+    </div>
+    <div class="col-xs-12" ng-show="treeSelector.focused">
+        <div class="tree-select">
+            <script type="text/ng-template" id="categories.html">
+                <div ng-repeat="option in option.children">
+                    <uib-accordion>
+                        <uib-accordion-group is-disabled="!treeSelector.hasChildren(option)">
+                            <uib-accordion-heading>
+                                <div class="row"
+                                     ng-click="treeSelector.select(option)"
+                                     ng-class="{focused: treeSelector.category === option.id}"
+                                     ng-mouseover="treeSelector.hover(option.id)"
+                                     ng-mouseleave="treeSelector.hoverOut()">
+                                    <div class="col-xs-6">
+                                        {{option.name}}
+                                    </div>
+                                </div>
+                            </uib-accordion-heading>
+                            <div ng-include="'categories.html'"></div>
+                </div>
+                </uib-accordion>
+                </div>
+            </script>
+            <div>
+                <div ng-repeat="option in treeSelector.data.options">
+                    <uib-accordion>
+                        <uib-accordion-group is-disabled="!treeSelector.hasChildren(option)">
+                            <uib-accordion-heading>
+                                <div class="row"
+                                     ng-click="treeSelector.select(option)"
+                                     ng-class="{focused: treeSelector.category === option.id}"
+                                     ng-mouseover="treeSelector.hover(option.id)"
+                                     ng-mouseleave="treeSelector.hoverOut()">
+                                    <div class="col-xs-6">
+                                        {{option.name}}
+                                    </div>
+                                </div>
+                            </uib-accordion-heading>
+                            <div ng-include="'categories.html'"></div>
+                </div>
+                </uib-accordion>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

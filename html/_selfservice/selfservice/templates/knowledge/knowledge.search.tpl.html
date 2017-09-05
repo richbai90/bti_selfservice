@@ -1,0 +1,80 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<strong>Knowledgbase Search</strong>
+	</div>
+	<div class="panel-body">
+		<form name="KnowledgeSearchForm" novalidate>
+			<!-- Type of Search -->
+			<!-- Disabled if system setting dictates... -->			
+			<div class="form-group">
+				<label for="searchType">Type of Search</label>
+				<select class="form-control"
+					name="searchType"
+					ng-options="type.value as type.display for type in searchTypes"
+					ng-model="searchCriteria.searchType"
+					ng-disabled="!systemSettings.boolChangeType">
+				</select>
+			</div>
+			<!-- Search String -->
+			<!-- Red label when no search string entered -->					
+			<div class="form-group">
+				<label for="searchString" ng-style="{color : searchCriteria.searchString == '' ? 'red' : 'black'}">Your Query or Words to Search For:</label>
+				<textarea class="form-control" name="searchString" wrap="on"
+						  ng-model="searchCriteria.searchString">
+				</textarea>
+				<div class="alert alert-info"
+					 ng-show="showSearchStringAlert && searchCriteria.searchString == ''">
+					<p class="text-center">You must enter something to search for.</p>
+				</div>
+			</div>
+			<!-- Catalog Select -->
+			<!-- Disabled if system setting dictates... -->
+			<div class="form-group">
+				<label for="searchCatalog">Look in:</label>
+				<select class="form-control"
+					name="searchCatalog"
+					ng-options="catalog.name for catalog in kbcats track by catalog.catalogId"
+					ng-model="searchCriteria.catalog"
+					ng-disabled="!systemSettings.boolChangeCat">
+				</select>
+			</div>
+			<!-- Search Options -->	
+			<!-- Red label and red border around all search options when selection is not valid -->		
+			<div class="form-group" style="padding: 5px 5px 5px 5px; border-radius:10px; border-padding:10px;"
+					ng-style="{border: searchSectionValid() ? '' : '2px solid red'}">
+				<!-- Options disabled if search type is not a "word search"-->
+				<label for="searchSections"
+						ng-style="{color: searchSectionValid() ? 'black' : 'red'}" >Search Sections</label><br/>
+				<input type="checkbox"	ng-model="searchCriteria.searchOptions['keywords']"
+										ng-disabled="searchCriteria.searchType == 1"/>&nbsp;Document Keywords<br/>
+				<input type="checkbox"	ng-model="searchCriteria.searchOptions['title']"
+										ng-disabled="searchCriteria.searchType == 1"/>&nbsp;Document Title<br/>
+				<input type="checkbox"	ng-model="searchCriteria.searchOptions['problem']"
+										ng-disabled="searchCriteria.searchType == 1"/>&nbsp;Document Problem Text<br/>
+				<input type="checkbox"	ng-model="searchCriteria.searchOptions['solution']"
+										ng-disabled="searchCriteria.searchType == 1"/>&nbsp;Document Solution Text<br/>
+				<div class="alert alert-info"
+					 ng-show="!searchSectionValid()">
+					<p class="text-center">You must select at least one Search Section.</p>
+				</div>
+			</div>
+			<!-- Max Results -->
+			<!-- Red label when number greater than 500 or less than 1 -->
+			<div class="form-group">
+				<label for="maxResults"
+					ng-style="{color : (KnowledgeSearchForm.maxResults.$invalid) ? 'red' : 'black'}">
+					Maximum Number of Results </label>
+				<input class="form-control" name="maxResults" type="number"
+						ng-model="searchCriteria.maxResults"
+						ng-max="500" ng-min="1"/>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Search" ng-class="'btn btn-primary btn-sm'"
+													ng-click="submitKBSearch()"/>												
+				<input type="button" value="Reset" ng-class="'btn btn-danger btn-sm'"													   
+												   ng-click="resetSearchCriteria();
+															 KnowledgeSearchForm.$setPristine()"/>
+			</div>
+		</form>
+	</div>
+</div>

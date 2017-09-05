@@ -1,0 +1,17 @@
+<div  class="checkbox  checkbox-primary"
+      ng-repeat="option in question.options track by $index">
+    <input  name="q_{{question.pk_qid}}"
+            id="q_{{question.pk_qid}}_{{$index}}"
+            ng-change="wizServ.checkboxChanged(question)"
+            ng-required="question.flg_mandatory == 1 && !question.checked"
+            type="checkbox"
+            ng-model="question.answer[option.keycol]"
+            ng-checked="question.answer[option.keycol]"
+            ng-true-value="'{{option.discol}}'"
+            ng-false-value="''"
+            disable-valid-styling="true"
+            required-err-type="wizardMultiSelect">
+  <label    for="q_{{question.pk_qid}}_{{$index}}">
+        <span ng-bind-html="option.discol"></span>
+  </label>
+</div>

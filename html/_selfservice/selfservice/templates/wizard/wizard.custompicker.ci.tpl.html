@@ -1,0 +1,17 @@
+<div class="form-group"
+      ng-if="question.flg_hidden == 0">
+  <!--<label for="q_{{question.pk_qid}}">{{question.question}}</label>-->
+  <div class="right-inner-icon">
+    <i class="fa fa-search fa-fw fa-lg"></i>
+    <input  role="button"
+            name="q_{{question.pk_qid}}"
+            ng-required="question.flg_mandatory == 1"
+            type = "text"
+            class = "form-control input-button"
+            readonly
+            placeholder="Click to select CMDB items"
+            value="{{question.answer | ciPickerDisplay}}"
+            ng-click="wizServ.ciPicker.openCIModal(question, 'md')">
+    <!--NOTE This input has no ng-model - as the value of question.answer is set via the modal in the wizServ service -->
+  </div>
+</div>

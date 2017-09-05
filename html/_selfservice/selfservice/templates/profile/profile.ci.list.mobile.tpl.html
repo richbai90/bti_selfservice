@@ -1,0 +1,29 @@
+<div ng-controller="ProfileCICtrl">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>My Configuration Items</strong>
+		</div>
+		<div class="panel-body">
+			<ul class="list-group">
+				<li class="list-group-item" ng-repeat="(key, ci) in cisArray track by $index">
+					<table width="100%" style="word-break:break-all">
+						<tr>
+							<td>
+							  <h4 class="list-group-item-heading">{{ ci.ck_config_item }}</h4>
+							  <p class="list-group-item-text">{{ ci.description }}</p>
+							  <p class="list-group-item-text">{{ ci.ck_config_type }}</p>
+							</td>
+							<td align="right">
+								<i class="fa fa-fw fa-3x"
+										ng-class="ci.fk_status_level | statusLvlIcon"
+										ng-style="{color: (ci.fk_status_level | statusLvlColor)}"
+										uib-tooltip-html="ci.fk_status_level">
+								</i>
+							</td>
+						</tr>
+					</table>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

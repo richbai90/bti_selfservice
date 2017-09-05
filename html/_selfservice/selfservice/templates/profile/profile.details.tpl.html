@@ -1,0 +1,41 @@
+<div ng-controller="ProfileDetailsCtrl">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>My Details</strong>
+		</div>
+		<div class="panel-body">
+			<form novalidate name="profileDetailsForm">
+				<div class="form-group">
+					<label for="name">Name</label>
+					<div class = "input-group">
+						<input type="text" class="form-control" ng-model="user.firstname" disable-valid-styling="true"/>
+						<span class="input-group-addon">-</span>
+						<input type="text" class="form-control" ng-model="user.surname" disable-valid-styling="true"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input type="email" class="form-control" ng-model="user.email" disable-valid-styling="true" />
+				</div>
+				<div class="form-group">
+					<label for="mobiletel">Telephone Number</label>
+					<input type="text" class="form-control" ng-model="user.mobiletel" disable-valid-styling="true"/>
+				</div>
+				<div class="form-group">
+					<label for="location">Location</label>
+					<input type="text" class="form-control" ng-model="user.location" disable-valid-styling="true" />
+				</div>
+				<!-- Submit update button (only enabled when form has been modified) -->
+				<input type="submit" value="Update" ng-class="'btn btn-primary btn-sm'"
+													ng-disabled="profileDetailsForm.$pristine"
+													ng-click="profileDetailsForm.$setPristine();
+															  submitProfileUpdate()"/>
+				<!-- Reset changes button (only enabled when form has been modified) -->
+				<input type="button" value="Reset" ng-class="'btn btn-danger btn-sm'"
+												   ng-disabled="profileDetailsForm.$pristine"
+												   ng-click="profileDetailsForm.$setPristine();
+															 resetProfileDetails()"/>
+			</form>
+		</div>
+	</div>
+</div>

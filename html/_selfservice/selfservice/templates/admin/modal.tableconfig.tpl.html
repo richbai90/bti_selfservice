@@ -1,0 +1,11 @@
+<div>
+  <div class="modal-body">
+    <json-editor schema="tableSchema" startval="tableData" buttons-controller="AsyncButtonsController">
+      <div class="modal-footer">
+        <button class="btn btn-danger" type="button" ng-click="onReset()">Reset to Default</button>
+        <button class="btn btn-primary" type="button" ng-click="onSubmit($event)" ng-disabled="!isValid">Save &amp; Close</button>
+        <button class="btn btn-warning" type="button" ng-click="onCancel()">Cancel</button>
+      </div>
+    </json-editor>
+  </div>
+</div>

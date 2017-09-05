@@ -1,0 +1,28 @@
+<div class="panel panel-default" ng-show="custRequests.requestArray.length != 0  && custRequests.loadingRequests == false">
+  <ul class="list-group">
+    <li class="list-group-item"
+        dir-paginate="request in custRequests.requestArray | itemsPerPage:custRequests.outputConfigObject[requestPage].rowsPerPage"
+        total-items="custRequests.totalRequests"
+        pagination-id="requestPage"
+        ng-click="custRequests.requestDetails(request.h_formattedcallref)">
+      <div  class="row">
+        <div class="col-xs-7">
+          <i ng-class="reqServ.callClassClass(request['callclass'])" class="fa-3x fa-fw pull-left"></i>
+          <h4 class="list-group-item-heading">{{ request['h_formattedcallref']}}</h4>
+          <p class="list-group-item-text">{{ request['callclass']}}</p>
+        </div>
+        <div class="col-xs-5">
+          <p class="list-group-item-text"><strong ng-class="reqServ.callStatusClass(request['status'])">{{ request['status'] | callStatus}}</strong></p>
+          <p class="list-group-item-text">{{ request['itsm_title']}}</p>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<sw-spinner is-loading="custRequests.loadingRequests == true" message="Loading..."></sw-spinner>
+
+<div  class="alert alert-info"
+      ng-show="custRequests.requestArray.length == 0 && custRequests.loadingRequests == false">
+  <p class="text-center">No requests found!</p>
+</div>

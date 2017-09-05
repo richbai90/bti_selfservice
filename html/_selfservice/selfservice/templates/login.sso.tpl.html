@@ -1,0 +1,41 @@
+<div ng-if="sessServ.previousLogin || loginFailed">
+	<div class="backstretch" backstretch backstretch-images="images" backstretch-duration="5000" backstretch-fade="1">
+		<div class="container-fluid login-page">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="login-title" ng-cloak>
+						<h1 class="text-center">{{brandTextTitle}}</h1>
+					</div>
+					<div class="login-subtitle" ng-cloak>
+						<p class="text-center">{{brandSubTitle}}</p>
+					</div>
+					<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+						<div class="login-form">
+							<form role="form"
+										ng-submit="login(updateForm.$valid)"
+										name="loginForm"
+										novalidate
+										autocomplete="off">
+								<div class="row">
+									<div class="col-xs-12">
+										<div 	class="alert alert-success fade in">
+											<strong>You are logged out of {{brandTextTitle}}!</strong><br/>
+											You can either log in using the button below, or close your broswer to end the session!
+										</div>
+										<div class="form-group">
+											<button type="submit"
+												class="btn btn-success pull-right"
+												ladda="loggingIn">
+												<span class="fa fa-sign-in"></span> Log Back In!
+											</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

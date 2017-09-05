@@ -1,0 +1,353 @@
+<div class="row" ng-repeat="row in categories" on-finish-render="selectCategory(0, 0)">
+    <div ng-repeat="category in row" class="col-sm-{{getCategorySize(row)}}" data-position="bottom"
+         data-arrow="true" data-animation="scale" tippy="{{category.description}}">
+        <a class="button service-category-anchor" ng-class="{active: category.selected}"
+           ng-click="selectCategory($parent.$index, $index)">
+            <img class="button img-responsive bg-primary service-category-img" ng-src="{{category.icon}}"
+                 alt="{{category.label}}" title="{{category.label}}"
+            />
+            <span class="text-center"><strong>{{category.label}}</strong></span>
+        </a>
+    </div>
+</div>
+<div style="margin-top: 10rem" class="row">
+    <uib-accordion>
+        <div uib-accordion-group class="panel-default" is-open="firstOpen"
+             ng-click="selectCategoryGroup(currCat, $event)">
+            <uib-accordion-heading>
+                <div class="row">
+                    <div class="col-xs-6">{{currCat.label}} <span
+                            ng-if="currCat.description && currCat.description != ''" role="button"
+                            tippy="{{currCat.description}}"
+                            class="fa fa-lg fa-fw fa-question-circle-o"></span></div>
+                    <div class="col-xs-6">
+                        <span role="button" class="pull-right fa fa-lg fa-fw"
+                              ng-class="{'fa-plus': !currCat.open, 'fa-minus': currCat.open}"></span>
+                    </div>
+                </div>
+            </uib-accordion-heading>
+            <div ng-include="'categories.html'">
+
+            </div>
+            <script type="text/ng-template" id="categories.html">
+                <uib-accordion>
+                    <div ng-repeat="currCat in currCat.children" uib-accordion-group class="panel-default"
+                         ng-click="selectCategoryGroup(currCat, $event)">
+                        <uib-accordion-heading>
+                            <div class="row">
+                                <div class="col-xs-6">{{currCat.label}} <span
+                                        ng-if="currCat.description && currCat.description != ''" role="button"
+                                        tippy="{{currCat.description}}"
+                                        class="fa fa-lg fa-fw fa-question-circle-o"></span>
+                                </div>
+                                <div class="col-xs-6"><span role="button" class="pull-right fa fa-lg fa-fw"
+                                                            ng-class="{'fa-plus': !currCat.open, 'fa-minus': currCat.open}"></span>
+                                </div>
+                            </div>
+                        </uib-accordion-heading>
+                        <div ng-include="'categories.html'">
+                            <ul class="list-group">
+                                <li class="list-group-item"
+                                    ng-repeat="service in currCat.services"
+                                    ng-click="selectService(service)"
+                                    ng-style="{'background-color': service.fk_cmdb_id == custServices.selectedService.fk_cmdb_id ? 'lightblue' : ''}">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <i ng-class="service.vsb_icon" class="fa fa-3x fa-fw pull-left"></i>
+                                            <h4 class="list-group-item-heading">{{service.vsb_title}}
+                                                <div class="pull-right">
+                                                    <button type="button"
+                                                            ng-if="canRaiseIncident(service)"
+                                                            class="btn btn-warning btn-sm"
+                                                            ng-click="raiseRequest(service, 'Incident')">
+                                                        <span class="fa fa-exclamation-triangle fa-2x visible-xs visible-sm"></span>
+                                                        <div class="hidden-xs hidden-sm"><span
+                                                                class="fa fa-exclamation-triangle"></span> Support
+                                                            Me
+                                                        </div>
+                                                    </button>
+                                                    <button type="button"
+                                                            ng-if="canRaiseRequest(service)"
+                                                            class="btn btn-success btn-sm"
+                                                            ng-click="raiseRequest(service, 'Service Request')">
+                                                        <span class="fa fa-bullhorn fa-2x visible-xs visible-sm"></span>
+                                                        <div class="hidden-xs hidden-sm"><span
+                                                                class="fa fa-bullhorn"></span>
+                                                            Raise
+                                                            Request
+                                                        </div>
+                                                    </button>
+                                                    <!-- MANAGE SERVICE DETAILS -->
+                                                    <button type="button"
+                                                            ng-if="ownDetailsSection(service)"
+                                                            class="btn btn-warning btn-sm"
+                                                            ng-click="displayOwnDetails(service)">
+                                                        <span class="fa fa-eye fa-1x visible-xs visible-sm"></span>
+                                                        <div class="hidden-xs hidden-sm"><span
+                                                                class="fa fa-eye"></span>
+                                                            View
+                                                            Details
+                                                        </div>
+                                                    </button>
+                                                    <!-- -->
+                                                    <span role="button"
+                                                          class="fa fa-lg fa-fw fa-heart-o"
+                                                          ng-if="!isFav(service.pk_auto_id) && canAddFav()"
+                                                          ng-click="addFav(service.subs_id, service.pk_auto_id)"></span>
+                                                    <span role="button"
+                                                          class="fa fa-lg fa-fw fa-heart text-danger"
+                                                          ng-if="isFav(service.pk_auto_id) && canAddFav()"
+                                                          ng-click="delFav(service.pk_auto_id)"></span>
+                                                </div>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <!-- BEGINNING SERVICE DETAILS -->
+                        <div ng-if="custServices.selectedService != null"
+                             ng-click="getDetails(custServices.selectedService.fk_cmdb_id)">
+                            <uib-accordion close-others="accStatus.closeOthers">
+                                <uib-accordion-group is-open="accStatus.detailsOpen">
+                                    <uib-accordion-heading>
+                                        Service Details
+                                        <i class="fa fa-fw"
+                                           ng-class="{'fa-chevron-down': accStatus.detailsOpen, 'fa-chevron-right': !accStatus.detailsOpen}"></i>
+                                    </uib-accordion-heading>
+
+
+                                    <dl class="dl-horizontal">
+                                        <dt>Details</dt>
+                                        <dd ng-bind-html="serviceDetails"></dd>
+                                    </dl>
+                                    <hr/>
+                                    <dl class="dl-horizontal">
+                                        <dt>Features</dt>
+                                        <dd ng-bind-html="custServices.selectedService.vsb_key_features"></dd>
+                                    </dl>
+                                </uib-accordion-group>
+                            </uib-accordion>
+                        </div>
+                        <!-- END SERVICE DETAILS -->
+                        <!-- BEGINNING ACTIVE REQUEST -->
+                        <div ng-if="custServices.selectedService.fk_cmdb_id"
+                             ng-click="getActiveRequest(custServices.selectedService.fk_cmdb_id, close)">
+                            <uib-accordion close-others="accStatus.closeOthers">
+                                <uib-accordion-group is-open="accStatus.activeRequest">
+                                    <uib-accordion-heading>
+                                        Active Requests
+                                        <i class="fa fa-fw"
+                                           ng-class="{'fa-chevron-down': accStatus.activeRequest, 'fa-chevron-right': !accStatus.activeRequest}"></i>
+                                    </uib-accordion-heading>
+
+                                    <div class="row" ng-if="RequestActive.length!=0 && windowWidth>=768">
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-responsive vertical-align">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Reference</th>
+                                                        <th>Summary</th>
+                                                        <th>Priority</th>
+                                                        <th>Submitted on</th>
+                                                        <th>Planned For/Deliver For/Resolve By</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr ng-repeat="model in RequestActive">
+                                                        <!--<td custRequests.requestDetails(request.h_formattedcallref)>-->
+                                                        <td>
+                                                            <span ng-bind-html="model.h_formattedcallref | requestDetailsButton"></span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{model.itsm_title}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{model.priority}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{model.logdatex | unixToDate}} {{model.logdatex | unixToTime}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{model.fixbyx | unixToDate}} {{model.fixbyx | unixToTime}}</span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel panel-default"
+                                         ng-show="RequestActive.length != 0 && windowWidth<768">
+                                        <ul class="list-group">
+                                            <li class="list-group-item" ng-repeat="model in RequestActive">
+                                                <div class="row">
+                                                    <div class="col-xs-7">
+                                                        <i ng-class="reqServ.callClassClass(request['callclass'])"
+                                                           class="fa-3x fa-fw pull-left fa fa-bullhorn call-icon-srequest"></i>
+                                                        <h4 class="list-group-item-heading"><span
+                                                                ng-bind-html="model.h_formattedcallref | requestDetailsButton"></span>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="col-xs-5">
+                                                        <p class="list-group-item-text">
+                                                            <span>{{model.itsm_title}}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="alert alert-info" ng-show="RequestActive.length == 0">
+                                        <p class="text-center">No requests found!</p>
+                                    </div>
+
+                                </uib-accordion-group>
+                            </uib-accordion>
+                        </div>
+                        <!-- END ACTIVE REQUEST -->
+                        <!-- BEGINNING CLOSED REQUEST -->
+                        <div ng-if="custServices.selectedService.fk_cmdb_id"
+                             ng-click="getCloseRequest(custServices.selectedService.fk_cmdb_id)">
+                            <uib-accordion close-others="accStatus.closeOthers">
+                                <uib-accordion-group is-open="accStatus.closeRequest">
+                                    <uib-accordion-heading>
+                                        Closed Requests
+                                        <i class="fa fa-fw"
+                                           ng-class="{'fa-chevron-down': accStatus.closeRequest, 'fa-chevron-right': !accStatus.closeRequest}"></i>
+                                    </uib-accordion-heading>
+                                    <div class="row" ng-if="RequestClose.length!=0 && windowWidth>=768">
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-responsive vertical-align">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Reference</th>
+                                                        <th>Summary</th>
+                                                        <th>Priority</th>
+                                                        <th>Submitted on</th>
+                                                        <th>Planned For/Deliver For/Resolve By</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr ng-repeat="model in RequestClose">
+                                                        <td>
+                                                            <span ng-bind-html="model.h_formattedcallref | requestDetailsButton"></span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{model.itsm_title}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{model.priority}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{model.logdatex | unixToDate}} {{model.logdatex | unixToTime}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{model.fixbyx | unixToDate}} {{model.fixbyx | unixToTime}}</span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="panel panel-default"
+                                         ng-show="RequestClose.length != 0 && windowWidth<768">
+                                        <ul class="list-group">
+                                            <li class="list-group-item" ng-repeat="model in RequestClose">
+                                                <div class="row">
+                                                    <div class="col-xs-7">
+                                                        <i ng-class="reqServ.callClassClass(request['callclass'])"
+                                                           class="fa-3x fa-fw pull-left fa fa-bullhorn call-icon-srequest"></i>
+                                                        <h4 class="list-group-item-heading"><span
+                                                                ng-bind-html="model.h_formattedcallref | requestDetailsButton"></span>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="col-xs-5">
+                                                        <p class="list-group-item-text">
+                                                            <span>{{model.itsm_title}}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div ng-if="RequestClose.length== 0">
+                                        <div class="alert alert-info">
+                                            <p class="text-center">No request found!</p>
+                                        </div>
+                                    </div>
+
+                                </uib-accordion-group>
+                            </uib-accordion>
+                        </div>
+                        <!-- END CLOSED REQUEST -->
+                    </div>
+                </uib-accordion>
+                <ul class="list-group">
+                    <li class="list-group-item"
+                        ng-repeat="service in currCat.services"
+                        ng-click="selectService(service)"
+                        ng-style="{'background-color': service.fk_cmdb_id == custServices.selectedService.fk_cmdb_id ? 'lightblue' : ''}">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <i ng-class="service.vsb_icon" class="fa fa-3x fa-fw pull-left"></i>
+                                <h4 class="list-group-item-heading">{{service.vsb_title}}
+                                    <div class="pull-right">
+                                        <button type="button"
+                                                ng-if="canRaiseIncident(service)"
+                                                class="btn btn-warning btn-sm"
+                                                ng-click="raiseRequest(service, 'Incident')">
+                                            <span class="fa fa-exclamation-triangle fa-2x visible-xs visible-sm"></span>
+                                            <div class="hidden-xs hidden-sm"><span
+                                                    class="fa fa-exclamation-triangle"></span> Support Me
+                                            </div>
+                                        </button>
+                                        <button type="button"
+                                                ng-if="canRaiseRequest(service)"
+                                                class="btn btn-success btn-sm"
+                                                ng-click="raiseRequest(service, 'Service Request')">
+                                            <span class="fa fa-bullhorn fa-2x visible-xs visible-sm"></span>
+                                            <div class="hidden-xs hidden-sm"><span class="fa fa-bullhorn"></span>
+                                                Raise
+                                                Request
+                                            </div>
+                                        </button>
+                                        <!-- MANAGE SERVICE DETAILS -->
+                                        <button type="button"
+                                                ng-if="ownDetailsSection(service)"
+                                                class="btn btn-warning btn-sm"
+                                                ng-click="displayOwnDetails(service)">
+                                            <span class="fa fa-eye fa-1x visible-xs visible-sm"></span>
+                                            <div class="hidden-xs hidden-sm"><span class="fa fa-eye"></span> View
+                                                Details
+                                            </div>
+                                        </button>
+                                        <!-- -->
+                                        <span role="button"
+                                              class="fa fa-lg fa-fw fa-heart-o"
+                                              ng-if="!isFav(service.pk_auto_id) && canAddFav()"
+                                              ng-click="addFav(service.subs_id, service.pk_auto_id)"></span>
+                                        <span role="button"
+                                              class="fa fa-lg fa-fw fa-heart text-danger"
+                                              ng-if="isFav(service.pk_auto_id) && canAddFav()"
+                                              ng-click="delFav(service.pk_auto_id)"></span>
+                                    </div>
+                                </h4>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </script>
+        </div>
+    </uib-accordion>
+</div>

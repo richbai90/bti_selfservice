@@ -1,0 +1,39 @@
+<div class="well well-sm request-filters">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <select class="form-control"
+              name="callClass"
+              ng-init="custRequests.callClass = reqServ.callClasses[0]"
+              ng-model="custRequests.callClass"
+              ng-options="option.name for option in reqServ.callClasses">
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <div class="input-group">
+        <input  type="text"
+                class="form-control"
+                ng-model="custRequests.search"
+                ng-model-options="{ debounce: 400 }"
+                placeholder="Search...">
+        <span class = "input-group-btn">
+           <button class = "btn btn-default"
+                   type = "button"
+                   ng-click="custRequests.clearSearch()">
+              <span class="fa fa-fw fa-search" ng-class="{'fa-times': custRequests.search != '' }"></span>
+           </button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <dir-pagination-controls
+            max-size="5"
+            direction-links="true"
+            boundary-links="true"
+            on-page-change="custRequests.getNextPage(newPageNumber)"
+            pagination-id="requestPage">
+      </dir-pagination-controls>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+{
+  "name": "json-editor",
+  "authors": [
+    "Jeremy Dorn <jeremy@jeremydorn.com>"
+  ],
+  "description": "JSON Schema based editor",
+  "main": "dist/jsoneditor.js",
+  "keywords": [
+    "json",
+    "schema",
+    "jsonschema",
+    "editor"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "*.md",
+    "tests",
+    "examples",
+    "demo.html",
+    "*.png",
+    "package.json",
+    "Gruntfile.js",
+    "src"
+  ],
+  "homepage": "https://github.com/jdorn/json-editor",
+  "version": "0.7.27",
+  "_release": "0.7.27",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.7.27",
+    "commit": "6664b1ffa336a5b6601217f97c3ed266f198abe5"
+  },
+  "_source": "https://github.com/jdorn/json-editor.git",
+  "_target": "^0.7.18",
+  "_originalSource": "json-editor"
+}

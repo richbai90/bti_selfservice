@@ -1,0 +1,46 @@
+<div>
+  <div class="panel-group call-diary-panels">
+    <div  class="panel panel-default">
+      <div class="panel-body service-information" ng-if="serviceOptions.length != 0">
+        <table  class="table table-striped table-responsive">
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Apply Type</th>
+                <th>Units</th>
+                <th>Unit Cost</th>
+                <th>Price</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="serviceOption in serviceOptions">
+              <td>
+                  <span>{{serviceOption.description}}</span>
+              </td>
+              <td>
+                  <span>{{serviceOption.apply_type}}</span>
+              </td>
+              <td>
+                  <span>{{serviceOption.units}}</span>
+              </td>
+              <td>
+                  <span>{{serviceOption.total_unit_cost}}</span>
+              </td>
+              <td>
+                  <span>{{serviceOption.price}}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel-body fixed-panel" ng-if="serviceOptions.length == 0">
+        <div  class="alert alert-info">
+          <p class="text-center">No service options found!</p>
+        </div>
+      </div>
+    </div>
+    <sw-spinner is-loading="loadingDiary" message="Loading..."></sw-spinner>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div ng-controller="ProfileCICtrl">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>My Configuration Items</strong>
+		</div>
+		<div class="panel-body">
+			<table class="table table-hover table-striped table-responsive" >
+			  <tr>
+					<th>Configuration ID</th>
+					<th>Description</th>
+					<th>Type</th>
+					<th>Status</th>
+					<th>Impact Level</th>
+			  </tr>
+			  <tr ng-repeat="(key, ci) in cisArray track by $index">		
+					<td>
+						<span ng-bind-html="ci.ck_config_item"></span>
+					</td>
+					<td>
+						<span ng-bind-html="ci.description"></span>
+					</td>
+					<td>
+						<span ng-bind-html="ci.ck_config_type"></span>
+					</td>
+					<td>
+						<span ng-bind-html="ci.fk_status_level"></span>
+					</td>
+					<td>
+						<span ng-bind-html="ci.fk_impact_level"></span>
+					</td>
+			  </tr>
+			</table>
+		</div>
+	</div>
+</div>

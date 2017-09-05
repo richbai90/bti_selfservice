@@ -1,0 +1,17 @@
+<div class="hover-btn hidden-xs hidden-sm">
+  <span class="fa fa-cog fa-lg"
+        role="button"
+        ng-click="openTableAdminModal()">
+  </span>
+</div>
+<hierarchical-selector  data="question.options"
+                        multi-select="false"
+                        on-selection-changed="question.answer = wizServ.probcodeSelected(items)">
+</hierarchical-selector>
+<!--  We need a hidden input type here to track the return of the CI Modal -->
+<input  type="hidden"
+        name="q_{{question.pk_qid}}"
+        ng-model="question.answer"
+        ng-required="question.flg_mandatory == 1"
+        disable-valid-styling="true"
+        required-err-type="wizardMultiSelect" />

@@ -1,0 +1,18 @@
+<div class="panel-group call-diary-panels">
+  <div  class="panel panel-default"
+        ng-repeat="diaryEntry in requestService.requestDiary">
+    <div class="panel-heading">
+      {{diaryEntry.updatetimex | unixToDateTime}} by {{diaryEntry.repid}}<span class="pull-right">{{diaryEntry.udcode}}</span>
+    </div>
+    <div class="panel-body fixed-panel">
+      <span ng-bind-html="diaryEntry.updatetxt | stripTags" style="white-space:pre-wrap;"></span>
+    </div>
+  </div>
+</div>
+<sw-spinner is-loading="loadingDiary" message="Loading..."></sw-spinner>
+<div ng-show="requestService.requestDiary.length == 0">
+  <div  class="alert alert-info"
+        ng-show="!loadingDiary">
+    <p class="text-center">No affected items found!</p>
+  </div>
+</div>

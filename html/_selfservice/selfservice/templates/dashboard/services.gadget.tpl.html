@@ -1,0 +1,92 @@
+<div ng-controller="ServiceListCtrl" ng-init="getCustFaveServices()">
+    <div class="panel panel-default dash-gadget">
+        <div class="panel-heading panel-heading-input clearfix">
+            <strong class="panel-title-input pull-left">Favourite Services</strong>
+            <input id="GadgetSearch"
+                   type="text"
+                   class="form-control input-sm"
+                   ng-model="custServices.search"
+                   ng-model-options="{ debounce: 400 }"
+                   placeholder="Search...">
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <sw-spinner is-loading="custServices.servicesLoading == true" message="Loading..."></sw-spinner>
+                </div>
+            </div>
+            <div class="row"
+                 ng-show="custServices.serviceArray.length > 0 && custServices.servicesLoading == false">
+                <div class="col-xs-12">
+                    <ul class="list-group">
+                        <li class="list-group-item"
+                            dir-paginate="service in custServices.serviceArray | itemsPerPage:custServices.rowsPerPage"
+                            pagination-id="servicePage"
+                            total-items="custServices.totalServices"
+                            ng-click="selectService(service)"
+                            ng-style="{'background-color': service.fk_cmdb_id == custServices.selectedService.fk_cmdb_id ? 'lightblue' : ''}">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <i ng-class="service.vsb_icon" class="fa fa-3x fa-fw pull-left"></i>
+                                    <h4 class="list-group-item-heading">{{service.vsb_title}}</h4>
+                                    <div class="btn-group visible-xs visible-sm visible-md pull-right">
+                                        <button type="button" ng-if="canRaiseIncident(service)"
+                                                class="btn btn-warning btn-sm"
+                                                ng-click="raiseRequest(service, 'Incident')">
+                                            <span class="fa fa-exclamation-triangle fa-lg fa-fw"></span>
+                                        </button>
+                                        <button type="button" ng-if="canRaiseRequest(service)"
+                                                class="btn btn-success btn-sm"
+                                                ng-click="raiseRequest(service, 'Service Request')">
+                                            <span class="fa fa-bullhorn fa-lg fa-fw"></span>
+                                        </button>
+                                    </div>
+                                    <p>
+                                        {{service.type_display}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row visible-lg">
+                                <div class="col-xs-12">
+                                    <div class="btn-group pull-right">
+                                        <button type="button"
+                                                ng-if="canRaiseIncident(service)"
+                                                class="btn btn-warning btn-sm"
+                                                ng-click="raiseRequest(service, 'Incident')">
+                                            <span class="fa fa-exclamation-triangle fa-fw"></span> Support Me
+                                        </button>
+                                        <button type="button"
+                                                ng-if="canRaiseRequest(service)"
+                                                class="btn btn-success btn-sm"
+                                                ng-click="raiseRequest(service, 'Service Request')">
+                                            <span class="fa fa-bullhorn fa-fw"></span> Raise Request
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div ng-if="custServices.serviceArray.length == 0 && custServices.servicesLoading == false">
+                        <div class="alert alert-info">
+                            <p class="text-center">No services found!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-center">
+                        <dir-pagination-controls
+                                max-size="5"
+                                direction-links="true"
+                                boundary-links="true"
+                                on-page-change="getNextPage(newPageNumber)"
+                                pagination-id="servicePage"
+                                class="pagination-gadget">
+                        </dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

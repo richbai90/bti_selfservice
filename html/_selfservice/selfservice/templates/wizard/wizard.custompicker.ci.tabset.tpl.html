@@ -1,0 +1,65 @@
+<uib-tabset>
+    <uib-tab
+        heading="Your Services"
+        select="setCIListSelect('fav')">
+    </uib-tab>
+    <uib-tab
+        heading="All Services"
+        select="setCIListSelect('cust')">
+    </uib-tab>
+    <uib-tab
+        heading="Assets You Use"
+        select="setCIListSelect('own')">
+    </uib-tab>
+    <uib-tab
+        heading="Assets You Own"
+        select="setCIListSelect('unsub')">
+    </uib-tab>
+</uib-tabset>
+
+
+
+<ul class="list-group"
+    ng-show="custServices.serviceArray.length > 0 && custServices.servicesLoading == false">
+  <li class="list-group-item"
+      dir-paginate="service in custServices.serviceArray | itemsPerPage:custServices.rowsPerPage"
+      pagination-id="servicePage"
+      total-items="custServices.totalServices"
+      ng-click="selectService(service)"
+      ng-style="{'background-color': service.fk_cmdb_id == custServices.selectedService.fk_cmdb_id ? 'lightblue' : ''}">
+    <div class="row">
+      <div class="col-xs-12">
+        <i ng-class="service.vsb_icon" class="fa fa-3x fa-fw pull-left"></i>
+        <h4 class="list-group-item-heading">{{service.vsb_title}}
+          <div class="pull-right">
+            <button type="button"
+                    ng-if="canRaiseIncident(service)"
+                    class="btn btn-warning btn-sm"
+                    ng-click="raiseRequest(service, 'Incident')">
+              <span class="fa fa-exclamation-triangle fa-2x visible-xs visible-sm"></span>
+              <div class="hidden-xs hidden-sm"><span class="fa fa-exclamation-triangle"></span> Support Me</div>
+            </button>
+            <button type="button"
+                    ng-if="canRaiseRequest(service)"
+                    class="btn btn-success btn-sm"
+                    ng-click="raiseRequest(service, 'Service Request')">
+              <span class="fa fa-bullhorn fa-2x visible-xs visible-sm"></span>
+              <div class="hidden-xs hidden-sm"><span class="fa fa-bullhorn"></span> Raise Request</div>
+            </button>
+            <span role="button"
+                  class="fa fa-lg fa-fw fa-heart-o"
+                  ng-if="!isFav(service.pk_auto_id) && canAddFav()"
+                  ng-click="addFav(service.subs_id, service.pk_auto_id)"></span>
+            <span role="button"
+                  class="fa fa-lg fa-fw fa-heart text-danger"
+                  ng-if="isFav(service.pk_auto_id) && canAddFav()"
+                  ng-click="delFav(service.pk_auto_id)"></span>
+          </div>
+        </h4>
+        <p>
+          {{service.type_display}}
+        </p>
+      </div>
+    </div>
+  </li>
+</ul>

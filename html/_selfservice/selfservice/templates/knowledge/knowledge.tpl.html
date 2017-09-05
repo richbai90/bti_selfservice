@@ -1,0 +1,23 @@
+<div ng-controller="KnowledgeCtrl">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<wss-page-header title="Knowledge Base" icon="fa-binoculars">
+					<span class="hidden-xs">Search for and view Knowledgebase documents.</span>
+					<span class="hidden-sm hidden-md hidden-lg">Knowledge Base.</span>
+				</wss-page-header>
+			</div>
+		</div>
+		<div class="row">
+				<div class="col-xs-12 col-sm-6 col-lg-4">
+					<div ng-include="'templates/knowledge/knowledge.search.tpl.html'"></div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<div ng-include="'templates/knowledge/knowledge.results.tpl.html'"></div>
+				</div>
+				<!--<div class="col-xs-12 col-sm-4">
+				<div ng-include="'templates/knowledge/....tpl.html'"></div>
+			</div>-->
+		</div>
+	</div>
+</div>

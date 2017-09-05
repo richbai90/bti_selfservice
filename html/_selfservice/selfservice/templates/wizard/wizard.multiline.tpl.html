@@ -1,0 +1,9 @@
+<textarea   name="q_{{question.pk_qid}}"
+            auto-grow="true"
+            type="text"
+            class="form-control"
+            ng-model="question.answer"
+            ng-init="question.answer = question.defaultvalue"
+            ng-required="question.flg_mandatory == 1"
+            disable-valid-styling="true"
+            required-err-type="wizardText"></textarea>

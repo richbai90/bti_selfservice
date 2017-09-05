@@ -1,0 +1,6 @@
+<ul class="breadcrumb">
+    <li ng-if="$index ? true : breadCrumbs.showTop" ng-repeat="crumb in breadCrumbs.crumbs">
+        <a ng-click="breadCrumbs.navigate(crumb)" tabindex="0" role="button"
+           ng-class="{only: breadCrumbs.crumbs.length === 1}">{{crumb.display}}</a>
+    </li>
+</ul>

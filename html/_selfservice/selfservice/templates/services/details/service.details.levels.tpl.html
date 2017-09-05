@@ -1,0 +1,35 @@
+<div>
+  <div class="panel-group call-diary-panels">
+    <div  class="panel panel-default">
+     
+      <div class="panel-body service-information" ng-if="serviceLevels.length != 0">
+            <table  class="table table-striped table-responsive">
+                <thead>
+                                          <tr>
+                                              <th><span><strong>Available Service Levels</strong></span></th>
+                                              <th><span><strong>Cost</strong></span></th>
+                                          </tr>
+                </thead>
+
+                <tbody>
+                                          <tr ng-repeat="level in serviceLevels">
+                                            <td>
+                                                <span>{{level.fk_sla_name}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{level.cost}}</span>
+                                            </td>
+                                          </tr>
+                </tbody>
+            </table>
+      </div>
+
+      <div class="panel-body fixed-panel" ng-if="serviceLevels.length == 0">
+          <div  class="alert alert-info">
+              <p class="text-center">No dependencies found!</p>
+          </div>
+      </div>
+    </div>
+  </div>
+  <sw-spinner is-loading="loadingDiary" message="Loading..."></sw-spinner>
+</div>

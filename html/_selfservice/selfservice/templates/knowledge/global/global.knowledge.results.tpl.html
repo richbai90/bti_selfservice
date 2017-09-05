@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<strong>Knowledgebase Results</strong>
+	</div>
+	<div class="panel-body">
+		<div 	class="table-responsive"
+					ng-show="searchService.knowledgeResults.length > 0 && !searchService.searchingKB" >
+			<table 	class="table table-hover table-striped"
+				width="100%"
+				style="word-break:break-all">
+				<tr>
+					<th>Reference</th>
+					<th>Title</th>
+				</tr>
+				<tr ng-repeat="(key, article) in searchService.knowledgeResults">
+					<td>
+						<a 	class="btn btn-success btn-sm"
+								ui-sref="kbarticle({kbRef : article.docref})">{{article.docref}}</a>
+					</td>
+					<td>
+						<span ng-bind-html="article.title"></span>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="alert alert-info" ng-show="searchService.knowledgeResults.length == 0 && !searchService.searchingKB">
+			<p class="text-center">No knowledgebase articles found!</p>
+			<p class="text-center">Click <strong><a ui-sref="knowledge">here</a></strong> to perform a full knowledgebase search.</p>
+		</div>
+		<sw-spinner is-loading="searchService.searchingKB" message="Loading..."></sw-spinner>
+	</div>
+</div>

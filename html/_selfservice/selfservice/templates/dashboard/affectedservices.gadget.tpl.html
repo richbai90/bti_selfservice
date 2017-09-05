@@ -1,0 +1,31 @@
+<div ng-controller="AffectedServicesCtrl">
+    <div class="panel panel-default" ng-if="notifArray.length != 0">
+        <div class="panel-heading">
+            <strong>Affected Services</strong>
+        </div>
+        <div class="panel-body">
+			<div>
+				<sw-spinner is-loading="notifications.notificationsLoading == true" message="Loading..."></sw-spinner>
+			</div>
+            <ul class="list-group">
+                <li class="list-group-item"
+                            ng-repeat="(key, value) in notifArray track by $index">
+                    <table>
+                        <tr>
+                            <td>
+                                <i     class="fa fa-fw fa-2x"
+										ng-class="value.cmdb_status | cmdbStatusLvlIcon"
+										ng-style="{color: (value.cmdb_status | cmdbStatusLvlColor)}"
+										uib-tooltip-html="value.fk_status_level">								
+                                </i>
+                            </td>
+                            <td style="padding-left: 10px">
+                                <span ng-bind-html="value.description | serviceTitle: value.cmdb_status: value.selfserv_titlefail: value.selfserv_titleimpact"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

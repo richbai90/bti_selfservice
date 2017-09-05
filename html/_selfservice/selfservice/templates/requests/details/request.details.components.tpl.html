@@ -1,0 +1,23 @@
+<ul class = "list-group request-details" ng-show="requestService.requestComponents.length > 0">
+  <li  class="list-group-item"
+      ng-repeat="component in requestService.requestComponents">
+    <div class="row">
+      <div class="col-xs-7">
+        <i class="fa fa-3x fa-gears pull-left"></i>
+        <strong class="list-group-item-heading">{{component.name}}</strong>
+        <p class="list-group-item-text">{{component.description}}</p>
+      </div>
+
+      <div class="col-xs-5">
+        <strong class="list-group-item-heading">Quantity: {{component.qty}}</strong>
+      </div>
+    </div>
+  </li>
+</ul>
+<sw-spinner is-loading="loadingComponents" message="Loading..."></sw-spinner>
+<div ng-show="requestService.requestComponents.length == 0">
+  <div  class="alert alert-info"
+        ng-show="!loadingComponents">
+    <p class="text-center">No components found!</p>
+  </div>
+</div>

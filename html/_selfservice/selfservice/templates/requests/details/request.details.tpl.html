@@ -1,0 +1,368 @@
+<div class="container-fluid">
+
+  <div class="row" ng-show="!loadingRequest && !haveRights">
+    <div class="col-xs-12 visible-xs-block">
+      <wss-request-header title="{{requestID}}"
+                          icon="{{getIcon(callClass)}}"
+                          stack="{{getStyle(callClass)}}">
+        <span>You do not have access to this request!</span>
+      </wss-request-header>
+    </div>
+    <div class="col-xs-12 hidden-xs">
+      <wss-request-header title="{{requestID}} - Access Denied"
+                          icon="{{getIcon(callClass)}}"
+                          stack="{{getStyle(callClass)}}">
+        <span>You do not have access to this request!</span>
+      </wss-request-header>
+    </div>
+  </div>
+
+  <div  class="row"
+        ng-show="!loadingRequest && !haveRights">
+    <div class="col-xs-12 text-center">
+      <h4>
+        You are not authorised to see this request.
+      </h4>
+      <h4>
+        Please contact your System Administrator.
+      </h4>
+    </div>
+  </div>
+
+  <!-- Request Header -->
+  <div class="row" ng-if="!loadingRequest && haveRights">
+    <div class="col-xs-12 visible-xs-block">
+      <wss-request-header title="{{requestID}}"
+                          icon="{{getIcon(callClass)}}"
+                          stack="{{getStyle(callClass)}}">
+        <span><strong>{{requestService.requestDetails.status | callStatus}}</strong> : {{requestService.requestDetails.itsm_title}}</span>
+      </wss-request-header>
+    </div>
+    <div class="col-xs-12 hidden-xs">
+      <wss-request-header title="{{requestID}} - {{callClass}}"
+                          icon="{{getIcon(callClass)}}"
+                          stack="{{getStyle(callClass)}}">
+        <span><strong>{{requestService.requestDetails.status | callStatus}}</strong> : {{requestService.requestDetails.itsm_title}}</span>
+      </wss-request-header>
+    </div>
+  </div>
+
+  <!-- Request Body -->
+  <div class="row" ng-show="!loadingRequest  && haveRights">
+    <div class="col-sm-6 col-md-7">
+
+      <!--Authorisation Panel
+          Not using ng-include to keep everything in same scope
+          Will put this in a directive at some point...-->
+      <div  class="panel panel-primary panel-shadow-primary clearfix fadeout"
+            ng-show="showAuthPanel()">
+        <div class="panel-heading">
+          <strong>{{authTitle}}</strong>
+        </div>
+        <div class="panel-body">
+          <form role="form"
+          name="authForm"
+          ng-submit="authRequest(authForm.$valid)"
+          novalidate="novalidate">
+            <div class="form-group">
+
+              <p ng-bind-html="authDescription"></p>
+
+              <div  class="row"
+              ng-if="showRequestCost()">
+                <div class="col-xs-12">
+                  <h6><strong>Request Price</strong></h6>
+                  <div class="table-responsive">
+                    <table  class="table table-condensed table-striped">
+                      <tbody>
+                        <tr>
+                          <td>Components Price</td>
+                          <td>{{compPrice}}</td>
+                        </tr>
+                        <tr>
+                          <td>SLA Price</td>
+                          <td>{{slaPrice}}</td>
+                        </tr>
+                        <tr>
+                          <td>Price</td>
+                          <td>{{totalPrice}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div  class="row"
+              ng-if="showRequestAuthComponents()">
+                <div class="col-xs-12">
+                  <h6><strong>Component Prices</strong></h6>
+                  <div class="table-responsive">
+                    <table  class="table table-condensed table-striped">
+                      <tbody>
+                        <tr ng-repeat="component in authComponents">
+                          <td>{{component}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <select id="authDecision"
+              class="form-control"
+              ng-model="authDecision"
+              required="required">
+              <option ng-repeat="(key, value) in authDecisions"
+              value="{{key}}">{{value}}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <textarea id="authDescription"
+                        auto-grow
+                        ng-model="authText"
+                        placeholder="Please give your reasons for your decision..."
+                        class="form-control"
+                        required="required"
+                        ng-minlength="3">
+              </textarea>
+            </div>
+
+            <div class="form-group fg-bottom-row pull-right">
+              <button type="submit"
+                      class="btn btn-primary btn-sm"
+                      ladda="authorisingRequest">
+                <span ng-show="!updatingRequest">
+                  <i class="fa fa-check-square-o"></i> Apply Authorisation Decision
+                </span>
+                <span ng-show="updatingRequest">Updating</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <!--Update Panel
+          Not using ng-include to keep everything in same scope-->
+      <div class="panel panel-default clearfix"
+          ng-show="showUpdatePanel()">
+        <div  class="panel-body">
+          <form role="form"
+          ng-submit="rateRequest(rateForm.$valid)"
+          name="rateForm"
+          novalidate="novalidate">
+
+          <!-- Rating -->
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <uib-rating ng-model="ratingValue"
+                              rating-states="ratingStates">
+                  </uib-rating>
+                </span>
+                <input  type="text"
+                        name="ratingText"
+                        ng-model="ratingText"
+                        placeholder="How are we doing with this request?"
+                        class="form-control"
+                        required
+                        ng-minlength="3" />
+                <div class="input-group-btn">
+                  <button type="submit"
+                          class="btn btn-primary"
+                          ng-class="{'btn-danger': rateForm.$submitted && rateForm.ratingText.$invalid }"
+                          ladda="ratingRequest">
+                          Rate! <!---->
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <!-- Update -->
+          <form role="form"
+            ng-submit="updateRequest(updateForm.$valid)"
+            name="updateForm"
+            novalidate="novalidate">
+            <div class="form-group">
+              <textarea auto-grow
+                        ng-model="updatetxt"
+                        placeholder="Apply a new update to this request..."
+                        class="form-control"
+                        required="required"
+                        ng-minlength="3"
+                        required-err-type="updateTextRequired"
+                        ng-minlength-err-type="updateTextMinimum"
+                        focus-element>
+              </textarea>
+            </div>
+
+            <!-- Button group for mobile devices -->
+            <div class="row visible-xs">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="btn-group pull-right">
+                    <div  class="fileUpload btn btn-primary btn-sm"
+                          ladda="addingFiles">
+                      <span>Add File</span>
+                      <input  type="file"
+                              class=" button upload"
+                              id="my-file-selector"
+                              base-sixty-four-input
+                              ng-model="newFileAttachments"
+                              multiple
+                              maxsize="10000"
+                              maxsize-err-type="fileAttachMaxSize"
+                              maxnum="5"
+                              maxnum-err-type="fileAttachMaxFiles"
+                              onloadstart="checkFiles"
+                              on-after-validate="filesAdded">
+                    </div>
+                    <button type="submit"
+                            ng-click="updateType = 'Update'"
+                            class="btn btn-primary btn-sm"
+                            ladda="updatingRequest">
+                      <span ng-show="!updatingRequest">Update</span>
+                      <span ng-show="updatingRequest">&nbsp;</span>
+                    </button>
+                    <button type="submit"
+                            ng-click="$parent.updateType = 'Close'"
+                            ng-if="showClosure()"
+                            class="btn btn-danger btn-sm"
+                            ladda="closingRequest">
+                      <span ng-show="!closingRequest">Request Closure</span>
+                    <span ng-show="closingRequest">&nbsp;</span>
+                    </button>
+                    <button type="submit"
+                            ng-click="$parent.updateType = 'Cancel'"
+                            ng-if="showCancellation()"
+                            class="btn btn-danger btn-sm"
+                            ladda="cancellingRequest">
+                      <span ng-show="!cancellingRequest">Request Cancel</span>
+                      <span ng-show="cancellingRequest">&nbsp;</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Button group for larger screens -->
+            <div class="row hidden-xs">
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div  class="fileUpload btn btn-primary btn-sm"
+                          ladda="addingFiles">
+                      <i class="fa fa-files-o"></i>
+                      <span>Attach files</span>
+                      <input  type="file"
+                              class="upload"
+                              id="my-file-selector"
+                              base-sixty-four-input
+                              ng-model="newFileAttachments"
+                              multiple
+                              maxsize="10000"
+                              maxsize-err-type="fileAttachMaxSize"
+                              maxnum="5"
+                              maxnum-err-type="fileAttachMaxFiles"
+                              onloadstart="checkFiles"
+                              on-after-validate="filesAdded">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-10">
+                <div class="form-group pull-right">
+                    <button type="submit"
+                            ng-click="updateType = 'Update'"
+                            class="btn btn-primary btn-sm"
+                            ladda="updatingRequest">
+                      <span ng-show="!updatingRequest">Apply Update</span>
+                      <span ng-show="updatingRequest">Updating</span>
+                    </button>
+                    <button type="submit"
+                            ng-click="updateType = 'Close'"
+                            ng-show="showClosure()"
+                            class="btn btn-danger btn-sm"
+                            ladda="closingRequest">
+                      <span ng-show="!closingRequest">Request Closure</span>
+                      <span ng-show="closingRequest">Updating</span>
+                    </button>
+                    <button type="submit"
+                            ng-click="updateType = 'Cancel'"
+                            ng-show="showCancellation()"
+                            class="btn btn-danger btn-sm"
+                            ladda="cancellingRequest">
+                      <span ng-show="!cancellingRequest">Cancel Request</span>
+                      <span ng-show="cancellingRequest">Updating</span>
+                    </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <table class="table table-bordered table-striped"  ng-show="newFileAttachments.length > 0">
+                  <tr>
+                    <th>File Name</th>
+                    <th>File Size</th>
+                  </tr>
+                  <tr ng-repeat="(key, file) in newFileAttachments">
+                    <td>{{file.filename}}</td>
+                    <td>{{file.filesize | bytes}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <uib-tabset active="activeJustified" justified="true">
+
+        <!-- Diary Tab -->
+        <uib-tab index="0" heading="Diary">
+          <div ng-include src="'templates/requests/details/request.details.diary.tpl.html'"></div>
+        </uib-tab>
+
+        <!-- Assets Tab -->
+        <uib-tab  index="1"
+                  heading="Affected Items"
+                  ng-show="classAssets == true">
+          <div ng-include src="'templates/requests/details/request.details.assets.tpl.html'"></div>
+        </uib-tab>
+
+        <!-- Components Tab -->
+        <uib-tab  index="2"
+                  heading="Components"
+                  ng-show="classComponents">
+          <div ng-include src="'templates/requests/details/request.details.components.tpl.html'"></div>
+        </uib-tab>
+
+        <!-- Attachments Tab -->
+        <uib-tab index="3" heading="Attachments">
+          <div ng-include src="'templates/requests/details/request.details.attachments.tpl.html'"></div>
+        </uib-tab>
+
+        <!--- Zero content Tab for Request Details - Allows customers on mobile devices to
+              essentially "jump" to the Request Details pane -->
+        <uib-tab  index="4"
+                  heading="Request Details"
+                  class="visible-xs-block">
+        </uib-tab>
+
+      </uib-tabset>
+
+    </div>
+
+    <!-- Call Details right-hand pane-->
+    <div class="col-sm-6 col-md-5">
+      <div ng-include src="'templates/requests/details/request.sidepanel.tpl.html'"></div>
+    </div>
+  </div>
+
+  <sw-spinner is-loading="loadingRequest" message="Loading..."></sw-spinner>
+
+</div>

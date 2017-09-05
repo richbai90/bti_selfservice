@@ -1,0 +1,21 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<wss-page-header title="My Profile" icon="fa-user">
+				<span class="hidden-xs">This section contains your personal profile details for this portal, as well as your list of configuration items and Knowledgebase catalogues you can subscribe to.</span>
+				<span class="hidden-sm hidden-md hidden-lg">This is your profile.</span>
+			</wss-page-header>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-md-4">
+			<div ng-include="'templates/profile/profile.details.tpl.html'"></div>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<div ng-include="'templates/profile/profile.ci.list.mobile.tpl.html'"></div>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<div ng-include="'templates/profile/profile.kb.subs.tpl.html'"></div>
+		</div>
+	</div>
+</div>

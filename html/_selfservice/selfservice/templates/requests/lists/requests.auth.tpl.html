@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <wss-page-header title="Request Authorisations" icon="fa-check-square-o">
+        <!--This is the XS screen (mobile) Request Header Text-->
+        <span class="hidden-sm hidden-md hidden-lg">These are the requests awaiting your authorisation.</span>
+        <!--This is the SM to LG screen Request Header Text-->
+          <span class="hidden-xs">These are the requests awaiting your authorisation. Click on the reference to view the details of an item.</span>
+      </wss-page-header>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+        <div>
+          <uib-tabset>
+              <uib-tab
+                  ng-repeat="t in tabs"
+                  heading="{{t.heading}}"
+                  select="go(t.route)"
+                  active="t.active">
+              </uib-tab>
+          </uib-tabset>
+          <small>&nbsp;</small>
+          <!-- Now load correct route for selected tab-->
+          <ui-view></ui-view>
+      </div>
+    </div>
+  </div>
+</div>
