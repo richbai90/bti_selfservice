@@ -1,16 +1,5 @@
 --- 
 db_schema: "%SWSERVER%\\idata\\itsm\\dbschema.xml"
-execute: 
-  -
-    command: "wmic path win32_networkadapter where PhysicalAdapter=True call disable"
-    cwd: "."
-  - 
-    command: "call ..\\bin\\node_bin\\nodevars.bat && yarn install && yarn run build:selfservice --offline"
-    cwd: "%SWSERVER%\\html"
-    new_shell: true
-  -
-    command: "wmic path win32_networkadapter where PhysicalAdapter=True call enable"
-    cwd: "."
 prereq: "%SWSERVER%\\data\\_dd_data\\ITSM.ddf"
 queries: 
   swdata: 
