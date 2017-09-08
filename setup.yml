@@ -4,10 +4,73 @@ prereq: "%SWSERVER%\\data\\_dd_data\\ITSM.ddf"
 queries: 
   swdata: 
     - |-
-        DROP PROCEDURE IF EXISTS SCSUBSCRIPTIONS; DELIMITER ;;
-        CREATE PROCEDURE SCSUBSCRIPTIONS() BEGIN DECLARE scn INT DEFAULT 0; DECLARE sci INT DEFAULT 0; DECLARE scid INT DEFAULT 0; DECLARE n INT DEFAULT 0; DECLARE i INT DEFAULT 0;
-        DROP TABLE IF EXISTS SERVICE_LIST; CREATE TEMPORARY TABLE SERVICE_LIST SELECT pk_auto_id, ck_config_item FROM config_itemi WHERE (ck_config_item in ( 'Account Password Reset/Unlock', 'One Way Transfer Account Request', 'Privileged Account Request', 'One Way Transfer Account Request', 'Data Transfer' ) AND catalog_type = 'Account Services') OR ( ck_config_item in ( 'Firewall', 'ISP', 'MPLS', 'Router/Switch' ) AND catalog_type like 'MTG->Network%' ) AND ck_config_type = 'ME->SERVICE';
-        SELECT COUNT(*) FROM SERVICE_LIST INTO scn; SET sci=0; WHILE sci<scn DO SELECT pk_auto_id FROM SERVICE_LIST LIMIT sci,1 INTO scid; SELECT COUNT(*) FROM COMPANY INTO n; SET i=0; WHILE i<n DO INSERT INTO sc_subscription( request_price, subscription_price, rel_type, fk_default_sla, fk_me_display, `type`, fk_service, fk_me_table, fk_me_key, fk_priority ) SELECT '0.00', '0.00', 'SUBSCRIPTION', 6, companyname, 'Organisation', scid, 'Company', pk_company_id, '04Low_SR' FROM company LIMIT i,1; SET i = i + 1; END WHILE; SET sci = sci + 1; END WHILE; SELECT scn; END;
+        DELIMITER ;;
+        
+        CREATE PROCEDURE SCSUBSCRIPTIONS()
+        BEGIN
+          DECLARE scn INT DEFAULT 0;
+          DECLARE sci INT DEFAULT 0;
+          DECLARE scid INT DEFAULT 0;
+          DECLARE n INT DEFAULT 0;
+          DECLARE i INT DEFAULT 0;
+          
+          DROP TABLE IF EXISTS SERVICE_LIST;
+          CREATE TEMPORARY TABLE SERVICE_LIST
+            SELECT pk_auto_id, ck_config_item
+            FROM config_itemi
+            WHERE (ck_config_item in (
+            'Account Password Reset/Unlock',
+            'One Way Transfer Account Request',
+            'Privileged Account Request',
+            'One Way Transfer Account Request',
+            'Data Transfer'
+            ) AND catalog_type = 'Account Services') OR (
+            ck_config_item in (
+            'Firewall',
+            'ISP',
+            'MPLS',
+            'Router/Switch'
+            ) AND catalog_type like 'MTG->Network%'
+            )
+            AND ck_config_type = 'ME->SERVICE';
+
+          SELECT COUNT(*) FROM SERVICE_LIST INTO scn;
+          SET sci=0;
+          WHILE sci<scn DO
+            SELECT pk_auto_id FROM SERVICE_LIST LIMIT sci,1 INTO scid;
+            SELECT COUNT(*) FROM COMPANY INTO n;
+            SET i=0;
+            WHILE i<n DO
+              INSERT INTO sc_subscription(
+                request_price, 
+                subscription_price, 
+                rel_type,
+                fk_default_sla,
+                fk_me_display,
+                `type`,
+                fk_service,
+                fk_me_table,
+                fk_me_key,
+                fk_priority
+            )
+            SELECT
+              '0.00',
+              '0.00',
+              'SUBSCRIPTION',
+              6,
+              companyname,
+              'Organisation',
+              scid,
+              'Company',
+              pk_company_id,
+              '04Low_SR'
+            FROM company LIMIT i,1;
+            SET i = i + 1;
+          END WHILE;
+          SET sci = sci + 1;
+          END WHILE;
+        SELECT scn;
+        END;
     - "update probcode set code_status = 'deactivated'"
     - "update config_itemi set service_type = 2, status_lifecycle = 'Retired', status_portfolio = 'Pipeline' where pk_auto_id in (728, 676, 677, 668, 669, 670, 671, 672, 673, 674, 667, 687, 666, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 719, 716, 696, 715, 683, 684, 717, 469, 705, 727, 726, 725, 724, 723, 721, 706, 707, 708, 709, 710, 711, 712, 713, 714, 701, 702, 703, 704, 697, 698, 699, 695, 692, 693, 694, 691, 690, 689, 688, 686, 685, 678, 679, 680, 681, 675, 722, 720, 718, 700, 682, 729, 730, 731, 732, 733, 734, 735, 736, 737, 738, 739, 740, 741, 742, 743, 744, 745, 746, 747, 748, 749, 750, 751, 752, 753, 754, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764, 765, 766, 767, 768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791, 792, 793, 794, 795, 796, 797, 798, 799, 800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832, 833, 834, 835, 836, 837, 2430)"
     - "update config_itemi set status_lifecycle = 'Marked For Retirement' where pk_auto_id in (843, 838, 839, 931, 1117, 1183, 1195, 1524, 1650, 1653, 1805, 1806, 1807, 1808, 1809, 1810, 1811, 1812, 1813, 1814, 1815, 1816, 1910, 1911, 1912, 1913, 1914, 1915, 1916, 1917, 1918, 1919, 1920, 1921, 1922, 1923, 1924, 1925, 1926, 1927, 1928, 1929, 1930, 1931, 1932, 1933, 1934, 1935, 1936, 1937, 1938, 2699, 2920)"
