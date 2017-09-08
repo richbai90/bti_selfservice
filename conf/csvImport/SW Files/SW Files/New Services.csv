@@ -34,10 +34,10 @@ FK_CONFIG_TYPE,TYPE_DISPLAY,PK_CONFIG_TYPE,SERVICE,Customer,Analyst,PK_AUTO_ID,D
 MTG,Windows,MTG->Windows,Certificate Request,n,y,3036,136
 MTG,Windows,MTG->Windows,Domain Name,n,y,3037,137
 MTG,Windows,MTG->Windows,Domain Controller,n,y,3038,138
-MTG,Network  ,MTG->Network  ,Firewall,n,y,3040,140
-MTG,Network  ,MTG->Network  ,ISP,n,y,3041,141
-MTG,Network  ,MTG->Network  ,MPLS,n,y,3042,142
-MTG,Network  ,MTG->Network  ,Router/Switch,n,y,3043,143
+MTG,Network,MTG->Network,Firewall,n,y,3040,140
+MTG,Network,MTG->Network,ISP,n,y,3041,141
+MTG,Network,MTG->Network,MPLS,n,y,3042,142
+MTG,Network,MTG->Network,Router/Switch,n,y,3043,143
 MTG,Server,MTG->Server,Virtual - AWS,n,y,3045,145
 MTG,Server,MTG->Server,Virtual - VMWare,n,y,3046,146
 MTG,Server,MTG->Server,Physical,n,y,3047,147
