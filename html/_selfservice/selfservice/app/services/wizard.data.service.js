@@ -251,7 +251,6 @@
     };
 
     self.getStageQuestions = function (intStage) {
-      const promises = [];
       var deferred = $q.defer();
       var sqparams = "stage=" + intStage;
       var xmlmc = new XMLMCService.MethodCall();
@@ -333,7 +332,7 @@
               questionArray[qKey].options = [];
               if (qVal.type === 'Selectbox' || qVal.type === 'Radiobox' || qVal.type === 'Checkbox') {
 
-                const gettingQuestionOptions = self.getQuestionOptions(qVal).then(function (respOptions) {
+                self.getQuestionOptions(qVal).then(function (respOptions) {
                   questionArray[qKey].options = respOptions;
 
                   //Cycle through question options, add to answer object if we match default value
@@ -350,11 +349,10 @@
                     });
                   }
                 });
-                promises.push(gettingQuestionOptions);
               } else if (qVal.type === 'Custom Picker') {
                 if (qVal.pickername === 'Customer Organisations' || qVal.pickername === 'All Organisations') {
                   //Get cust Related Organisations
-                  const gettingOrgs = self.getOrgs(qVal.pickername).then(function (oOrgs) {
+                  self.getOrgs(qVal.pickername).then(function (oOrgs) {
                     //Then set picker options
                     questionArray[qKey].options = oOrgs;
                     //Cycle through question options, add to answer object if we match default value
@@ -368,25 +366,20 @@
                   }, function (error) {
                     wssLogging.logger(error, "ERROR", "WizardDataService::getStageQuestions-getOrgs", false, false);
                   });
-                  promises.push(gettingOrgs);
                 } else if (qVal.pickername === 'Category') {
                   //Get Probcodes
-                  const gettingCategories = self.getProfileTree().then(function (oCodes) {
+                  self.getProfileTree().then(function (oCodes) {
                     //Then set tree data to picker options
                     questionArray[qKey].options = oCodes;
-                    console.log(oCodes);
                   }, function (error) {
                     wssLogging.logger(error, "ERROR", "WizardDataService::getStageQuestions-getProfileTree", false, false);
                   });
-                  promises.push(gettingCategories);
                 } else if (qVal.pickername === 'Configuration Items') {
                   //Set a default value for this isn't going to be easy...
                 }
               }
             });
-            $q.all(promises).then(() => {
-              deferred.resolve(questionArray);
-            });
+            deferred.resolve(questionArray);
           } else {
             deferred.reject('No Questions Found.');
           }
