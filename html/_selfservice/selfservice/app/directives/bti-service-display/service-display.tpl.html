@@ -55,6 +55,11 @@
                                         <div class="col-xs-12">
                                             <i ng-class="service.vsb_icon" class="fa fa-3x fa-fw pull-left"></i>
                                             <h4 class="list-group-item-heading">{{service.vsb_title}}
+                                                <i ng-if="service.vsb_description && service.vsb_description != ''"
+                                                   class="fa fa-question-circle-o fa-lg fa-fw"
+                                                   role="button"
+                                                   tippy="{{service.vsb_description}}"
+                                                ></i>
                                                 <div class="pull-right">
                                                     <button type="button"
                                                             ng-if="canRaiseIncident(service)"
@@ -89,15 +94,6 @@
                                                             Details
                                                         </div>
                                                     </button>
-                                                    <!-- -->
-                                                    <span role="button"
-                                                          class="fa fa-lg fa-fw fa-heart-o"
-                                                          ng-if="!isFav(service.pk_auto_id) && canAddFav()"
-                                                          ng-click="addFav(service.subs_id, service.pk_auto_id)"></span>
-                                                    <span role="button"
-                                                          class="fa fa-lg fa-fw fa-heart text-danger"
-                                                          ng-if="isFav(service.pk_auto_id) && canAddFav()"
-                                                          ng-click="delFav(service.pk_auto_id)"></span>
                                                 </div>
                                             </h4>
                                         </div>
@@ -302,6 +298,11 @@
                             <div class="col-xs-12">
                                 <i ng-class="service.vsb_icon" class="fa fa-3x fa-fw pull-left"></i>
                                 <h4 class="list-group-item-heading">{{service.vsb_title}}
+                                    <i ng-if="service.vsb_description && service.vsb_description != ''"
+                                       class="fa fa-question-circle-o fa-lg fa-fw"
+                                       role="button"
+                                       tippy="{{service.vsb_description}}"
+                                    ></i>
                                     <div class="pull-right">
                                         <button type="button"
                                                 ng-if="canRaiseIncident(service)"
@@ -332,15 +333,6 @@
                                                 Details
                                             </div>
                                         </button>
-                                        <!-- -->
-                                        <span role="button"
-                                              class="fa fa-lg fa-fw fa-heart-o"
-                                              ng-if="!isFav(service.pk_auto_id) && canAddFav()"
-                                              ng-click="addFav(service.subs_id, service.pk_auto_id)"></span>
-                                        <span role="button"
-                                              class="fa fa-lg fa-fw fa-heart text-danger"
-                                              ng-if="isFav(service.pk_auto_id) && canAddFav()"
-                                              ng-click="delFav(service.pk_auto_id)"></span>
                                     </div>
                                 </h4>
                             </div>

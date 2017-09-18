@@ -18,10 +18,19 @@
         title: '@'
       },
       link: function (scope, elem, attrs) {
-        var contents = scope.tippy || scope.title || '';
+        const contents = scope.tippy || scope.title || '';
         if (contents !== '') {
-          var tooltip = angular.element('<div>' + contents + '</div>');
+          const tooltip = angular.element('<div>' + contents + '</div>');
           tippy(elem[0], { html: tooltip[0] });
+          if (scope.title && scope.title !== '') {
+            elem.mouseover(() => {
+              elem.attr('title', '');
+            });
+
+            elem.mouseleave(() => {
+              elem.attr('title', scope.title);
+            });
+          }
         }
       }
     };

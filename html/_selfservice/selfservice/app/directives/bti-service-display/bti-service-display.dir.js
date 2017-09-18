@@ -67,6 +67,7 @@
             }, []));
             addServicesToCategories(_categories, services);
             $scope.categories = _categories;
+            console.log(_categories, services);
           });
         });
       });
@@ -84,7 +85,7 @@
         return deferred.promise;
       }
 
-      $scope.firstOpen = true;
+      $scope.firstOpen = false;
 
       $scope.getCategorySize = function (categories) {
         return Math.floor(12 / categories.length);

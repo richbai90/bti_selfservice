@@ -64,18 +64,35 @@
           }
         }
 
-        this.currentLevel = crumb;
+        this.currentLevel = angular.copy(crumb);
       };
 
-      const select = option => {
+      const select = (option, e) => {
+        angular.element(e.currentTarget).parent().focus();
         updateOptions(option.children, this.data);
         this.currentLevel = { id: option.id, display: option.name };
         if (!option.children.length) {
           this.model.$setViewValue(this.onSelect([option]));
           this.model.$setValidity('completeselect', true);
+          this.blur();
         } else {
           this.model.$setValidity('completeselect', false);
         }
+      };
+
+      this.keyPress = e => {
+        if (this.focused) {
+          console.log(this.model.crumbs);
+          e.preventDefault();
+          if ((e.which === 8 || e.which === 37) && this.model.crumbs.length) {
+            let prevCrumb = this.model.crumbs.length - 2;
+            if (prevCrumb >= 0) navigate(this.model.crumbs[prevCrumb]);
+          }
+        }
+      };
+
+      this.expand = () => {
+        this.focused ? this.blur() : this.focus();
       };
 
       this.focus = () => {

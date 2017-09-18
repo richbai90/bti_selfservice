@@ -579,7 +579,11 @@
           let xmlmc = new XMLMCService.MethodCall();
           xmlmc.addParam("storedQuery", "query/wss/wizards/wizard.q.categories.filter");
           xmlmc.invoke("data", "invokeStoredQuery", {
-            onSuccess: (excluded) => {
+            onSuccess: excluded => {
+              if (!Object.keys(excluded).length) {
+                deferred.resolve(self.treeData);
+                return
+              }
               let rows = excluded.rowData.row;
               rows = Array.isArray(rows) ? rows : [rows];
               excluded = rows.map(r => r.code);
@@ -1113,7 +1117,6 @@
       objQuestion.targetcolumn = 'opencall.itsm_sladef';
       objQuestion.qfilter = 'optionDisplay';
       objQuestion.flg_mandatory = '1';
-      objQuestion.flg_hidden = '0';
       objQuestion.type = 'SLARadiobox';
       objQuestion.options = [];
       angular.forEach(oSLAs, function (objSLAVal, objSLAKey) {
@@ -1128,6 +1131,7 @@
         }
         objQuestion.options.push(option);
       });
+      objQuestion.options.length > 1 ? objQuestion.flg_hidden = '0' : objQuestion.flg_hidden = '1';
       return objQuestion;
     };
 

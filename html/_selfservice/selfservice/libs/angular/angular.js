@@ -15191,7 +15191,7 @@ ASTInterpreter.prototype = {
         function(scope, locals, assign, inputs) {
           var rhs = right(scope, locals, assign, inputs);
           var value;
-          if (rhs.value != null && rhs.value.apply) {
+          if (rhs.value != null) {
             ensureSafeObject(rhs.context, self.expression);
             ensureSafeFunction(rhs.value, self.expression);
             var values = [];

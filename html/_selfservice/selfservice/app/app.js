@@ -2,7 +2,7 @@
 
   'use strict';
 
-  var dependencies = ['angular-storage', 'ngSanitize', 'ui.router', 'ngCookies', 'toaster', 'ngAnimate', 'angularUtils.directives.dirPagination', 'ui.bootstrap', 'ng-backstretch', 'angular-ladda', 'jcs-autoValidate', 'naif.base64', 'ct.ui.router.extras', 'angularBootstrapNavTree', 'daterangepicker', 'ng-fusioncharts', 'hierarchical-selector', 'angular-timeline', 'angular-json-editor', 'hbSwXmlmc', 'mp.deepBlur'];
+  var dependencies = ['angular-storage', 'ngSanitize', 'ui.router', 'ngCookies', 'toaster', 'ngAnimate', 'angularUtils.directives.dirPagination', 'ui.bootstrap', 'ng-backstretch', 'angular-ladda', 'jcs-autoValidate', 'naif.base64', 'ct.ui.router.extras', 'angularBootstrapNavTree', 'daterangepicker', 'ng-fusioncharts', 'hierarchical-selector', 'angular-timeline', 'angular-json-editor', 'hbSwXmlmc', 'mp.deepBlur', 'cp.ngConfirm'];
 
   var module = angular.module('swSelfService', dependencies);
 
@@ -168,6 +168,13 @@
       templateUrl: 'templates/wizard/raiseRequest.tpl.html',
       data: {
         requiresLogin: true
+      },
+      resolve: {
+        PreviousState: ["$state", $state => ({
+          name: $state.current.name,
+          params: $state.params,
+          URL: $state.href($state.current.name, $state.params)
+        })]
       }
     }).state('requestsauth', {
       abstract: true,

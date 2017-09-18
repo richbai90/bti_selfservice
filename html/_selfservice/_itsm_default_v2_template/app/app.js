@@ -24,6 +24,7 @@ var dependencies = [
   'angular-json-editor',
   'hbSwXmlmc',
   'mp.deepBlur',
+  'cp.ngConfirm',
 ];
 
 var module = angular.module('swSelfService', dependencies);
@@ -209,7 +210,17 @@ module.config(function ($stateProvider, $urlRouterProvider, paginationTemplatePr
       templateUrl: 'templates/wizard/raiseRequest.tpl.html',
       data: {
         requiresLogin: true
-      }
+      },
+      resolve: {
+        PreviousState: [
+          "$state",
+          $state => ({
+              name: $state.current.name,
+              params: $state.params,
+              URL: $state.href($state.current.name, $state.params)
+          })
+        ]
+      },
     })
     .state('requestsauth', {
       abstract: true,

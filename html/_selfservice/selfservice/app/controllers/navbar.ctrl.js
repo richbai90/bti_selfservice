@@ -3,9 +3,9 @@
 
   angular.module('swSelfService').controller('NavBarController', NavBarController);
 
-  NavBarController.$inject = ['$scope', 'SWSessionService', '$state', 'wssLogging', 'store'];
+  NavBarController.$inject = ['$scope', 'SWSessionService', '$state', 'wssLogging', 'store', 'shortcuts'];
 
-  function NavBarController($scope, SWSessionService, $state, wssLogging, store) {
+  function NavBarController($scope, SWSessionService, $state, wssLogging, store, shortcuts) {
     $scope.brandLogo = wssBranding.logoImage;
     $scope.sessServ = SWSessionService;
     $scope.logoff = function () {
@@ -31,6 +31,13 @@
     $scope.activePage = function (stateLoc) {
       return stateLoc === $state.current.name;
     };
+
+    $scope.raiseSupportRequest = function () {
+      store.remove("currDataForm");
+      $state.go('requestwizard');
+    };
+
+    $scope.shortcuts = shortcuts.initFlatShortcuts($scope);
   }
 })();
 //# sourceMappingURL=navbar.ctrl.js.map

@@ -78,3 +78,4 @@ $strOrderBy = " ORDER BY config_itemi.catalog_type ASC ";
 //Execute SQL
 $sqlDatabase = "swdata";
 $sqlCommand = $strCols . $strFromTable . $strWhere . $strGroupBy . $strOrderBy;
+error_log($sqlCommand);

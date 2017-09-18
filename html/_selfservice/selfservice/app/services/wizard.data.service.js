@@ -251,6 +251,7 @@
     };
 
     self.getStageQuestions = function (intStage) {
+      const promises = [];
       var deferred = $q.defer();
       var sqparams = "stage=" + intStage;
       var xmlmc = new XMLMCService.MethodCall();
@@ -332,7 +333,7 @@
               questionArray[qKey].options = [];
               if (qVal.type === 'Selectbox' || qVal.type === 'Radiobox' || qVal.type === 'Checkbox') {
 
-                self.getQuestionOptions(qVal).then(function (respOptions) {
+                const gettingQuestionOptions = self.getQuestionOptions(qVal).then(function (respOptions) {
                   questionArray[qKey].options = respOptions;
 
                   //Cycle through question options, add to answer object if we match default value
@@ -349,10 +350,11 @@
                     });
                   }
                 });
+                promises.push(gettingQuestionOptions);
               } else if (qVal.type === 'Custom Picker') {
                 if (qVal.pickername === 'Customer Organisations' || qVal.pickername === 'All Organisations') {
                   //Get cust Related Organisations
-                  self.getOrgs(qVal.pickername).then(function (oOrgs) {
+                  const gettingOrgs = self.getOrgs(qVal.pickername).then(function (oOrgs) {
                     //Then set picker options
                     questionArray[qKey].options = oOrgs;
                     //Cycle through question options, add to answer object if we match default value
@@ -366,20 +368,24 @@
                   }, function (error) {
                     wssLogging.logger(error, "ERROR", "WizardDataService::getStageQuestions-getOrgs", false, false);
                   });
+                  promises.push(gettingOrgs);
                 } else if (qVal.pickername === 'Category') {
                   //Get Probcodes
-                  self.getProfileTree().then(function (oCodes) {
+                  const gettingCategories = self.getProfileTree().then(function (oCodes) {
                     //Then set tree data to picker options
                     questionArray[qKey].options = oCodes;
                   }, function (error) {
                     wssLogging.logger(error, "ERROR", "WizardDataService::getStageQuestions-getProfileTree", false, false);
                   });
+                  promises.push(gettingCategories);
                 } else if (qVal.pickername === 'Configuration Items') {
                   //Set a default value for this isn't going to be easy...
                 }
               }
             });
-            deferred.resolve(questionArray);
+            $q.all(promises).then(() => {
+              deferred.resolve(questionArray);
+            });
           } else {
             deferred.reject('No Questions Found.');
           }
@@ -561,7 +567,31 @@
           });
           //Unflatten treeview data, and return;
           self.treeData = wssHelpers.unflattenTreeview(catList, 'name');
-          deferred.resolve(self.treeData);
+          let xmlmc = new XMLMCService.MethodCall();
+          xmlmc.addParam("storedQuery", "query/wss/wizards/wizard.q.categories.filter");
+          xmlmc.invoke("data", "invokeStoredQuery", {
+            onSuccess: excluded => {
+              if (!Object.keys(excluded).length) {
+                deferred.resolve(self.treeData);
+                return;
+              }
+              let rows = excluded.rowData.row;
+              rows = Array.isArray(rows) ? rows : [rows];
+              excluded = rows.map(r => r.code);
+              self.treeData = self.treeData.filter(function f(code) {
+                if (code.children.length) {
+                  code.children = code.children.filter(f);
+                }
+
+                return excluded.indexOf(code.swValue) === -1;
+              });
+              deferred.resolve(self.treeData);
+            },
+            onFailure(err) {
+              wssLogging.logger(err, "ERROR", "WizardDataService::getProfileTree::Filter", false, true, "Could Not Filter Probcodes");
+              deferred.resolve(self.treeData);
+            }
+          });
         },
         onFailure: function (error) {
           wssLogging.logger(error, "ERROR", "WizardDataService::getProfileTree", false, false);
@@ -1076,7 +1106,6 @@
       objQuestion.targetcolumn = 'opencall.itsm_sladef';
       objQuestion.qfilter = 'optionDisplay';
       objQuestion.flg_mandatory = '1';
-      objQuestion.flg_hidden = '0';
       objQuestion.type = 'SLARadiobox';
       objQuestion.options = [];
       angular.forEach(oSLAs, function (objSLAVal, objSLAKey) {
@@ -1091,6 +1120,7 @@
         }
         objQuestion.options.push(option);
       });
+      objQuestion.options.length > 1 ? objQuestion.flg_hidden = '0' : objQuestion.flg_hidden = '1';
       return objQuestion;
     };
 

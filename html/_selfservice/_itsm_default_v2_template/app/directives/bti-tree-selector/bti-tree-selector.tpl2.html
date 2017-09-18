@@ -1,11 +1,15 @@
-<div class="row" deep-blur="treeSelector.blur()">
+<div tabindex="0" class="row" deep-blur="treeSelector.blur()" ng-keydown="treeSelector.keyPress($event)">
     <div class="col-xs-12">
         <div tabindex="0" ng-focus="treeSelector.focus()" class="{{treeSelector.className}}"
-             ng-model="treeSelector.inputModel"
              style="{{treeSelector.style}}">
-            <bti-bread-crumbs show-top="treeSelector.focused"
-                              navigate="treeSelector.navigate"
-                              current-level="treeSelector.currentLevel"></bti-bread-crumbs>
+            <span ng-click="treeSelector.expand()"
+                  role="button" class="pull-right fa fa-lg fa-fw"
+                  ng-class="{'fa-plus': !treeSelector.focused, 'fa-minus': treeSelector.focused}"></span>
+            <bti-bread-crumbs
+                    ng-model="treeSelector.model"
+                    show-top="treeSelector.focused"
+                    navigate="treeSelector.navigate"
+                    current-level="treeSelector.currentLevel"></bti-bread-crumbs>
         </div>
     </div>
     <div tabindex="0" class="col-xs-12" ng-show="treeSelector.focused">
@@ -14,7 +18,7 @@
                  ng-mouseover="treeSelector.hover(option.id)" ng-mouseleave="treeSelector.hoverOut()"
                  ng-repeat="option in treeSelector.options"
                  ng-class="{focused: treeSelector.category === option.id}"
-                 ng-click="treeSelector.select(option)"
+                 ng-click="treeSelector.select(option, $event)"
             >
                 {{option.name}}
             </div>

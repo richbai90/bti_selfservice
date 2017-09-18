@@ -13,7 +13,7 @@ foreach ($folders as $folder) {
         foreach ($params as $param) {
             if (strtolower($param->name) === 'wsspcfilter') {
 
-                $pc_filter = method_exists($param, 'value') ? $param->value : '';
+                $pc_filter = property_exists($param, 'value') ? $param->value : '';
                 break;
             }
         }
@@ -22,6 +22,6 @@ foreach ($folders as $folder) {
     }
 }
 
-if($pc_filter && $pc_filter != '') $pc_filter = 'WHERE ' . $pc_filter;
+$pc_filter = ($pc_filter && $pc_filter != '') ? ' WHERE ' . $pc_filter : $pc_filter = ' WHERE code IS null';
 
 $sqlCommand = "SELECT code FROM pcinfo $pc_filter";

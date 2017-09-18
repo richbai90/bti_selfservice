@@ -4,9 +4,9 @@
   //Main Services List controller
 
   angular.module('swSelfService').controller('WizardCtrl', WizardCtrl);
-  WizardCtrl.$inject = ['$scope', 'WizardDataService', 'WizardLogService', 'store', 'wssLogging', '$state', 'SWSessionService'];
+  WizardCtrl.$inject = ['$scope', 'WizardDataService', 'WizardLogService', 'store', 'wssLogging', '$state', 'SWSessionService', 'PreviousState', '$ngConfirm'];
 
-  function WizardCtrl($scope, WizardDataService, WizardLogService, store, wssLogging, $state, SWSessionService) {
+  function WizardCtrl($scope, WizardDataService, WizardLogService, store, wssLogging, $state, SWSessionService, PreviousState, $ngConfirm) {
     $scope.wizDataServ = WizardDataService;
 
     //Accordian Setup
@@ -455,7 +455,9 @@
 
           if (error == "SLA invalid: 'Not configured'") {
             var toasterBody = "The SLA Priority definition in the Service has not been configured correctly. Please inform the System Administrator.";
-          } else var toasterBody = "We've been unable to raise your request at this time. Please report this to your System Administrator should this behaviour continue.";
+          } else {
+            var toasterBody = "We've been unable to raise your request at this time. Please report this to your System Administrator should this behaviour continue.";
+          }
 
           store.remove("currDataForm");
           $scope.requestLogging = false;
@@ -469,6 +471,30 @@
         var toastBody = 'Unable to process the Wizard responses to raise your request at this time. Please report this to your System Administrator should this behaviour continue.';
         var toastTitle = "Error raising request!";
         wssLogging.sendToast(toastType, toastBody, toastTitle);
+      });
+    };
+
+    $scope.cancelRequest = () => {
+      $ngConfirm({
+        title: 'You are about to leave the page',
+        content: '<strong>Your progress will be lost if you continue</strong>',
+        scope: $scope,
+        buttons: {
+          okay: {
+            text: 'Okay',
+            btnClass: 'btn-danger',
+            action: function (scope, button) {
+              $state.go(PreviousState.name, PreviousState.params);
+            }
+          },
+          cancel: {
+            text: 'Cancel',
+            btnClass: 'btn-success',
+            action: function (scope, button) {
+              // closes the modal
+            }
+          }
+        }
       });
     };
 

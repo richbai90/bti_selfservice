@@ -28,4 +28,59 @@ var wssBranding = {
     }
   }
 };
+
+var wssLayout = {
+  "navBar": {
+    "shortcuts": {
+      // specify details in here to add or modify the shortcuts
+      // The assumption otherwise is that we use the same as the
+      // Homepage shortcuts
+
+    }
+  },
+  "homePage": {
+    // These are default and their text and link are pre-defined.
+    // If you'd like to add a new shortcut, follow this design,
+    // If you are unsure how to make this work, contact support.
+    "shortcuts": {
+      "_support": {
+        // "icon" : "fa-life-ring",
+        // "text" : "Support Me",
+        // "desc" : "Raise a new support request",
+        "tooltip": 'desc',
+        "row": "1"
+      },
+      "_services": {
+        // "icon" : "fa-cogs",
+        // "text" : "Services",
+        // "desc" : "Request or view a service",
+        "tooltip": 'desc',
+        "row": "1"
+      },
+      "_requests": {
+        // "icon" : "fa-tasks",
+        // "text" : "Requests",
+        // "desc" : "View or update your requests",
+        "tooltip": 'desc',
+        "row": "2"
+      },
+      "_knowledge": {
+        // "icon" : "fa-binoculars",
+        // "text" : "Knowledge",
+        // "desc" : "Search for help",
+        "tooltip": 'desc',
+        "row": "2"
+      },
+      "_authorize": {
+        // "icon" : "fa-check-square-o",
+        // "badge": "numAuths",
+        // "text" : "Authorize",
+        // "desc" : "Authorize a request",
+        "tooltip": 'desc',
+        "row": "2",
+        "hidden": true
+      }
+    }
+  }
+};
 //# sourceMappingURL=branding.js.map

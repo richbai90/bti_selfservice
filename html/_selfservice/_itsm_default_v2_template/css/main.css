@@ -943,3 +943,15 @@ input.tree-select:focus {
 .breadcrumb li a:active:after {
     border-left-color: #16a085;
 }
+
+.navbar-default span {
+    display: inline-block;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.form-control-height {
+    height: 34px;
+}

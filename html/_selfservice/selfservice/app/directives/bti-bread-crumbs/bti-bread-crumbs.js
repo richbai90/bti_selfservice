@@ -4,19 +4,20 @@
   angular.module('swSelfService').directive('btiBreadCrumbs', [() => ({
     restrict: 'E',
     templateUrl: 'app/directives/bti-bread-crumbs/bti-bread-crumbs.tpl.html',
-    scope: true,
-    bindToController: {
+    scope: {
       navigate: '=',
       currentLevel: '&',
-      showTop: '='
+      showTop: '=',
+      ngModel: '=',
+      crumbs: '&'
     },
+    require: 'ngModel',
+    link(scope, elem, attrs) {
+      scope.crumbs = [];
+      scope.ngModel.crumbs = angular.copy(scope.crumbs);
+      const _this = scope;
 
-    controllerAs: 'breadCrumbs',
-    controller($scope) {
-      this.crumbs = [];
-      const _this = this;
-
-      $scope.$watch($scope.breadCrumbs.currentLevel, (newVal, oldVal) => {
+      scope.$watch(scope.currentLevel, (newVal, oldVal) => {
         if (newVal) {
           if (_this.crumbs.filter(e => newVal.id === e.id).length) {
             let found = false;
@@ -30,6 +31,7 @@
           } else {
             _this.crumbs.push(newVal);
           }
+          scope.ngModel.crumbs = angular.copy(_this.crumbs);
         }
       });
     }
