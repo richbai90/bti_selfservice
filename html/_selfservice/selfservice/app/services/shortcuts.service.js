@@ -40,8 +40,9 @@
     };
 
     const prepShortcuts = () => {
-      return merge({}, defaultShortcuts, wssLayout.homePage.shortcuts);
+      return orderBy(wssLayout.homePage.shortcuts, merge({}, defaultShortcuts, wssLayout.homePage.shortcuts));
     };
+
     const shortcutKeys = shortcuts => {
       let shortcutKeys = Object.keys(shortcuts).filter(s => !shortcuts[s].hidden && evalCondition(shortcuts[s].condition));
       shortcutKeys.sort((a, b) => (shortcuts[a].row || 0) - (shortcuts[b].row || 0));
@@ -50,6 +51,7 @@
     const isObject = item => {
       return item && typeof item === 'object' && !Array.isArray(item);
     };
+
     const merge = (target, ...sources) => {
       if (!sources.length) return target;
       const source = sources.shift();
@@ -69,12 +71,23 @@
 
       return merge(target, ...sources);
     };
+
+    const orderBy = (map, target) => {
+      map = Array.isArray(map) && map || Object.keys(map);
+      let reorderd = {};
+      map.forEach(e => {
+        reorderd[e] = target[e];
+      });
+      return merge({}, reorderd);
+    };
+
     const valInScope = (v, $scope) => {
       if (!v) return v;
       let vParts = v.split('|');
       if (vParts[0].trim() !== '$scope') return false;
       return $scope.$eval(vParts[1].trim());
     };
+
     const evalShortcut = (sc, $scope) => {
       let valInObject = v => {
         return ((sc, v) => {
