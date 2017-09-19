@@ -4,6 +4,7 @@ prereq: "%SWSERVER%\\data\\_dd_data\\ITSM.ddf"
 queries: 
   swdata: 
     - |-
+        DROP PROCEDURE IF EXISTS SCSUBSCRIPTIONS;
         DELIMITER ;;
         
         CREATE PROCEDURE SCSUBSCRIPTIONS()
