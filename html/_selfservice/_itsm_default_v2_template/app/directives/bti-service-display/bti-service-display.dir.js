@@ -27,6 +27,7 @@
     function ServiceCategoryDirectiveController($scope) {
       $scope.custServices = servicesService;
       var selectedCategory = [0, 0];
+
       $scope.selectCategory = function (row, col) {
         $scope.currCat = _categories[row][col];
         $scope.categories[selectedCategory[0]][selectedCategory[1]].selected = false;
@@ -37,23 +38,31 @@
       var _categories = [];
       var catTreeData = [];
 
+      let parentCategory = null;
+
       function addServicesToCategories(categories, services) {
         for (var i = 0; i < categories.length; i++) {
           if (Array.isArray(categories[i])) {
             addServicesToCategories(categories[i], services)
           } else {
             if (categories[i].children.length > 0) {
-              addServicesToCategories(categories[i].children, services);
+              categories[i].children.reduce((acc, child) => {
+                acc.push(child);
+                return acc;
+              }, categories);
+              delete categories[i].children;
+              //addServicesToCategories(categories[i], services);
             }
 
             categories[i].services = services.reduce(function (acc, service) {
-              if (service.pk_config_type === categories[i].content) {
+              if (service.pk_config_type.split('->')[0].trim() === categories[i].content) {
                 acc.push(service);
               }
 
               return acc;
 
             }, [])
+
           }
         }
       }
@@ -80,8 +89,11 @@
               return acc;
             }, []));
             addServicesToCategories(_categories, services);
-            $scope.categories = _categories;
-            console.log(_categories, services);
+            $scope.categories = _categories.map(category => {
+              if (Array.isArray(category)) {
+                return category.filter(c => c.services.length);
+              }
+            })
           });
         });
       });
@@ -99,7 +111,7 @@
         return deferred.promise;
       }
 
-      $scope.firstOpen = false;
+      $scope.firstOpen = true;
 
       $scope.getCategorySize = function (categories) {
         return Math.floor(12 / categories.length)

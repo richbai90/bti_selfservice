@@ -78,7 +78,6 @@ SELECT sc_typei.type_display,
        sc_folio.fk_df_onsub,
        sc_folio.fk_df_onreq,
        sc_folio.fk_df_support,
-       sc_folio.service_desc,
        sc_subscription.pk_id AS subs_id
 
 sql;

@@ -2,7 +2,6 @@
 include_once('SwPhpDll.php');
 
 $installPath = sw_getcfgstring("InstallPath");
-
 $dd = json_decode(file_get_contents($installPath . '/data/_dd_data/exported/itsm/xml/globalParams/Global Parameters.json'));
 
 $folders = $dd->espGlobalParameters->folder;

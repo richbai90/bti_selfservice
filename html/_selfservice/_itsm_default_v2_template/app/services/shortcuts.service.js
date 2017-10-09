@@ -41,7 +41,7 @@
     const prepShortcuts = () => {
       return orderBy(wssLayout.homePage.shortcuts, merge({}, defaultShortcuts, wssLayout.homePage.shortcuts));
     };
-    
+
     const shortcutKeys = shortcuts => {
       let shortcutKeys = Object.keys(shortcuts).filter(s => (!shortcuts[s].hidden && evalCondition(shortcuts[s].condition)));
       shortcutKeys.sort((a, b) => ((shortcuts[a].row || 0) - (shortcuts[b].row || 0)));

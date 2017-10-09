@@ -25,6 +25,7 @@ var dependencies = [
   'hbSwXmlmc',
   'mp.deepBlur',
   'cp.ngConfirm',
+  'angucomplete-alt',
 ];
 
 var module = angular.module('swSelfService', dependencies);

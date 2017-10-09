@@ -4,5 +4,6 @@
         ng-options="option.discol for option in question.options"
         ng-required="question.flg_mandatory == 1"
         required-err-type="wizardSingleSelect"
+        ng-disabled="question.disabled"
         disable-valid-styling="true">
 </select>

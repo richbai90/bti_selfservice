@@ -2,7 +2,7 @@
         type="{{question.inputtype}}"
         class="form-control"
         ng-model="question.answer"
-        ng-init="question.answer = question.defaultvalue"
         required-err-type="wizardText"
+        ng-disabled="question.disabled"
         ng-required="question.flg_mandatory == 1"
         disable-valid-styling="true"/>

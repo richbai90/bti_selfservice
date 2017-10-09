@@ -454,6 +454,26 @@
 					<Column name="avgfixtime" sqltype="VARCHAR" size="16" nullable="yes"/>
 					<Column name="fk_ci_id" sqltype="INTEGER" nullable="yes"/>
 				</Table>
+				<Table name="ci_avail_hist">
+					<Column name="opdowntime" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="downtime" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="fixtitle" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="probtitle" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="fixcode" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="probcode" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="startedonx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="endedonx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="pk_auto_id" sqltype="INTEGER" nullable="yes" primarykey="yes"/>
+					<Column name="probtext" sqltype="LONGVARCHAR" nullable="yes"/>
+					<Column name="fk_ci_item" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="fk_ci_id" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fixtext" sqltype="LONGVARCHAR" nullable="yes"/>
+					<Column name="fk_callref" sqltype="VARCHAR" size="8" nullable="yes"/>
+					<Column name="minutesdown" sqltype="INTEGER" nullable="yes"/>
+					<Column name="opminutesdown" sqltype="INTEGER" nullable="yes"/>
+					<Column name="timesincelastevent" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="timetoresolve" sqltype="DOUBLE" nullable="yes"/>
+				</Table>
 				<Table name="ci_avail_vpme">
 					<Column name="execorder" sqltype="INTEGER" nullable="yes"/>
 					<Column name="pk_auto_id" sqltype="INTEGER" nullable="yes" primarykey="yes"/>
@@ -865,6 +885,69 @@
 					<Column name="fk_callref" sqltype="INTEGER" nullable="yes"/>
 					<Column name="relcode" sqltype="VARCHAR" size="32" nullable="yes"/>
 				</Table>
+				<Table name="company">
+					<Column name="custom_a" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_b" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_c" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_d" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_e" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_f" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="fk_address_id" sqltype="INTEGER" nullable="yes"/>
+					<Column name="address_3" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="address_1" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="address_2" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="town" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="county" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="country" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="postcode" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="fk_company_id" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="pk_company_id" sqltype="VARCHAR" size="64" primarykey="yes"/>
+					<Column name="fk_accountmanager_id" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="fk_supportauthoriser_id" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="fk_company_type" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="fk_industry_type" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="flg_supporton" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="application_code" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="www_address" sqltype="VARCHAR" size="200" nullable="yes"/>
+					<Column name="fax_alt" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="telephone" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="telephone_alt" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="companyname_alt" sqltype="VARCHAR" size="128" nullable="yes"/>
+					<Column name="fax" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="notes" sqltype="LONGVARCHAR" nullable="yes"/>
+					<Column name="companyname" sqltype="VARCHAR" size="128"/>
+					<Column name="fk_cmdb_id" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="recordresolvedmsg" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_g" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_h" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_j" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i1" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i2" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i3" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i4" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_d1" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d2" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d3" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d4" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="supportexpiryx" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="logo" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Index name="ifkaccmgr" cols="fk_accountmanager_id" unique="no" seq="0" idxorder="desc"/>
+					<Index name="appcode" cols="appcode" unique="no" seq="0" idxorder="desc"/>
+					<Index name="country" cols="country" unique="no" seq="0" idxorder="desc"/>
+					<Index name="fk_company_type" cols="fk_company_type" unique="no" seq="0" idxorder="desc"/>
+					<Index name="fk_accountmanager_id" cols="fk_accountmanager_id" unique="no" seq="0" idxorder="desc"/>
+					<Index name="town" cols="town" unique="no" seq="0" idxorder="desc"/>
+					<Index name="county" cols="county" unique="no" seq="0" idxorder="desc"/>
+					<Index name="postcode" cols="postcode" unique="no" seq="0" idxorder="desc"/>
+					<Index name="fk_industry_type" cols="fk_industry_type" unique="no" seq="0" idxorder="desc"/>
+					<Index name="address_2" cols="address_2" unique="no" seq="0" idxorder="desc"/>
+					<Index name="companyname" cols="companyname" unique="no" seq="0" idxorder="desc"/>
+					<Index name="address_3" cols="address_3" unique="no" seq="0" idxorder="desc"/>
+					<Index name="address_1" cols="address_1" unique="no" seq="0" idxorder="desc"/>
+					<Index name="ialtconame" cols="companyname" unique="no" seq="0" idxorder="desc"/>
+				</Table>
 				<Table name="company_rc_tools">
 					<Column name="flg_is_default" sqltype="VARCHAR" size="254" nullable="yes"/>
 					<Column name="rc_tool" sqltype="VARCHAR" size="254" nullable="yes"/>
@@ -1134,6 +1217,83 @@
 					<Column name="flg_changecontrol" sqltype="INTEGER" nullable="yes"/>
 					<Index name="canmonitor" cols="flg_canmonitor" unique="no" seq="0" idxorder="desc"/>
 				</Table>
+				<Table name="contract">
+					<Column name="flg_alwayssupport" sqltype="INTEGER" nullable="yes"/>
+					<Column name="title" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_a" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_b" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_c" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_d" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_e" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_f" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="fk_company_id" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="fk_manager" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="flg_expemail_sent" sqltype="INTEGER" nullable="yes"/>
+					<Column name="flg_ewemail_sent" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fk_userdb" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="fk_ewanalyst" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="contract_notes" sqltype="LONGVARCHAR" nullable="yes"/>
+					<Column name="start_datex" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="pk_contract_id" sqltype="VARCHAR" size="124" primarykey="yes"/>
+					<Column name="flg_valid" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="fk_contract_type" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="end_datex" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="fk_priority" sqltype="VARCHAR" size="200" nullable="yes"/>
+					<Column name="renew_datex" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="application_code" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="document_ref" sqltype="VARCHAR" size="196" nullable="yes"/>
+					<Column name="fk_cmdb_id" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_g" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_h" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_j" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i1" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i2" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i3" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i4" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_d1" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d2" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d3" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d4" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="owner_email" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="owner_tel" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="tpoptions" sqltype="INTEGER" nullable="yes"/>
+					<Column name="timezone" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="fixMins" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fixHrs" sqltype="INTEGER" nullable="yes"/>
+					<Column name="respMins" sqltype="INTEGER" nullable="yes"/>
+					<Column name="respHrs" sqltype="INTEGER" nullable="yes"/>
+					<Column name="type" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="nextreviewx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fk_review" sqltype="INTEGER" nullable="yes"/>
+					<Column name="email" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="template" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="mailbox" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="flg_sendemail" sqltype="INTEGER" nullable="yes"/>
+					<Column name="cost_total_total" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_total" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_discount_servs" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_discount_ci" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_discount_sla" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_total_servs" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_total_ci" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_total_sla" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_amt_servs" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_amt_ci" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_amt_sla" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_discount_total" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="cost_amt_total" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="flg_support_unlimited" sqltype="INTEGER" nullable="yes"/>
+					<Column name="support_unit_type" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="support_units_avail" sqltype="INTEGER" nullable="yes"/>
+					<Column name="support_unit_dec_method" sqltype="INTEGER" nullable="yes"/>
+					<Column name="support_unit_dec_amount" sqltype="INTEGER" nullable="yes"/>
+					<Index name="appcode" cols="appcode" unique="no" seq="0" idxorder="desc"/>
+					<Index name="fk_manager" cols="fk_manager" unique="no" seq="0" idxorder="desc"/>
+					<Index name="fk_userdb" cols="fk_userdb" unique="no" seq="0" idxorder="desc"/>
+					<Index name="fk_priority" cols="fk_priority" unique="no" seq="0" idxorder="desc"/>
+				</Table>
 				<Table name="contract_diary">
 					<Column name="pk_auto_id" sqltype="INTEGER" nullable="yes" primarykey="yes"/>
 					<Column name="udcode" sqltype="VARCHAR" size="64" nullable="yes"/>
@@ -1194,6 +1354,38 @@
 					<Column name="title" sqltype="VARCHAR" size="124" nullable="yes"/>
 					<Column name="nindex" sqltype="INTEGER" nullable="yes"/>
 				</Table>
+				<Table name="costcent">
+					<Column name="costcenter" sqltype="VARCHAR" size="64" primarykey="yes"/>
+					<Column name="department" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="rate" sqltype="INTEGER" nullable="yes"/>
+					<Column name="priority" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="custom_a" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_b" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_c" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_d" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_e" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_f" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="fk_company_id" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="custom_g" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_h" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_j" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i1" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i2" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i3" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i4" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_d1" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d2" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d3" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d4" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="companyname" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="itsm_sla" sqltype="INTEGER" nullable="yes"/>
+					<Index name="costcenter" cols="costcenter" unique="yes" seq="0" idxorder="desc"/>
+					<Index name="appcode" cols="appcode" unique="no" seq="0" idxorder="desc"/>
+					<Index name="fk_company_id" cols="fk_company_id" unique="no" seq="0" idxorder="desc"/>
+					<Index name="companyname" cols="companyname" unique="no" seq="0" idxorder="desc"/>
+				</Table>
 				<Table name="ct_ctrl_fields">
 					<Column name="regexerrormsg" sqltype="VARCHAR" size="254" nullable="yes"/>
 					<Column name="fk_config_type" sqltype="VARCHAR" size="254"/>
@@ -1235,6 +1427,44 @@
 					<Column name="class" sqltype="VARCHAR" size="20" nullable="yes"/>
 					<Column name="flg_sc" sqltype="INTEGER" nullable="yes"/>
 					<Index name="pk" cols="fk_config_type" unique="yes" seq="0" idxorder="desc"/>
+				</Table>
+				<Table name="custom_standard_services">
+					<Column name="pk_auto_id" sqltype="INTEGER" unsigned="yes" nullable="yes" primarykey="yes"/>
+					<Column name="fk_service_id" sqltype="INTEGER" unsigned="yes"/>
+					<Column name="fk_service_name" sqltype="VARCHAR" size="255"/>
+				</Table>
+				<Table name="department">
+					<Column name="custom_f" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_e" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_d" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_c" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_b" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_a" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_g" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_h" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_j" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i1" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i2" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i3" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i4" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_d1" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d2" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d3" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d4" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="pk_dept_code" sqltype="VARCHAR" size="254" primarykey="yes"/>
+					<Column name="dept_name" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="telephone" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="email" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="notes" sqltype="LONGVARCHAR" nullable="yes"/>
+					<Column name="fk_dept_manager" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="fk_company_id" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="companyname" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="fk_dept_code" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="fk_cmdb_id" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fk_dept_id" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Index name="appcode" cols="appcode" unique="no" seq="0" idxorder="desc"/>
 				</Table>
 				<Table name="equipmnt">
 					<Column name="inst_date" sqltype="VARCHAR" size="20" nullable="yes"/>
@@ -1427,6 +1657,32 @@
 					<Column name="description" sqltype="LONGVARCHAR" nullable="yes"/>
 					<Column name="creator_id" sqltype="VARCHAR" size="64" nullable="yes"/>
 					<Column name="createdonx" sqltype="INTEGER" nullable="yes"/>
+				</Table>
+				<Table name="generic">
+					<Column name="code" sqltype="VARCHAR" size="32" primarykey="yes"/>
+					<Column name="descriptn" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="picture" sqltype="INTEGER" nullable="yes"/>
+					<Column name="custom_a" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_b" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_c" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_d" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_e" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_f" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_g" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_h" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_j" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i1" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i2" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i3" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i4" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_d1" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d2" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d3" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d4" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Index name="code" cols="code" unique="yes" seq="0" idxorder="desc"/>
+					<Index name="appcode" cols="appcode" unique="no" seq="0" idxorder="desc"/>
 				</Table>
 				<Table name="ila_criterion">
 					<Column name="pk_auto_id" sqltype="INTEGER" nullable="yes" primarykey="yes"/>
@@ -1805,6 +2061,65 @@
 					<Column name="analystid" sqltype="VARCHAR" size="64" nullable="yes"/>
 					<Column name="pk_auto_id" sqltype="INTEGER" nullable="yes" primarykey="yes"/>
 				</Table>
+				<Table name="makemod">
+					<Column name="make" sqltype="VARCHAR" size="64"/>
+					<Column name="model" sqltype="VARCHAR" size="64" primarykey="yes"/>
+					<Column name="custom_a" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_b" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_c" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_d" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_e" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_f" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_g" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_h" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_j" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i1" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i2" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i3" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i4" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_d1" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d2" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d3" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d4" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Index name="make" cols="make" unique="no" seq="0" idxorder="desc"/>
+					<Index name="appcode" cols="appcode" unique="no" seq="0" idxorder="desc"/>
+				</Table>
+				<Table name="manufact">
+					<Column name="address3" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="address2" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="comp_name" sqltype="VARCHAR" size="64" primarykey="yes"/>
+					<Column name="address1" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="country" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="postcode" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="contact" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="telephone" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="altphone" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="fax" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="custom_a" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_b" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_c" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_d" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_e" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_f" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_g" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_h" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_j" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i1" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i2" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i3" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i4" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_d1" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d2" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d3" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d4" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Index name="comp_name" cols="comp_name" unique="yes" seq="0" idxorder="desc"/>
+					<Index name="postcode" cols="postcode" unique="no" seq="0" idxorder="desc"/>
+					<Index name="appcode" cols="appcode" unique="no" seq="0" idxorder="desc"/>
+				</Table>
 				<Table name="me_training">
 					<Column name="course" sqltype="VARCHAR" size="124" nullable="yes"/>
 					<Column name="pk_code" sqltype="VARCHAR" size="64" primarykey="yes"/>
@@ -1865,6 +2180,257 @@
 					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
 					<Column name="flg_override" sqltype="INTEGER" nullable="yes"/>
 					<Column name="flg_work_week" sqltype="INTEGER" nullable="yes"/>
+				</Table>
+				<Table name="opencall">
+					<Column name="callref" sqltype="INTEGER" unsigned="yes" primarykey="yes"/>
+					<Column name="status" sqltype="INTEGER" nullable="yes"/>
+					<Column name="escalation" sqltype="INTEGER" nullable="yes"/>
+					<Column name="h_condition" sqltype="INTEGER" nullable="yes"/>
+					<Column name="priority" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="tpcontract" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="assignment" sqltype="VARCHAR" size="255" nullable="yes"/>
+					<Column name="suppgroup" sqltype="VARCHAR" size="160" nullable="yes"/>
+					<Column name="owner" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="cust_id" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="cust_name" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="loggedby" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="logdate" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="assigndate" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="closedby" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="closedate" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="equipment" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="slaresp" sqltype="INTEGER" nullable="yes"/>
+					<Column name="slafix" sqltype="INTEGER" nullable="yes"/>
+					<Column name="rate" sqltype="INTEGER" nullable="yes"/>
+					<Column name="costcenter" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="probcode" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="fixcode" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="respondby" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="fixby" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="resp_time" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fix_time" sqltype="INTEGER" nullable="yes"/>
+					<Column name="withinresp" sqltype="INTEGER" nullable="yes"/>
+					<Column name="totaltime" sqltype="INTEGER" nullable="yes"/>
+					<Column name="withinfix" sqltype="INTEGER" nullable="yes"/>
+					<Column name="logdatex" sqltype="INTEGER"/>
+					<Column name="assigndatx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="closedatex" sqltype="INTEGER" nullable="yes"/>
+					<Column name="completeby" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="fixbyx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="respondbyx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="compltdate" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="site" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="postcode" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="compltdatx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="contact" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="component_id" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="component" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="issueref" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="extdetails" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="callclass" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="prob_text" sqltype="VARCHAR" size="255" nullable="yes"/>
+					<Column name="c_rating" sqltype="INTEGER" nullable="yes"/>
+					<Column name="last_text" sqltype="VARCHAR" size="255" nullable="yes"/>
+					<Column name="a_rating" sqltype="INTEGER" nullable="yes"/>
+					<Column name="stateflags" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="origin" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="assigncount" sqltype="INTEGER" nullable="yes"/>
+					<Column name="commitdatex" sqltype="INTEGER" nullable="yes"/>
+					<Column name="lastaction" sqltype="INTEGER" nullable="yes"/>
+					<Column name="commitdate" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="lastactby" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="lastactdate" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="lastactdatex" sqltype="INTEGER" nullable="yes"/>
+					<Column name="nextactdatex" sqltype="INTEGER" nullable="yes"/>
+					<Column name="nextaction" sqltype="INTEGER" nullable="yes"/>
+					<Column name="nextactdate" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="workitemprogress" sqltype="VARCHAR" size="10" nullable="yes"/>
+					<Column name="contact_id" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="custom_a" sqltype="VARCHAR" size="164" nullable="yes"/>
+					<Column name="custom_b" sqltype="VARCHAR" size="164" nullable="yes"/>
+					<Column name="custom_c" sqltype="VARCHAR" size="164" nullable="yes"/>
+					<Column name="custom_d" sqltype="VARCHAR" size="164" nullable="yes"/>
+					<Column name="custom_e" sqltype="VARCHAR" size="164" nullable="yes"/>
+					<Column name="custom_f" sqltype="VARCHAR" size="164" nullable="yes"/>
+					<Column name="itsm_impact_level" sqltype="VARCHAR" size="50" nullable="yes"/>
+					<Column name="itsm_selfservice_on" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_thirdparty" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_title" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="itsm_buildx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_requiredbyx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_schedstartx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_schedendx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_testx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_reviewx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_workx" sqltype="INTEGER" nullable="yes"/>
+					<Column name="resolve_datex" sqltype="INTEGER" nullable="yes"/>
+					<Column name="resolve_date" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="itsm_status" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="bpm_stage_id" sqltype="INTEGER" nullable="yes"/>
+					<Column name="bpm_workflow_id" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="bpm_status_id" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="bpm_timer_id" sqltype="INTEGER" nullable="yes"/>
+					<Column name="bpm_waitingauth" sqltype="INTEGER" nullable="yes"/>
+					<Column name="bpm_waitingtasks" sqltype="INTEGER" nullable="yes"/>
+					<Column name="bpm_stage_title" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="itsm_prefered_suppgroup" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="itsm_tempnote" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="itsm_temptel" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="itsm_tempemail" sqltype="VARCHAR" size="196" nullable="yes"/>
+					<Column name="itsm_swtoday_on" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_priority_level" sqltype="VARCHAR" size="50" nullable="yes"/>
+					<Column name="itsm_urgency_level" sqltype="VARCHAR" size="50" nullable="yes"/>
+					<Column name="temp" sqltype="VARCHAR" size="100" nullable="yes"/>
+					<Column name="itsm_prefered_text" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="bpm_placedonhold" sqltype="INTEGER" nullable="yes"/>
+					<Column name="bpm_seq_task" sqltype="INTEGER" nullable="yes"/>
+					<Column name="bpm_task_id" sqltype="INTEGER" nullable="yes"/>
+					<Column name="bpm_task_title" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="bpm_parentcallref" sqltype="INTEGER" nullable="yes"/>
+					<Column name="bpm_managerid" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="callback_callref" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="callback_telephone" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="bpm_laction" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="bpm_lactionbytype" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="bpm_lactionres" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="bpm_lactionbyid" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="bpm_execvpme" sqltype="INTEGER" nullable="yes"/>
+					<Column name="newequiptype" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="flg_firsttimefix" sqltype="INTEGER" nullable="yes"/>
+					<Column name="flg_tempfix" sqltype="INTEGER" nullable="yes"/>
+					<Column name="c_ratingtxt" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="itsm_majorinc" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="logcall_source" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="itsm_rfc_type" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="resolve_text" sqltype="VARCHAR" size="255" nullable="yes"/>
+					<Column name="close_text" sqltype="VARCHAR" size="255" nullable="yes"/>
+					<Column name="cfh_nirn" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="bpm_progress_title" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="bpm_progress_fail" sqltype="INTEGER" nullable="yes"/>
+					<Column name="bpm_progress" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fk_company_id" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="companyname" sqltype="VARCHAR" size="128" nullable="yes"/>
+					<Column name="fk_contract_id" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="flg_resolve_prbs" sqltype="INTEGER" nullable="yes"/>
+					<Column name="flg_resolve_incs" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_wssm_on" sqltype="INTEGER" nullable="yes"/>
+					<Column name="prb_state" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="custom_d4" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d3" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d2" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d1" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_i4" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i3" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i2" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i1" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_j" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_i" sqltype="INTEGER" nullable="yes"/>
+					<Column name="custom_h" sqltype="INTEGER" nullable="yes"/>
+					<Column name="custom_g" sqltype="INTEGER" nullable="yes"/>
+					<Column name="prb_callref" sqltype="INTEGER" nullable="yes"/>
+					<Column name="rfc_callref" sqltype="INTEGER" nullable="yes"/>
+					<Column name="authdatex" sqltype="INTEGER" nullable="yes"/>
+					<Column name="authanalyst" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="flg_authorised" sqltype="INTEGER" nullable="yes"/>
+					<Column name="flg_requiresauth" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fk_authoriser" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="fk_dept_code" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="flg_ke" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_catreq_type" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="itsm_fk_service" sqltype="INTEGER" nullable="yes"/>
+					<Column name="request_cost" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="request_price" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="request_sla_cost" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="request_sla_price" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="request_comp_cost" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="request_comp_price" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="bpm_progress_perc" sqltype="INTEGER" nullable="yes"/>
+					<Column name="loggedbygroup" sqltype="VARCHAR" size="160" nullable="yes"/>
+					<Column name="custom_k" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_l" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="itsm_sladef" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="request_qty" sqltype="INTEGER" nullable="yes"/>
+					<Column name="breach_text" sqltype="VARCHAR" size="255" nullable="yes"/>
+					<Column name="itsm_slaname" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="emp_sick_name" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="emp_sick_startdatex" sqltype="INTEGER" nullable="yes"/>
+					<Column name="emp_sick_enddatex" sqltype="INTEGER" nullable="yes"/>
+					<Column name="emp_sick_reason" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="emp_sick_startdate" sqltype="VARCHAR" size="128" nullable="yes"/>
+					<Column name="emp_sick_enddate" sqltype="VARCHAR" size="128" nullable="yes"/>
+					<Column name="support_unit_cost" sqltype="INTEGER" nullable="yes"/>
+					<Column name="sm_tw_resp_act" sqltype="VARCHAR" size="255" nullable="yes"/>
+					<Column name="probcodedesc" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="flg_ila_complete" sqltype="INTEGER" nullable="yes"/>
+					<Column name="ila_weighting" sqltype="INTEGER" nullable="yes"/>
+					<Column name="requested_start_datex" sqltype="INTEGER" nullable="yes"/>
+					<Column name="requested_end_datex" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_rfc_timing" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="action_status" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="customer_ref" sqltype="VARCHAR" size="200" nullable="yes"/>
+					<Column name="third_party_email" sqltype="VARCHAR" size="100" nullable="yes"/>
+					<Column name="third_party_reference" sqltype="VARCHAR" size="100" nullable="yes"/>
+					<Column name="esc_email_sent" sqltype="INTEGER" nullable="yes"/>
+					<Column name="itsm_sched_datex" sqltype="INTEGER" nullable="yes"/>
+					<Column name="resolvedby" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="resolvedbygroup" sqltype="VARCHAR" size="160" nullable="yes"/>
+					<Column name="closedbygroup" sqltype="VARCHAR" size="160" nullable="yes"/>
+					<Column name="itsm_hide_fsc" sqltype="INTEGER" nullable="yes"/>
+					<Column name="case_origin" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="referred_by" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="referred_reason" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="referred_to" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="budgeted_time" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="costs_total" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fm_block" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="fm_fk_space_id" sqltype="VARCHAR" size="128" nullable="yes"/>
+					<Column name="fm_building" sqltype="VARCHAR" size="128" nullable="yes"/>
+					<Column name="fm_floor" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="fm_space_identifier" sqltype="VARCHAR" size="128" nullable="yes"/>
+					<Column name="fm_total_cost" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fm_time_cost" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fm_materials_cost" sqltype="INTEGER" nullable="yes"/>
+					<Column name="fm_parentcallref" sqltype="INTEGER" nullable="yes"/>
+					<Column name="flg_skip_calc" sqltype="INTEGER" nullable="yes"/>
+					<Column name="loc_notes" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="h_formattedcallref" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="itsm_risk_level" sqltype="VARCHAR" size="50" nullable="yes"/>
+					<Column name="environment" sqltype="VARCHAR" size="50" nullable="yes"/>
+					<Column name="itsm_risk_weighting" sqltype="INTEGER" nullable="yes"/>
+					<Column name="actionverb" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Index name="callref" cols="callref" unique="yes" seq="0" idxorder="desc"/>
+					<Index name="h_f_callref" cols="h_formattedcallref" unique="yes" seq="0" idxorder="desc"/>
+					<Index name="fixbyx" cols="fixbyx" unique="no" seq="0" idxorder="desc"/>
+					<Index name="logdatex" cols="logdatex" unique="no" seq="0" idxorder="desc"/>
+					<Index name="closedatex" cols="closedatex" unique="no" seq="0" idxorder="desc"/>
+					<Index name="respondbyx" cols="respondbyx" unique="no" seq="0" idxorder="desc"/>
+					<Index name="assigndatx" cols="assigndatx" unique="no" seq="0" idxorder="desc"/>
+					<Index name="compltdatx" cols="compltdatx" unique="no" seq="0" idxorder="desc"/>
+					<Index name="owner" cols="owner" unique="no" seq="0" idxorder="desc"/>
+					<Index name="completeby" cols="completeby" unique="no" seq="0" idxorder="desc"/>
+					<Index name="cust_id" cols="cust_id" unique="no" seq="0" idxorder="desc"/>
+					<Index name="cust_name" cols="cust_name" unique="no" seq="0" idxorder="desc"/>
+					<Index name="appcode" cols="appcode" unique="no" seq="0" idxorder="desc"/>
+					<Index name="idx_tskcnt" cols="bpm_parentcallref" unique="no" seq="0" idxorder="desc"/>
+					<Index name="flg_requiresauth" cols="flg_requiresauth" unique="no" seq="0" idxorder="desc"/>
+					<Index name="flg_authorised" cols="flg_authorised" unique="no" seq="0" idxorder="desc"/>
+					<Index name="bpm_stage_title" cols="bpm_stage_title" unique="no" seq="0" idxorder="desc"/>
+					<Index name="component_id" cols="component_id" unique="no" seq="0" idxorder="desc"/>
+					<Index name="swtoday" cols="itsm_swtoday_on" unique="no" seq="0" idxorder="desc"/>
+					<Index name="callclass" cols="callclass" unique="no" seq="0" idxorder="desc"/>
+					<Index name="customer_ref" cols="customer_ref" unique="no" seq="0" idxorder="desc"/>
+					<Index name="fk_company_id" cols="fk_company_id" unique="no" seq="0" idxorder="desc"/>
+					<Index name="site" cols="site" unique="no" seq="0" idxorder="desc"/>
+					<Index name="companyname" cols="companyname" unique="no" seq="0" idxorder="desc"/>
+					<Index name="bpm_workflow_id" cols="bpm_workflow_id" unique="no" seq="0" idxorder="desc"/>
+					<Index name="resolve_datex" cols="resolve_datex" unique="no" seq="0" idxorder="desc"/>
+					<Index name="bpm_status_id" cols="bpm_status_id" unique="no" seq="0" idxorder="desc"/>
+					<Index name="bpm_stage_id" cols="bpm_stage_id" unique="no" seq="0" idxorder="desc"/>
+					<Index name="contact_id" cols="contact_id" unique="no" seq="0" idxorder="desc"/>
+					<Index name="status" cols="status" unique="no" seq="0" idxorder="desc"/>
+					<Index name="suppgroup" cols="suppgroup" unique="no" seq="0" idxorder="desc"/>
+					<Index name="tpcontract" cols="tpcontract" unique="no" seq="0" idxorder="desc"/>
 				</Table>
 				<Table name="pcdesc">
 					<Column name="code" sqltype="VARCHAR" size="254" primarykey="yes"/>
@@ -2214,6 +2780,53 @@
 					<Column name="flg_canmonitor" sqltype="INTEGER" nullable="yes"/>
 					<Column name="type_status" sqltype="VARCHAR" size="32" nullable="yes"/>
 				</Table>
+				<Table name="site">
+					<Column name="site_name" sqltype="VARCHAR" size="124" primarykey="yes"/>
+					<Column name="country" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="comp_name" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="address" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="postcode" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="timezone" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="telephone" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="fax" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="custom_a" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_b" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_c" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_d" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_e" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_f" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="notes" sqltype="LONGVARCHAR" nullable="yes"/>
+					<Column name="fk_company_id" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="fk_address_id" sqltype="INTEGER" nullable="yes"/>
+					<Column name="address_3" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="address_1" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="address_2" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="town" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="county" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="fk_cmdb_id" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="site_type" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="custom_d4" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d3" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d2" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d1" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_i4" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i3" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i2" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i1" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_j" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_h" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_g" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="fk_address_hash" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="fk_company_hash" sqltype="VARCHAR" size="124" nullable="yes"/>
+					<Column name="application_code" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Index name="site_name" cols="site_name" unique="yes" seq="0" idxorder="desc"/>
+					<Index name="telephone" cols="telephone" unique="no" seq="0" idxorder="desc"/>
+					<Index name="appcode" cols="appcode" unique="no" seq="0" idxorder="desc"/>
+					<Index name="fk_company_id" cols="fk_company_id" unique="no" seq="0" idxorder="desc"/>
+					<Index name="comp_name" cols="comp_name" unique="no" seq="0" idxorder="desc"/>
+				</Table>
 				<Table name="slad_review_details">
 					<Column name="pk_id" sqltype="INTEGER" nullable="yes" primarykey="yes"/>
 					<Column name="fk_review_id" sqltype="INTEGER"/>
@@ -2372,6 +2985,57 @@
 					<Column name="dbtablefieldfor_citype" sqltype="VARCHAR" size="100" nullable="yes"/>
 					<Column name="ssgroup" sqltype="VARCHAR" size="32" nullable="yes"/>
 				</Table>
+				<Table name="supplier">
+					<Column name="company_id" sqltype="VARCHAR" size="64" primarykey="yes"/>
+					<Column name="address3" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="address2" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="address1" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="telephone" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="postcode" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="altphone" sqltype="VARCHAR" size="32" nullable="yes"/>
+					<Column name="fax" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="contact" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="country" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="custom_a" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_b" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_c" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_d" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_e" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_f" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_g" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_h" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_j" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i1" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i2" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i3" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i4" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_d1" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d2" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d3" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d4" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Column name="company_name" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="notes" sqltype="VARCHAR" size="255" nullable="yes"/>
+					<Column name="fk_cmdb_id" sqltype="INTEGER" nullable="yes"/>
+					<Column name="category" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="status" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="web" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="email" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="sd_web" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="am_name" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="am_phone" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="am_email" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="am_fax" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="flg_sendemail" sqltype="INTEGER" nullable="yes"/>
+					<Column name="mailbox" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="template" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="webflag" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="flg_internal" sqltype="INTEGER" nullable="yes"/>
+					<Index name="company_id" cols="company_id" unique="yes" seq="0" idxorder="desc"/>
+					<Index name="postcode" cols="postcode" unique="no" seq="0" idxorder="desc"/>
+					<Index name="appcode" cols="appcode" unique="no" seq="0" idxorder="desc"/>
+				</Table>
 				<Table name="sw_adm_settings">
 					<Column name="pk_settings" sqltype="VARCHAR" size="254" primarykey="yes"/>
 					<Column name="flg_type" sqltype="INTEGER" nullable="yes"/>
@@ -2390,6 +3054,48 @@
 					<Column name="toplevelcategory" sqltype="VARCHAR" size="254" nullable="yes"/>
 					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
 					<Index name="udx" cols="setting_name" unique="yes" seq="0" idxorder="desc"/>
+				</Table>
+				<Table name="swissues">
+					<Column name="starttimex" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="issueref" sqltype="VARCHAR" size="20" primarykey="yes"/>
+					<Column name="starttime" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="resolveby" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="status" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="resolvebyx" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="mastercallref" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="issuetype" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="owner" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="resolveedx" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="affectedusers" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="resolveed" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="dd" sqltype="VARCHAR" size="64" nullable="yes"/>
+					<Column name="flags" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="suppgroup" sqltype="VARCHAR" size="160" nullable="yes"/>
+					<Column name="description" sqltype="LONGVARCHAR" nullable="yes"/>
+					<Column name="closeby" sqltype="VARCHAR" size="20" nullable="yes"/>
+					<Column name="closetimex" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_a" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_b" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_c" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_d" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_e" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_f" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_g" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_h" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_j" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="custom_i1" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i2" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i3" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_i4" sqltype="INTEGER" unsigned="yes" nullable="yes"/>
+					<Column name="custom_d1" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d2" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d3" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="custom_d4" sqltype="DOUBLE" nullable="yes"/>
+					<Column name="appcode" sqltype="VARCHAR" size="16" nullable="yes"/>
+					<Index name="issueref" cols="issueref" unique="yes" seq="0" idxorder="desc"/>
+					<Index name="status" cols="status" unique="no" seq="0" idxorder="desc"/>
+					<Index name="appcode" cols="appcode" unique="no" seq="0" idxorder="desc"/>
 				</Table>
 				<Table name="swkb_articles">
 					<Column name="docref" sqltype="VARCHAR" size="32" primarykey="yes"/>
@@ -2800,6 +3506,7 @@
 					<Column name="sec_filtercolumn" sqltype="VARCHAR" size="254" nullable="yes"/>
 					<Column name="prim_lbl" sqltype="VARCHAR" size="254" nullable="yes"/>
 					<Column name="sec_lbl" sqltype="VARCHAR" size="254" nullable="yes"/>
+					<Column name="flg_disabled" sqltype="INTEGER"/>
 					<Index name="fk_wiz_stage" cols="fk_wiz_stage" unique="no" seq="0" idxorder="desc"/>
 				</Table>
 				<Table name="wssm_wiz_q_backup">
@@ -3125,33 +3832,6 @@
 					<Column name="showChangeSchedule" sqltype="INTEGER" nullable="yes"/>
 					<Column name="showAuth" sqltype="INTEGER" nullable="yes"/>
 					<Column name="showMI" sqltype="INTEGER" nullable="yes"/>
-				</Table>
-				<Table name="system_timezones">
-					<Column name="name" sqltype="VARCHAR" size="64" primarykey="yes"/>
-					<Column name="description" sqltype="VARCHAR" size="255"/>
-					<Column name="bias" sqltype="INTEGER"/>
-					<Column name="stdbias" sqltype="INTEGER"/>
-					<Column name="dstbias" sqltype="INTEGER"/>
-					<Column name="dststartmonth" sqltype="TINYINT" unsigned="yes"/>
-					<Column name="dststartweekinmonth" sqltype="TINYINT" unsigned="yes"/>
-					<Column name="dststartdayofweek" sqltype="TINYINT" unsigned="yes"/>
-					<Column name="dststarthour" sqltype="TINYINT" unsigned="yes"/>
-					<Column name="dststartminute" sqltype="TINYINT" unsigned="yes"/>
-					<Column name="dststartsecond" sqltype="TINYINT" unsigned="yes"/>
-					<Column name="dstendmonth" sqltype="TINYINT" unsigned="yes"/>
-					<Column name="dstendweekinmonth" sqltype="TINYINT" unsigned="yes"/>
-					<Column name="dstenddayofweek" sqltype="TINYINT" unsigned="yes"/>
-					<Column name="dstendhour" sqltype="TINYINT" unsigned="yes"/>
-					<Column name="dstendminute" sqltype="TINYINT" unsigned="yes"/>
-					<Column name="dstendsecond" sqltype="TINYINT" unsigned="yes"/>
-				</Table>
-				<Table name="temp">
-					<Column name="flags" sqltype="INTEGER" nullable="yes"/>
-					<Column name="levelx" sqltype="INTEGER"/>
-					<Column name="parentcode" sqltype="VARCHAR" size="8"/>
-					<Column name="descx" sqltype="VARCHAR" size="32" nullable="yes"/>
-					<Column name="code" sqltype="VARCHAR" size="8"/>
-					<Column name="dd" sqltype="VARCHAR" size="255" nullable="yes"/>
 				</Table>
 				<Table name="utility">
 					<Column name="account_ref" sqltype="VARCHAR" size="164" nullable="yes"/>

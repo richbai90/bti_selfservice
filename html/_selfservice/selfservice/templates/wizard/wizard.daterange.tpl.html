@@ -12,6 +12,7 @@
                   }"
           name="q_{{question.pk_qid}}"
           type="text"
+          ng-disabled="question.disabled"
           class="form-control date-picker  input-button"
           value="{{quesion.data}}"
           ng-model="question.answer"

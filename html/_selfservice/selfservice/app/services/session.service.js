@@ -3,9 +3,9 @@
 
   angular.module('swSelfService').service('SWSessionService', SWSessionService);
 
-  SWSessionService.$inject = ['$q', 'XMLMCService', '$cookies', 'store', '$rootScope', '$state', 'wssHelpers', '$http', 'wssLogging'];
+  SWSessionService.$inject = ['$ngConfirm', '$timeout', '$q', 'XMLMCService', '$cookies', 'store', '$rootScope', '$state', 'wssHelpers', '$http', 'wssLogging'];
 
-  function SWSessionService($q, XMLMCService, $cookies, store, $rootScope, $state, wssHelpers, $http, wssLogging) {
+  function SWSessionService($ngConfirm, $timeout, $q, XMLMCService, $cookies, store, $rootScope, $state, wssHelpers, $http, wssLogging) {
     var self = {
       'selfServiceConfig': {},
       'custDetails': [],
@@ -14,6 +14,35 @@
       'sessionEnded': false,
       'sessionLoggedOff': false,
       'previousLogin': false
+    };
+
+    self.keepAlive = strSessionId => {
+      if (self.timeout) {
+        $timeout.cancel(self.timeout);
+      }
+      self.timeout = $timeout(() => {
+        $ngConfirm({
+          title: 'Are you still there?',
+          content: '<strong>Your session is about to end press okay if you wish to continue.</strong>',
+          autoClose: 'cancel|120000',
+          buttons: {
+            okay: {
+              text: 'Okay',
+              btnClass: 'btn-info',
+              action: function () {
+                self.bindSession(strSessionId);
+              }
+            },
+            cancel: {
+              text: 'Logout',
+              btnClass: 'btn-success hidden',
+              action: function (scope, button) {
+                self.logoff();
+              }
+            }
+          }
+        });
+      }, 480000);
     };
 
     self.bindSession = function (strSessionID) {
@@ -52,6 +81,7 @@
           if (params.sessionId) $cookies.put("swSessionID", params.sessionId);
           self.sessionLoggedOff = false;
           deferred.resolve(params);
+          self.keepAlive(params.sessionId);
         },
         onFailure: function (error, status) {
           var connErrorBody = "";
@@ -91,6 +121,7 @@
     };
 
     self.logoff = function () {
+      $timeout.cancel(self.timeout);
       var deferred = $q.defer();
       var xmlmc = new XMLMCService.MethodCall();
       xmlmc.invoke("session", "selfServiceLogoff", {
@@ -209,10 +240,12 @@
         self.processSessionError();
       } else {
         var xmlmc = new XMLMCService.MethodCall();
-        xmlmc.addParam("sessionId", $cookies.get('swSessionID'));
+        let swSessionID = $cookies.get('swSessionID');
+        xmlmc.addParam("sessionId", swSessionID);
         xmlmc.invoke("session", "isSessionValid", {
           onSuccess: function (params) {
             //We have a valid session
+            self.keepAlive(swSessionID);
             deferred.resolve(true);
           },
           onFailure: function (error) {
@@ -227,6 +260,9 @@
     };
 
     self.processSessionError = function () {
+      if (self.timeout) {
+        $timeout.cancel(self.timeout);
+      }
       self.normalLogoff = false;
       wssLogging.sendToast('error', 'Your session appears to have expired. Please log on again.', 'Session Error!');
       self.previousLogin = true;

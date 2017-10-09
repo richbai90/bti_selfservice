@@ -16,6 +16,7 @@
 
           &nbsp;<input  id="q_{{question.pk_qid}}_{{$index}}_{{option.keycol}}"
                 type="radio"
+                        ng-disabled="question.disabled"
                 class="fa fa-check-square-o fa-2x"
                 ng-model="question.answer[option.keycol]"
                 ng-value="suboption"

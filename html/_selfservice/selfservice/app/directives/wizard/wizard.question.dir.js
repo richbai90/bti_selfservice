@@ -59,6 +59,9 @@
             case "Configuration Items":
               qTemplateURL = "templates/wizard/wizard.custompicker.ci.tpl.html";
               break;
+            case "Customer Lookup":
+              qTemplateURL = "templates/wizard/wizard.custompicker.customerlookup.tpl.html";
+              break;
             default:
               qTemplateURL = "templates/wizard/wizard.textbox.tpl.html";
               break;
@@ -77,6 +80,11 @@
       //For Modal opening & data control
       scope.wizServ = WizardDataService;
       scope.templateUrl = getQuestionTemplate(scope.question);
+      if (scope.question.defaultvalue) {
+        scope.question.defaultvalue.then(function (value) {
+          scope.question.answer = value;
+        });
+      }
     };
 
     return {

@@ -1,6 +1,7 @@
 <div  class="checkbox  checkbox-primary"
       ng-repeat="option in question.options track by $index">
   <input  name="q_{{question.pk_qid}}"
+          ng-disabled="question.disabled"
           id="q_{{question.pk_qid}}_{{$index}}"
           type="checkbox"
           ng-model="question.answer[option.keycol]"

@@ -1,6 +1,7 @@
 <div  class="checkbox  checkbox-primary"
       ng-repeat="option in question.options track by $index">
     <input  name="q_{{question.pk_qid}}"
+            ng-disabled="question.disabled"
             id="q_{{question.pk_qid}}_{{$index}}"
             ng-change="wizServ.checkboxChanged(question)"
             ng-required="question.flg_mandatory == 1 && !question.checked"

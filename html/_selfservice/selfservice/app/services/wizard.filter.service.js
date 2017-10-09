@@ -15,6 +15,7 @@
     //Takes filter or default value from wizard question, replaces stuff between ![ and ]!
     // with evaluated content from self.questionFilters within this service
     self.processFilter = function (strFilter, boolPFS) {
+      self.questionFilters.lookup = store.get("lookup");
       var strReturn = strFilter;
       //Create array containing all strings from filter that are wrapped in ![]!
       var objReg = strFilter.match(/!\[(.*?)\]!/g);

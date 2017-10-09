@@ -4,6 +4,7 @@
             id="q_{{question.pk_qid}}_{{$index}}"
             type="radio"
             class="fa fa-check-square-o fa-2x"
+            ng-disabled="question.disabled"
             ng-model="question.answer"
             ng-value="option"
             required-err-type="wizardSingle"

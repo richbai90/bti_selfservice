@@ -9,6 +9,7 @@
             ng-change="wizServ.slaChange(option)"
             required-err-type="wizardSingle"
             ng-required="question.flg_mandatory == 1"
+            ng-disabled="question.disabled"
             disable-valid-styling="true">
   <label for="q_{{question.pk_qid}}_{{$index}}">
       {{option.discol}} <span ng-if="wizServ.dataForm.subscription.permis_price == '1'">[{{option.slaoptions.price | currency:""}}]</span>

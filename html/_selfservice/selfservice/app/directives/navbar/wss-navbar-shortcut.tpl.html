@@ -1,16 +1,16 @@
 <a ng-if="shortcut.sref && shortcut.ngClick" ui-sref="{{shortcut.sref}}" ng-click="shortcut.ngClick()">
-    <i class="fa {{shortcut.icon}} fa-lg fa-fw"></i>
+    <i role="button" class="fa {{shortcut.icon}} fa-lg fa-fw"></i>
     <span class="hidden-sm hidden-md hidden-lg">{{shortcut.text}}</span>
 </a>
 <a ng-if="shortcut.sref && !shortcut.ngClick" ui-sref="{{shortcut.sref}}">
-    <i class="fa {{shortcut.icon}} fa-lg fa-fw"></i>
+    <i role="button" class="fa {{shortcut.icon}} fa-lg fa-fw"></i>
     <span class="hidden-sm hidden-md hidden-lg">{{shortcut.text}}</span>
 </a>
 <a ng-if="!shortcut.sref && shortcut.ngClick" ng-click="shortcut.ngClick()">
-    <i class="fa {{shortcut.icon}} fa-lg fa-fw"></i>
+    <i role="button" class="fa {{shortcut.icon}} fa-lg fa-fw"></i>
     <span class="hidden-sm hidden-md hidden-lg">{{shortcut.text}}</span>
 </a>
 <a ng-if="!shortcut.sref && !shortcut.ngClick">
-    <i class="fa {{shortcut.icon}} fa-lg fa-fw"></i>
+    <i role="button" class="fa {{shortcut.icon}} fa-lg fa-fw"></i>
     <span class="hidden-sm hidden-md hidden-lg">{{shortcut.text}}</span>
 </a>

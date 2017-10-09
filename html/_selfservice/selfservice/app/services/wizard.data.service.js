@@ -21,7 +21,63 @@
         ciArray: [],
         outputConfigObject: []
       },
-      wizardStages: {}
+      wizardStages: {},
+      lookup: {},
+      lookupData: {}
+    };
+
+    self.customerLookup = {
+      custId: '',
+      getDetails: customer => {
+        if (!customer) {
+          return;
+        }
+        let custId = customer.description.keysearch;
+        let xmlmc = new XMLMCService.MethodCall();
+        xmlmc.addParam("storedQuery", 'query/wss/customer/customer.get.details');
+        xmlmc.addParam("parameters", 'custid=' + custId);
+        xmlmc.invoke("data", "invokeStoredQuery", {
+          onSuccess: function (params) {
+            if (params.rowData && params.rowData.row) {
+              self.lookupData.customer = params.rowData.row;
+              store.set('lookup', self.lookupData);
+              if (self.lookup.hasOwnProperty('customer')) {
+                angular.forEach(self.lookup.customer, p => {
+                  // Now that we have customer data we can resolve it
+                  p[0].resolve(WizardFilterService.processFilter(p[1], false));
+                });
+              }
+            }
+          },
+          onFailure: function (error) {
+            wssLogging.logger(error, "ERROR", "WizardDataService::customerLookup", true, 'Customer Lookup Failed');
+          }
+        });
+      },
+      lookup: customer => {
+        const deferred = $q.defer();
+        let custId = self.customerLookup.custId;
+        self.customerLookup.custId = customer;
+
+        let xmlmc = new XMLMCService.MethodCall();
+        xmlmc.addParam("storedQuery", 'query/wss/customer/customer.list');
+        xmlmc.addParam("parameters", 'custid=' + customer);
+        xmlmc.invoke("data", "invokeStoredQuery", {
+          onSuccess: params => {
+            if (params.rowData && params.rowData.row) {
+              let data = Array.isArray(params.rowData.row) ? params.rowData.row : [params.rowData.row];
+              self.customerLookup.customers = data;
+              deferred.resolve(data);
+            }
+          },
+          onFailure: error => {
+            wssLogging.logger(error, "ERROR", "WizardDataService::customerLookup", true, 'Customer Lookup Failed');
+            deferred.reject(error);
+          }
+        });
+
+        return deferred.promise;
+      }
     };
 
     self.openTableAdminModal = function () {
@@ -250,6 +306,24 @@
       return deferred.promise;
     };
 
+    // The default value may be asynchronous in which case we need to handle that
+
+    self.handleDefaultValue = function (value) {
+      let deferred = $q.defer();
+      if (value.match(/!\[(lookup\..*?)\]!/g)) {
+        let lookup = value.split('.');
+        if (!Array.isArray(self.lookup[lookup[1]])) {
+          self.lookup[lookup[1]] = [];
+        }
+
+        self.lookup[lookup[1]].push([deferred, value]);
+      } else {
+        deferred.resolve(WizardFilterService.processFilter(value, false));
+      }
+
+      return deferred.promise;
+    };
+
     self.getStageQuestions = function (intStage) {
       const promises = [];
       var deferred = $q.defer();
@@ -275,9 +349,11 @@
             // any applicable options, filters and default value processing  for output
             angular.forEach(questionArray, function (qVal, qKey) {
 
+              questionArray[qKey].disabled = angular.isDefined(qVal.flg_disabled) && parseInt(qVal.flg_disabled);
+
               //Process default value filtering
               if (angular.isDefined(qVal.defaultvalue) && qVal.defaultvalue !== "") {
-                questionArray[qKey].defaultvalue = WizardFilterService.processFilter(qVal.defaultvalue, false);
+                questionArray[qKey].defaultvalue = self.handleDefaultValue(qVal.defaultvalue);
               }
 
               //Apply filters to right-hand-side answer summary display

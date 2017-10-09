@@ -2,7 +2,7 @@
 
   'use strict';
 
-  var dependencies = ['angular-storage', 'ngSanitize', 'ui.router', 'ngCookies', 'toaster', 'ngAnimate', 'angularUtils.directives.dirPagination', 'ui.bootstrap', 'ng-backstretch', 'angular-ladda', 'jcs-autoValidate', 'naif.base64', 'ct.ui.router.extras', 'angularBootstrapNavTree', 'daterangepicker', 'ng-fusioncharts', 'hierarchical-selector', 'angular-timeline', 'angular-json-editor', 'hbSwXmlmc', 'mp.deepBlur', 'cp.ngConfirm'];
+  var dependencies = ['angular-storage', 'ngSanitize', 'ui.router', 'ngCookies', 'toaster', 'ngAnimate', 'angularUtils.directives.dirPagination', 'ui.bootstrap', 'ng-backstretch', 'angular-ladda', 'jcs-autoValidate', 'naif.base64', 'ct.ui.router.extras', 'angularBootstrapNavTree', 'daterangepicker', 'ng-fusioncharts', 'hierarchical-selector', 'angular-timeline', 'angular-json-editor', 'hbSwXmlmc', 'mp.deepBlur', 'cp.ngConfirm', 'angucomplete-alt'];
 
   var module = angular.module('swSelfService', dependencies);
 

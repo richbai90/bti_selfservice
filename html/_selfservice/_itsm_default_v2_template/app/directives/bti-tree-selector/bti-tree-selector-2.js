@@ -2,8 +2,8 @@
   'use strict';
   angular
     .module('swSelfService')
-    .directive('btiTreeSelector', [
-      () => ({
+    .directive('btiTreeSelector', ['$timeout',
+      ($timeout) => ({
         restrict: 'E',
         templateUrl: 'app/directives/bti-tree-selector/bti-tree-selector.tpl2.html',
         transclude: true,
@@ -22,7 +22,8 @@
         controller ()  {
           this.options = angular.copy(this.data);
           this.focused = false;
-          this.currentLevel = { id: 'top', display: 'Select a Category' };
+          this.currentLevel = { id: 'top', display: 'Top Level' };
+          this.focusedCount = 0;
 
           function hasChildren(option) {
             return (!Array.isArray(option) && (option.children && option.children.length));
@@ -43,6 +44,14 @@
             return option;
           }
 
+          const toggleExpand = () => {
+
+            let self = this;
+            this.expanding = false;
+            $timeout(() => self.expanding = true, 50);
+
+          };
+
           const updateOptions = (options, data) => {
             const option = typeof options === 'string' ? getOptionByID(options, data) : options;
             const children = hasChildren(option);
@@ -60,6 +69,7 @@
               if (!option.children.length) {
                 this.model.$setViewValue(this.onSelect([option]));
                 this.model.$setValidity('completeselect', true);
+                this.blur();
               } else {
                 this.model.$setValidity('completeselect', false);
                 this.model.$setViewValue(this.onSelect(undefined));
@@ -96,16 +106,26 @@
           };
 
           this.expand = () => {
-            this.focused ? this.blur() : this.focus();
+            if (this.focusedCount <= 1) {
+              this.focusedCount += 2;
+              this.preventDeFocus = true;
+            } else {
+              this.preventDeFocus = false;
+            }
+            this.focused ? this.blur(true) : this.focus();
           };
 
           this.focus = () => {
+            toggleExpand();
+            this.focusedCount++;
             this.focused = true
           };
 
-          this.blur = () => {
-            if (!this.preventDeFocus || !this.options.length) {
+          this.blur = (force) => {
+            if (!this.preventDeFocus && (force || !this.options.length)) {
+              this.expanding = false;
               this.focused = false;
+              this.focusedCount = 0;
             }
           };
 

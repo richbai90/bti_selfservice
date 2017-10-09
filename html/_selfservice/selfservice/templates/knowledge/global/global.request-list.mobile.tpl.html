@@ -17,7 +17,7 @@
       <div class="col-xs-12">
         <div class="panel panel-default" ng-show="custRequests.requestArray.length != 0  && custRequests.loadingRequests == false && custRequests.search != ''">
           <ul class="list-group">
-            <li class="list-group-item"
+            <li class="list-group-item" role="button"
                 dir-paginate="request in custRequests.requestArray | itemsPerPage:custRequests.outputConfigObject['cust'].rowsPerPage"
                 total-items="custRequests.totalRequests"
                 pagination-id="cust"

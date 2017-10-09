@@ -1,6 +1,6 @@
 <div class="row" ng-repeat="row in categories" on-finish-render="selectCategory(0, 0)">
     <div ng-repeat="category in row" class="col-sm-{{getCategorySize(row)}}" data-position="bottom"
-         data-arrow="true" data-animation="scale" tippy="{{category.description}}">
+         data-arrow="true" data-animation="scale" uib-tooltip="{{category.description}}">
         <a class="button service-category-anchor" ng-class="{active: category.selected}"
            ng-click="selectCategory($parent.$index, $index)">
             <img class="button img-responsive bg-primary service-category-img" ng-src="{{category.icon}}"
@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-xs-6">{{currCat.label}} <span
                             ng-if="currCat.description && currCat.description != ''" role="button"
-                            tippy="{{currCat.description}}"
+                            uib-tooltip="{{currCat.description}}"
                             class="fa fa-lg fa-fw fa-question-circle-o"></span></div>
                     <div class="col-xs-6">
                         <span role="button" class="pull-right fa fa-lg fa-fw"
@@ -37,7 +37,7 @@
                             <div class="row">
                                 <div class="col-xs-6">{{currCat.label}} <span
                                         ng-if="currCat.description && currCat.description != ''" role="button"
-                                        tippy="{{currCat.description}}"
+                                        uib-tooltip="{{currCat.description}}"
                                         class="fa fa-lg fa-fw fa-question-circle-o"></span>
                                 </div>
                                 <div class="col-xs-6"><span role="button" class="pull-right fa fa-lg fa-fw"
@@ -58,7 +58,7 @@
                                                 <i ng-if="service.vsb_description && service.vsb_description != ''"
                                                    class="fa fa-question-circle-o fa-lg fa-fw"
                                                    role="button"
-                                                   tippy="{{service.vsb_description}}"
+                                                   uib-tooltip="{{service.vsb_description}}"
                                                 ></i>
                                                 <div class="pull-right">
                                                     <button type="button"
@@ -301,7 +301,7 @@
                                     <i ng-if="service.vsb_description && service.vsb_description != ''"
                                        class="fa fa-question-circle-o fa-lg fa-fw"
                                        role="button"
-                                       tippy="{{service.vsb_description}}"
+                                       uib-tooltip="{{service.vsb_description}}"
                                     ></i>
                                     <div class="pull-right">
                                         <button type="button"
