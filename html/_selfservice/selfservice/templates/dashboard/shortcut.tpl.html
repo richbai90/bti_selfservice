@@ -1,4 +1,4 @@
-<div tippy title="{{shortcut.tooltip}}" ng-class="shortcutClass(row)">
+<div uib-tooltip="{{shortcut.tooltip}}" ng-class="shortcutClass(row)">
     <a ng-if="shortcut.sref && shortcut.ngClick" ui-sref="{{shortcut.sref}}" ng-click="shortcut.ngClick()">
         <div class="panel panel-primary"
              role="button">
