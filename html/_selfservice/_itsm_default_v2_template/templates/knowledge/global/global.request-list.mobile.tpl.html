@@ -1,0 +1,55 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Your Requests Results</strong>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <sw-spinner is-loading="custRequests.loadingRequests == true" message="Loading..."></sw-spinner>
+        <div  class="alert alert-info"
+              ng-show="(custRequests.requestArray.length == 0 && custRequests.loadingRequests == false)  || custRequests.search == ''">
+          <p class="text-center">No requests found!</p>
+          <p class="text-center">Click <strong><a ui-sref="requests.myrequests">here</a></strong> to view your requests.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default" ng-show="custRequests.requestArray.length != 0  && custRequests.loadingRequests == false && custRequests.search != ''">
+          <ul class="list-group">
+            <li class="list-group-item" role="button"
+                dir-paginate="request in custRequests.requestArray | itemsPerPage:custRequests.outputConfigObject['cust'].rowsPerPage"
+                total-items="custRequests.totalRequests"
+                pagination-id="cust"
+                ng-click="custRequests.requestDetails(request.h_formattedcallref)">
+              <div  class="row">
+                <div class="col-xs-4 col-sm-5 col-md-4">
+                  <i ng-class="reqServ.callClassClass(request['callclass'])" class="fa-3x fa-fw pull-left"></i>
+                  <h4 class="list-group-item-heading">{{ request['h_formattedcallref']}}</h4>
+                  <p class="list-group-item-text">{{ request['callclass']}}</p>
+                </div>
+                <div class="col-xs-8 col-sm-5 col-md-8">
+                  <p class="list-group-item-text"><strong ng-class="reqServ.callStatusClass(request['status'])">{{ request['status'] | callStatus}}</strong></p>
+                  <p class="list-group-item-text">{{ request['itsm_title']}}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-show="custRequests.requestArray.length != 0  && custRequests.loadingRequests == false && custRequests.search != ''">
+      <div class="col-xs-12">
+        <div class="text-center">
+          <dir-pagination-controls
+            max-size="5"
+            direction-links="true"
+            boundary-links="true"
+            on-page-change="custRequests.getNextPage(newPageNumber)"
+            pagination-id="cust">
+          </dir-pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

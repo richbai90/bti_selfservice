@@ -1,0 +1,8 @@
+{
+  "serverAddress": "https://10.0.2.6",
+  "selfServiceInstance": "selfservice",
+  "ssoEnabled": false,
+  "ssoAddress": "sspi/sspiAuth.php",
+  "defaultSupportWizard": "Request Support",
+  "defaultRequestWizard": "Request Support"
+}

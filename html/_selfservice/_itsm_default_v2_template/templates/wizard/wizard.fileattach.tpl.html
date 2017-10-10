@@ -1,0 +1,33 @@
+<div class="input-group">
+  <div  class="fileUpload btn btn-primary btn-sm"
+        ladda="wizServ.addingFiles">
+    <i class="fa fa-files-o"></i>
+    <span>Attach files</span>
+    <input  name="q_{{question.pk_qid}}"
+            ng-required="question.flg_mandatory == 1"
+            type="file"
+            class="upload"
+            id="q_{{question.pk_qid}}"
+            base-sixty-four-input
+            ng-model="question.answer"
+            multiple
+            maxsize="10000"
+            ng-disabled="question.disabled"
+            maxsize-err-type="fileAttachMaxSize"
+            maxnum="5"
+            maxnum-err-type="fileAttachMaxFiles"
+            onloadstart="wizServ.checkFiles"
+            on-after-validate="wizServ.filesAdded"
+            required-err-type="wizardFileSelect">
+  </div>
+</div>
+<table class="table table-bordered table-striped"  ng-show="question.answer.length > 0">
+  <tr>
+    <th>File Name</th>
+    <th>File Size</th>
+  </tr>
+  <tr ng-repeat="(key, file) in question.answer">
+    <td>{{file.filename}}</td>
+    <td>{{file.filesize | bytes}}</td>
+  </tr>
+</table>

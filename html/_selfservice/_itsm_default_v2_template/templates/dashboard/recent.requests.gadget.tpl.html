@@ -1,0 +1,33 @@
+<div ng-controller="RequestListRecentCtrl">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>Recent Requests</strong>
+		</div>
+		 <div class="panel-body">
+			<div>
+				<sw-spinner is-loading="custRecentRequests.RecentRequestsLoading == true" message="Loading..."></sw-spinner>
+			</div>
+			<div class="alert alert-info"
+                    ng-show="requestArray.length == 0 && custRecentRequests.RecentRequestsLoading == false">
+                <p class="text-center">No Recent Requests found!</p>
+            </div>
+			<div>
+				<ul class="list-group">
+					<li class="list-group-item"
+							ng-repeat="(key, request) in requestArray track by $index">
+						<table>
+							<tr>
+								<td>
+									<span ng-bind-html="request.h_formattedcallref | requestDetailsButton"></span>
+								</td>
+								<td style="padding-left: 10px">
+									<span><strong>{{request.status | callStatus}}</strong> : {{request.itsm_title}}</span>
+								</td>
+							</tr>
+						</table>
+					 </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

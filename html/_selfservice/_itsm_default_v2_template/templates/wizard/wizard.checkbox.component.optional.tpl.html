@@ -1,0 +1,16 @@
+<div  class="checkbox  checkbox-primary"
+      ng-repeat="option in question.options track by $index">
+  <input  name="q_{{question.pk_qid}}"
+          ng-disabled="question.disabled"
+          id="q_{{question.pk_qid}}_{{$index}}"
+          type="checkbox"
+          ng-model="question.answer[option.keycol]"
+          ng-checked="question.answer[option.keycol]"
+          ng-true-value="{{ option.componentoptions }}"
+          ng-false-value="''"
+          disable-valid-styling="true"
+          ng-change="wizServ.componentChange()">
+  <label    for="q_{{question.pk_qid}}_{{$index}}">
+    <span ng-bind-html="option.discol"></span> <span ng-if="wizServ.dataForm.subscription.permis_price == '1'">[{{option.componentoptions.price | currency:""}}]</span>
+  </label>
+</div>

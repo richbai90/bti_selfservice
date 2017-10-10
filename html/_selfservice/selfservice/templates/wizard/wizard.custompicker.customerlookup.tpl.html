@@ -1,0 +1,16 @@
+ <angucomplete-alt id="q_{{question.pk_qid}}"
+                      input-name="" ame="q_{{question.pk_qid}}"
+                      placeholder="Search For Customer By Name or ID (Enter 4 characters or more)"
+                      pause="300"
+                      selected-object="wizServ.customerLookup.getDetails"
+                      local-data="wizServ.customerLookup.lookup"
+                      title-field="fullname" ,
+                      search-fields="keysearch,fullname"
+                      minlength="4"
+                      input-class="form-control"
+                      required-err-type="wizardText"
+                      ng-required="question.flg_mandatory == 1"
+                      disable-valid-styling="true"
+                      match-class="lookup-match"
+    />
+

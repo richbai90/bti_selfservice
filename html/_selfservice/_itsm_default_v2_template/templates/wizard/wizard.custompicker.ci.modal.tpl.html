@@ -1,0 +1,104 @@
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title">Identify Configuration Items</h4>
+  </div>
+  <div class="modal-body">
+    <!-- Draw the Tabs -->
+    <div class="row">
+      <div class="col-xs-12">
+        <uib-tabset class="modal-tabs">
+          <uib-tab
+            ng-repeat="(heading, list) in wizServ.ciPicker.tabSet"
+            heading="{{heading}}"
+            select="wizServ.ciPicker.setCIListSelect(list)">
+          </uib-tab>
+        </uib-tabset>
+      </div>
+    </div>
+
+    <!-- Now draw the table-->
+    <div class="row">
+      <div class="col-xs-12">
+        <div  class="table-responsive">
+          <table  class="table table-hover table-striped table-condensed">
+            <thead>
+              <tr>
+                <th>
+                  <!--Table Header Cell for Checkbox Col -->
+                </th>
+                <!--Build Table Headers from data-->
+                <th ng-click="wizServ.ciPicker.setOrder(value, $index)"
+                    ng-repeat="(key, value) in wizServ.ciPicker[wizServ.ciPicker.currListType].outputConfigObject.columns track by $index"
+                    ng-if="value['hidden'] === false">
+                  <span>
+                    {{value['display']}}
+                    <span ng-if="wizServ.ciPicker[wizServ.ciPicker.currListType].sortColumn == $index && wizServ.ciPicker[wizServ.ciPicker.currListType].sortOrder" class="fa fa-fw fa-sort-asc"></span>
+                    <span ng-if="wizServ.ciPicker[wizServ.ciPicker.currListType].sortColumn == $index && !wizServ.ciPicker[wizServ.ciPicker.currListType].sortOrder" class="fa fa-fw fa-sort-desc"></span>
+                  </span>
+                </th>
+
+              </tr>
+              <!--Table Admin Button-->
+              <div  class="hover-btn hidden-xs"
+                    ng-if="wizServ.isWssAdmin == true">
+                <span class="fa fa-cog fa-lg"
+                      role="button"
+                      ng-click="wizServ.openTableAdminModal()">
+                </span>
+              </div>
+              <!--END Table Admin Button-->
+            </thead>
+            <tbody  ng-show="wizServ.ciPicker[wizServ.ciPicker.currListType].ciArray.length != 0">
+              <!--Output row data-->
+              <tr ng-repeat="ci in wizServ.ciPicker[wizServ.ciPicker.currListType].ciArray">
+                <td>
+                  <div  class="checkbox checkbox-primary">
+                      <input  name="q_{{question.pk_qid}}"
+                              id="q_{{question.pk_qid}}"
+                              ng-change="ciSelected(ci.pk_auto_id, question)"
+                              ng-required="question.flg_mandatory == 1 && !question.checked"
+                              type="checkbox"
+                              ng-model="question.answer"
+                              ng-checked="question.answer"
+                              ng-true-value="{{ci}}"
+                              ng-false-value="''"
+                              disable-valid-styling="true"
+                              ng-disabled="question.disabled"
+                              required-err-type="wizardMultiSelect">
+                    <label></label>
+                  </div>
+                </td>
+                <td class="td-overflow"
+                  ng-repeat="(key, value) in wizServ.ciPicker[wizServ.ciPicker.currListType].outputConfigObject.columns"
+                  ng-if="value['hidden'] === false && value['location'] == 'table'">
+                  <div ng-if="value['conversion'] == ''">
+                    <span ng-bind-html="ci[value['column']]"></span>
+                  </div>
+                  <div ng-if="value['conversion'] != ''">
+                    <span ng-bind-html="ci[value['column']] | picker : value['conversion']"></span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+        <div  class="alert alert-info"
+          ng-show="wizServ.ciPicker[wizServ.ciPicker.currListType].ciArray.length == 0">
+          <p class="text-center">No items found!</p>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <sw-spinner is-loading="wizServ.ciPicker.loadingItems == true" message="Loading..."></sw-spinner>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+      <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div>
+</div>
