@@ -34,6 +34,7 @@
         <!-- Shortcuts -->
         <li ng-repeat="shortcut in shortcuts" ng-include="'app/directives/navbar/wss-navbar-shortcut.tpl.html'"
             ui-sref-active="active"
+            ng-class="{active: activePage(shortcut.active)}"
             uib-tooltip="{{shortcut.text}}"
             tooltip-placement="auto bottom"
             tooltip-popup-close-delay="200"
