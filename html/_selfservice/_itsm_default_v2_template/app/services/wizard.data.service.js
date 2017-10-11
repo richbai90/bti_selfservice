@@ -45,7 +45,7 @@
               if (self.lookup.hasOwnProperty('customer')) {
                 angular.forEach(self.lookup.customer, (p) => {
                   // Now that we have customer data we can resolve it
-                  p[0].resolve(WizardFilterService.processFilter(p[1], false));
+                  p[0].answer = WizardFilterService.processFilter(p[1], false);
                 })
               }
 
@@ -313,22 +313,19 @@
 
     // The default value may be asynchronous in which case we need to handle that
 
-    self.handleDefaultValue = function (value) {
-      let deferred = $q.defer();
+    self.handleDefaultValue = function (value, question) {
       if (value.match(/!\[(lookup\..*?)\]!/g)) {
         let lookup = value.split('.');
         if (!Array.isArray(self.lookup[lookup[1]])) {
           self.lookup[lookup[1]] = [];
         }
 
-        self.lookup[lookup[1]].push([deferred, value]);
+        self.lookup[lookup[1]].push([question, value]);
 
 
       } else {
-        deferred.resolve(WizardFilterService.processFilter(value, false));
+        question.answer = WizardFilterService.processFilter(value, false);
       }
-
-      return deferred.promise;
 
     };
 
@@ -361,7 +358,7 @@
 
               //Process default value filtering
               if (angular.isDefined(qVal.defaultvalue) && qVal.defaultvalue !== "") {
-                questionArray[qKey].defaultvalue = self.handleDefaultValue(qVal.defaultvalue);
+                self.handleDefaultValue(qVal.defaultvalue, questionArray[qKey]);
               }
 
               //Apply filters to right-hand-side answer summary display
