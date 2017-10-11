@@ -80,11 +80,6 @@
       //For Modal opening & data control
       scope.wizServ = WizardDataService;
       scope.templateUrl = getQuestionTemplate(scope.question);
-      if (scope.question.defaultvalue) {
-        scope.question.defaultvalue.then(function (value) {
-          scope.question.answer = value;
-        });
-      }
     };
 
     return {

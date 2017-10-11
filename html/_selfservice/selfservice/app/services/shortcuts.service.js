@@ -6,6 +6,7 @@
     const defaultShortcuts = {
       "_support": {
         "ngClick": '$scope | raiseSupportRequest',
+        "active": "requestwizard",
         "icon": "fa-life-ring",
         "text": "Support Me",
         "desc": "Raise a new support request",
