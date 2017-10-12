@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-init="loadRequests()">
   <div class="col-xs-12 col-md-8">
     <div  class="table-responsive">
       <table  class="table table-hover table-responsive vertical-align">
@@ -23,7 +23,7 @@
             <!--END Table Admin Button-->
           </tr>
         </thead>
-        <tbody ng-if="custRequests.loadingRequests == false && custRequests.requestArray.length > 0">
+        <tbody ng-show="custRequests.loadingRequests == false && custRequests.requestArray.length > 0">
           <!--Output row data-->
           <tr dir-paginate="request in custRequests.requestArray | itemsPerPage:custRequests.outputConfigObject[requestPage].rowsPerPage"
               pagination-id="requestPage"

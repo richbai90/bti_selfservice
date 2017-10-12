@@ -105,6 +105,18 @@
       }
     });
 
+    $scope.loadRequests = function () {
+      $scope.custRequests.loadingRequests = true;
+      SWSessionService.checkActiveSession().then(function () {
+        $scope.custRequests.clearSearch();
+        $scope.custRequests.requestPage = $scope.requestPage;
+        $scope.custRequests.pageNo = 1;
+        $scope.custRequests.getPagedRequests().then(function () {
+          paginationService.setCurrentPage($scope.requestPage, 1);
+        });
+      });
+    };
+
     //Check session, if active then get paged requests
     SWSessionService.checkActiveSession().then(function () {
       paginationService.setCurrentPage($scope.requestPage, 1);
@@ -126,12 +138,14 @@
     $scope.custRecentRequestList = RequestListService;
     $scope.custRecentRequestList.selectedRequest = null;
 
-    //Check session, if active then get recent requests
-    SWSessionService.checkActiveSession().then(function () {
-      $scope.custRecentRequests.getRecentRequests().then(function (requests) {
-        $scope.requestArray = requests;
+    $scope.loadRequests = function () {
+      SWSessionService.checkActiveSession().then(function () {
+        $scope.custRecentRequests.getRecentRequests().then(function (requests) {
+          $scope.requestArray = requests;
+        });
       });
-    });
+    };
+    //Check session, if active then get recent requests
   }
 
   //Site-Filtered Request List Controller
@@ -167,13 +181,15 @@
     });
 
     //Check session, if active then get paged requests
-    SWSessionService.checkActiveSession().then(function () {
-      paginationService.setCurrentPage($scope.requestPage, 1);
-      $scope.custRequests.search = '';
-      $scope.custRequests.requestPage = $scope.requestPage;
-    }, function () {
-      //
-    });
+    $scope.loadRequests = function () {
+      SWSessionService.checkActiveSession().then(function () {
+        paginationService.setCurrentPage($scope.requestPage, 1);
+        $scope.custRequests.search = '';
+        $scope.custRequests.requestPage = $scope.requestPage;
+      }, function () {
+        //
+      });
+    };
   }
 
   //Team-Filtered Request List Controller
@@ -209,13 +225,15 @@
     });
 
     //Check session, if active then get paged requests
-    SWSessionService.checkActiveSession().then(function () {
-      paginationService.setCurrentPage($scope.requestPage, 1);
-      $scope.custRequests.search = '';
-      $scope.custRequests.requestPage = $scope.requestPage;
-    }, function () {
-      //
-    });
+    $scope.loadRequests = function () {
+      SWSessionService.checkActiveSession().then(function () {
+        paginationService.setCurrentPage($scope.requestPage, 1);
+        $scope.custRequests.search = '';
+        $scope.custRequests.requestPage = $scope.requestPage;
+      }, function () {
+        //
+      });
+    };
   }
 
   //Organisation-Filtered Request List Controller
@@ -250,14 +268,16 @@
       }
     });
 
-    //Check session, if active then get paged requests
-    SWSessionService.checkActiveSession().then(function () {
-      paginationService.setCurrentPage($scope.requestPage, 1);
-      $scope.custRequests.search = '';
-      $scope.custRequests.requestPage = $scope.requestPage;
-    }, function () {
-      //
-    });
+    $scope.loadRequests = function () {
+      //Check session, if active then get paged requests
+      SWSessionService.checkActiveSession().then(function () {
+        paginationService.setCurrentPage($scope.requestPage, 1);
+        $scope.custRequests.search = '';
+        $scope.custRequests.requestPage = $scope.requestPage;
+      }, function () {
+        //
+      });
+    };
   }
 
   //Related Organisation-Filtered Request List Controller
@@ -293,13 +313,15 @@
     });
 
     //Check session, if active then get paged requests
-    SWSessionService.checkActiveSession().then(function () {
-      paginationService.setCurrentPage($scope.requestPage, 1);
-      $scope.custRequests.search = '';
-      $scope.custRequests.requestPage = $scope.requestPage;
-    }, function () {
-      //
-    });
+    $scope.loadRequests = function () {
+      SWSessionService.checkActiveSession().then(function () {
+        paginationService.setCurrentPage($scope.requestPage, 1);
+        $scope.custRequests.search = '';
+        $scope.custRequests.requestPage = $scope.requestPage;
+      }, function () {
+        //
+      });
+    };
   }
 })();
 //# sourceMappingURL=request.list.ctrl.js.map
