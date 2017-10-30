@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -30,7 +32,7 @@
       xmlmc.addParam("parameters", sqparams);
 
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           //XMLC was succesfull
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
@@ -48,7 +50,7 @@
           }
         },
 
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           //Send a toaster and change state back to Home?
           deferred.reject(error);
         }

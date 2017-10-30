@@ -1,10 +1,12 @@
+'use strict';
+
 (function () {
   'use strict';
 
   angular.module('swSelfService').directive('wizardQuestion', wizardQuestion);
   wizardQuestion.$inject = ['$compile', '$templateRequest', 'store', 'WizardDataService'];
   function wizardQuestion($compile, $templateRequest, store, WizardDataService) {
-    var getQuestionTemplate = function (objContent) {
+    var getQuestionTemplate = function getQuestionTemplate(objContent) {
       var qTemplateURL = "";
       var qTemplate = "";
       switch (objContent.type) {
@@ -74,7 +76,7 @@
       return qTemplateURL;
     };
 
-    var qlinker = function (scope, element, attrs) {
+    var qlinker = function qlinker(scope, element, attrs) {
       scope.wssConfig = store.get("wssConfig");
       //Need to access Data Service from directive scope
       //For Modal opening & data control

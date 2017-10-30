@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -319,7 +321,7 @@
         controller: 'AdminTableController',
         size: 'lg',
         resolve: {
-          items: function () {
+          items: function items() {
             return 'requests.' + $rootScope.recordPage;
           }
         }

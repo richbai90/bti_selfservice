@@ -1,12 +1,14 @@
+'use strict';
+
 /*
  * ElementQuery service ported over from css-element-queries library
  * To be dependency injected into an angular directive
  */
 
-(() => {
+(function () {
   'use strict';
 
-  angular.module('swSelfService').factory('ElementQuery', ['Resize', (ResizeSensor => {
+  angular.module('swSelfService').factory('ElementQuery', ['Resize', function (ResizeSensor) {
 
     /**
      * Copyright Marc J. Schmidt. See the LICENSE file at the top-level at
@@ -18,7 +20,7 @@
      * @type {Function}
      * @constructor
      */
-    var ElementQueries = function () {
+    var ElementQueries = function ElementQueries() {
 
       var trackingActive = false;
       var elements = [];
@@ -209,17 +211,23 @@
       function findElementQueriesElements() {
         var query = getQuery();
 
-        for (var mode in allQueries) if (allQueries.hasOwnProperty(mode)) {
+        for (var mode in allQueries) {
+          if (allQueries.hasOwnProperty(mode)) {
 
-          for (var property in allQueries[mode]) if (allQueries[mode].hasOwnProperty(property)) {
-            for (var value in allQueries[mode][property]) if (allQueries[mode][property].hasOwnProperty(value)) {
-              var elements = query(allQueries[mode][property][value]);
-              for (var i = 0, j = elements.length; i < j; i++) {
-                setupElement(elements[i], {
-                  mode: mode,
-                  property: property,
-                  value: value
-                });
+            for (var property in allQueries[mode]) {
+              if (allQueries[mode].hasOwnProperty(property)) {
+                for (var value in allQueries[mode][property]) {
+                  if (allQueries[mode][property].hasOwnProperty(value)) {
+                    var elements = query(allQueries[mode][property][value]);
+                    for (var i = 0, j = elements.length; i < j; i++) {
+                      setupElement(elements[i], {
+                        mode: mode,
+                        property: property,
+                        value: value
+                      });
+                    }
+                  }
+                }
               }
             }
           }
@@ -480,7 +488,7 @@
       ElementQueries.instance.init(ElementQueries.withTracking);
     };
 
-    var domLoaded = function (callback) {
+    var domLoaded = function domLoaded(callback) {
       /* Internet Explorer */
       /*@cc_on
        @if (@_win32 || @_win64)
@@ -523,6 +531,6 @@
     }
 
     return ElementQueries;
-  })(Resize)]);
+  }(Resize)]);
 })();
 //# sourceMappingURL=elementQueries.service.js.map

@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -25,7 +27,7 @@
       var _categories = [];
       var catTreeData = [];
 
-      let parentCategory = null;
+      var parentCategory = null;
 
       function addServicesToCategories(categories, services) {
         for (var i = 0; i < categories.length; i++) {
@@ -33,7 +35,7 @@
             addServicesToCategories(categories[i], services);
           } else {
             if (categories[i].children.length > 0) {
-              categories[i].children.reduce((acc, child) => {
+              categories[i].children.reduce(function (acc, child) {
                 acc.push(child);
                 return acc;
               }, categories);
@@ -74,9 +76,11 @@
               return acc;
             }, []));
             addServicesToCategories(_categories, services);
-            $scope.categories = _categories.map(category => {
+            $scope.categories = _categories.map(function (category) {
               if (Array.isArray(category)) {
-                return category.filter(c => c.services.length);
+                return category.filter(function (c) {
+                  return c.services.length;
+                });
               }
             });
           });

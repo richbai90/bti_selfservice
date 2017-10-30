@@ -1,3 +1,5 @@
+"use strict";
+
 var wssBranding = {
   "loginTitle": "Supportworks SelfService Portal",
   "loginSubTitle": "This is the subtitle. Customers can add their own text here, as well as replace the title above.",

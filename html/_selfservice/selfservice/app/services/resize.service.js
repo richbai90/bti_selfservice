@@ -1,12 +1,14 @@
+'use strict';
+
 /*
  * Reisize service ported over from css-element-queries library
  * To be dependency injected into an angular directive
  */
 
-(() => {
+(function () {
   'use strict';
 
-  angular.module('swSelfService').factory('Resize', [() => {
+  angular.module('swSelfService').factory('Resize', [function () {
 
     /**
      * Copyright Marc J. Schmidt. See the LICENSE file at the top-level at
@@ -54,12 +56,11 @@
      *
      * @constructor
      */
-    var ResizeSensor = function (element, callback) {
+    var ResizeSensor = function ResizeSensor(element, callback) {
       /**
        *
        * @constructor
        */
-      console.log(element);
       function EventQueue() {
         var q = [];
         this.add = function (ev) {
@@ -135,7 +136,7 @@
         var lastWidth = element.offsetWidth;
         var lastHeight = element.offsetHeight;
 
-        var reset = function () {
+        var reset = function reset() {
           expandChild.style.width = '100000px';
           expandChild.style.height = '100000px';
 
@@ -148,7 +149,7 @@
 
         reset();
 
-        var onResized = function () {
+        var onResized = function onResized() {
           rafId = 0;
 
           if (!dirty) return;
@@ -161,7 +162,7 @@
           }
         };
 
-        var onScroll = function () {
+        var onScroll = function onScroll() {
           newWidth = element.offsetWidth;
           newHeight = element.offsetHeight;
           dirty = newWidth != lastWidth || newHeight != lastHeight;
@@ -173,7 +174,7 @@
           reset();
         };
 
-        var addEvent = function (el, name, cb) {
+        var addEvent = function addEvent(el, name, cb) {
           if (el.attachEvent) {
             el.attachEvent('on' + name, cb);
           } else {

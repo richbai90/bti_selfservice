@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
 
   'use strict';
@@ -170,11 +172,13 @@
         requiresLogin: true
       },
       resolve: {
-        PreviousState: ["$state", $state => ({
-          name: $state.current.name,
-          params: $state.params,
-          URL: $state.href($state.current.name, $state.params)
-        })]
+        PreviousState: ["$state", function ($state) {
+          return {
+            name: $state.current.name,
+            params: $state.params,
+            URL: $state.href($state.current.name, $state.params)
+          };
+        }]
       }
     }).state('requestsauth', {
       abstract: true,

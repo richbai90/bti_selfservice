@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -34,7 +36,7 @@
       xmlmc.addParam("storedQuery", "query/wss/requests/cust.recent.calls");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -52,7 +54,7 @@
             deferred.resolve('');
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           self.RecentRequestsLoading = false;
           wssLogging.logger(error, "ERROR", "RequestService::getRecentRequests", false, false);
         }
@@ -78,7 +80,7 @@
       xmlmc.addParam("storedQuery", objConfig.countStoredQuery);
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (angular.isObject(params.rowData) && params.rowData.row.reqcnt) {
             totalRequests = params.rowData.row.reqcnt;
             deferred.resolve(totalRequests);
@@ -86,7 +88,7 @@
             deferred.resolve('0');
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "RequestService::getRequestCount", false, false);
           deferred.reject(error);
         }
@@ -122,7 +124,7 @@
         xmlmc.addParam("storedQuery", objConfig.recordsStoredQuery);
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             if (params.rowData) {
               if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
                 var intArrayLength = params.rowData.row.length;
@@ -138,7 +140,7 @@
               deferred.resolve('No Requests Returned.');
             }
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "ERROR", "RequestService::getRequests", false, false);
             deferred.reject(error);
           }
@@ -159,14 +161,14 @@
       xmlmc.addParam("storedQuery", self.authCountSQ);
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData.row.counter) {
             deferred.resolve(params.rowData.row.counter);
           } else {
             deferred.resolve(0);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "RequestService::getAuthCount", false, false);
           deferred.reject(error);
         }

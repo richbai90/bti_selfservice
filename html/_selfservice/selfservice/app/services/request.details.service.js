@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -43,7 +45,7 @@
       xmlmc.addParam("storedQuery", "query/wss/requests/request.details");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData.row) {
             self.requestDetails = params.rowData.row;
             deferred.resolve(self.requestDetails);
@@ -51,7 +53,7 @@
             deferred.reject(params);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "RequestDetailsService::getRequestDetails", false, false);
           deferred.reject(error);
         }
@@ -69,7 +71,7 @@
       xmlmc.addParam("storedQuery", "query/wss/requests/request.diary");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -85,7 +87,7 @@
             deferred.reject(params);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "RequestDetailsService::getRequestDiary", false, false);
           //Send a toaster and change state back to Home
           deferred.reject(error);
@@ -104,7 +106,7 @@
       xmlmc.addParam("storedQuery", "query/wss/requests/request.attachments");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -120,7 +122,7 @@
             deferred.resolve({});
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "RequestDetailsService::getRequestAttachments", false, false);
           deferred.reject(error);
         }
@@ -142,7 +144,7 @@
       xmlmc.addParam("storedQuery", self.assetConfigObject.recordsStoredQuery);
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -158,7 +160,7 @@
             deferred.resolve([]);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "RequestDetailsService::getRequestAssets", false, false);
           deferred.reject(error);
         }
@@ -177,7 +179,7 @@
       xmlmc.addParam("storedQuery", "query/wss/requests/request.components");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -193,7 +195,7 @@
             deferred.resolve({});
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "RequestDetailsService::getRequestComponents", false, false);
           deferred.reject(error);
         }
@@ -302,7 +304,7 @@
         xmlmc.addParam("storedQuery", "query/wss/requests/bpm.progress");
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             if (params.rowData) {
               if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
                 var intArrayLength = params.rowData.row.length;
@@ -316,7 +318,7 @@
             }
             deferred.resolve(workflowProgression);
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "ERROR", "RequestDetailsService::getWorkflowProgression", false, false);
             deferred.reject(error);
           }
@@ -334,7 +336,7 @@
       xmlmc.addParam("table", "bpm_workflow");
       xmlmc.addParam("keyValue", self.requestDetails.bpm_workflow_id);
       xmlmc.invoke("data", "getRecord", {
-        onSuccess: function (workflow) {
+        onSuccess: function onSuccess(workflow) {
           if (angular.isDefined(workflow.record) && angular.isDefined(workflow.record.ext_db_table) && workflow.record.ext_db_table !== '') {
             //have extended table, now get record from it
             var xmlmc = new XMLMCService.MethodCall();
@@ -343,7 +345,7 @@
             xmlmc.addParam("formatValues", "true");
             xmlmc.addParam("returnMeta", "true");
             xmlmc.invoke("data", "getRecord", {
-              onSuccess: function (extendedRecord) {
+              onSuccess: function onSuccess(extendedRecord) {
                 if (angular.isDefined(extendedRecord.record) && angular.isDefined(extendedRecord.meta)) {
                   angular.forEach(extendedRecord.record, function (recordVal, recordKey) {
                     if (recordKey !== "opencall") {
@@ -363,7 +365,7 @@
                   });
                 }
               },
-              onFailure: function (error) {
+              onFailure: function onFailure(error) {
                 //Extended record not found, or error in XMLMC
                 //error to log ONLY if we have an actual error - ignore "record not found" as there may not be an extended table record!
                 var res = error.match(/^(?=.*\bThe specified record\b)(?=.*\bin table\b)(?=.*\bwas not found\b).*$/);
@@ -374,7 +376,7 @@
             });
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "RequestDetailsService::getBPMExtendedTableData", false, false);
         }
       });
@@ -391,7 +393,7 @@
       xmlmc.addParam("storedQuery", "query/wss/requests/request.attachments.get");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData.row.response) {
             var oFile = params.rowData.row.response.split("||");
             var strMimeType = oFile[0];
@@ -412,7 +414,7 @@
             self.downloadingAttachment = 0;
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "RequestDetailsService::getCallAttachment", false, false);
           self.downloadingAttachment = 0;
         }
@@ -429,7 +431,7 @@
       xmlmc.addParam("storedQuery", "query/wss/authorisations/request.auth.allowed");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (!angular.isDefined(params.rowData)) {
             deferred.resolve(false);
           } else {
@@ -458,7 +460,7 @@
             deferred.resolve(false);
           }*/
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "RequestDetailsService::isRequestAuth", false, false);
           deferred.reject(error);
         }
@@ -481,7 +483,7 @@
         xmlmc.addParam("storedQuery", "query/wss/authorisations/request.auth.components");
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (compResponse) {
+          onSuccess: function onSuccess(compResponse) {
             if (compResponse.rowData) {
               if (Object.prototype.toString.call(compResponse.rowData.row) === '[object Array]') {
                 var intArrayLength = compResponse.rowData.row.length;
@@ -507,7 +509,7 @@
               xmlmc.addParam("storedQuery", "query/wss/authorisations/request.auth.components.override");
               xmlmc.addParam("parameters", sqparams);
               xmlmc.invoke("data", "invokeStoredQuery", {
-                onSuccess: function (upgradeCompResponse) {
+                onSuccess: function onSuccess(upgradeCompResponse) {
                   if (upgradeCompResponse.rowData) {
                     if (Object.prototype.toString.call(upgradeCompResponse.rowData.row) === '[object Array]') {
                       var intArrayLength = upgradeCompResponse.rowData.row.length;
@@ -534,7 +536,7 @@
                   });
                   deferred.resolve(self.authComponentStrings);
                 },
-                onFailure: function (error) {
+                onFailure: function onFailure(error) {
                   wssLogging.logger(error, "ERROR", "RequestDetailsService::getRequestAuthComponents", false, false);
                   //Now build component string list.
                   //Standard Components
@@ -552,7 +554,7 @@
               deferred.resolve({});
             }
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "ERROR", "RequestDetailsService::getRequestAuthComponents", false, false);
             deferred.reject(error);
           }

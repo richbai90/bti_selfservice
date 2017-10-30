@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -7,7 +9,7 @@
     return {
       restrict: 'E',
       template: '<div ng-include="searchwellTemplate"></div><div ng-include="templateUrl"></div>',
-      link: function (scope) {
+      link: function link(scope) {
 
         $window.onresize = function () {
           insertTemplate();

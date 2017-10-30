@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
     'use strict';
 
@@ -12,7 +14,7 @@
                 submit: "&"
             },
             templateUrl: "templates/wizard/wizard.main.tpl.html",
-            controller: function ($scope) {
+            controller: function controller($scope) {
                 $scope.currentStage = $scope.currentStage || 0;
                 $scope.getCurrentStage = function () {
                     return $scope.wizDataServ.wizardStages[$scope.currentStage];
@@ -22,7 +24,7 @@
                     var stageNumber = $scope.wizDataServ.wizardStages.indexOf(stage);
                     return $scope.goToStage(stageNumber);
                 };
-                var isValidStageNumber = function (stageNumber) {
+                var isValidStageNumber = function isValidStageNumber(stageNumber) {
                     return stageNumber < $scope.wizDataServ.wizardStages.length && stageNumber >= 0;
                 };
                 $scope.canGoToStage = function (stageNumber) {

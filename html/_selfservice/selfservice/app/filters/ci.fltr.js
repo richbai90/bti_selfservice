@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
 	'use strict';
 	//-- ci status level icon filter - given a "status level" reurns the relevant icon for the status level. 

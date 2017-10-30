@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
 	'use strict';
 
@@ -38,7 +40,7 @@
 			xmlmc.addParam("storedQuery", self.currCountSQ);
 			xmlmc.addParam("parameters", sqparams);
 			xmlmc.invoke("data", "invokeStoredQuery", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					/* if(params.rowData)
      {
      if( Object.prototype.toString.call( params.rowData.row ) === '[object Array]' )
@@ -85,7 +87,7 @@
 						deferred.resolve('');
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					wssLogging.logger(error, "ERROR", "AffectedServicesService::getActiveNotifications", false, false);
 				}
 			});

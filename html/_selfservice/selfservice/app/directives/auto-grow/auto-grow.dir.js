@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * From https://gist.github.com/thomseddon/4703968
  *
@@ -58,8 +60,8 @@
       });
       angular.element(document.body).append($shadow);
 
-      var update = function () {
-        var times = function (string, number) {
+      var update = function update() {
+        var times = function times(string, number) {
           for (var i = 0, r = ''; i < number; i++) {
             r += string;
           }

@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
 	'use strict';
 
@@ -56,7 +58,7 @@
 			xmlmc.addParam("maxResults", searchCriteriaObj.maxResults);
 
 			xmlmc.invoke("knowledgebase", searchOperation, {
-				onSuccess: function (results) {
+				onSuccess: function onSuccess(results) {
 					if (!angular.isDefined(results)) {
 						if (boolSendToast) {
 							wssLogging.sendToast('warning', 'No knowledgebase documents match your criteria!');
@@ -92,7 +94,7 @@
 						}
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					deferred.resolve('');
 					wssLogging.logger(error, "ERROR", "KnowledgeService::searchKB", false, false);
 				}
@@ -105,10 +107,10 @@
 			var xmlmc = new XMLMCService.MethodCall();
 			xmlmc.addParam("docRef", strDocRef);
 			xmlmc.invoke("knowledgebase", "documentGetInfo", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					deferred.resolve(params);
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					deferred.resolve('');
 					wssLogging.logger(error, "ERROR", "KnowledgeService::getArticleDetails", false, false);
 				}
@@ -121,10 +123,10 @@
 			var xmlmc = new XMLMCService.MethodCall();
 			xmlmc.addParam("docRef", strDocRef);
 			xmlmc.invoke("knowledgebase", "documentGetUrl", {
-				onSuccess: function (res) {
+				onSuccess: function onSuccess(res) {
 					deferred.resolve(res.url);
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					deferred.resolve('');
 					wssLogging.logger(error, "ERROR", "KnowledgeService::getDocumentURL", false, false);
 				}
@@ -136,10 +138,10 @@
 			var deferred = $q.defer();
 			var xmlmc = new XMLMCService.MethodCall();
 			xmlmc.invoke("knowledgebase", "catalogList", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					deferred.resolve(params.folder);
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					deferred.resolve('');
 					wssLogging.logger(error, "ERROR", "KnowledgeService::getKBCatList", false, false);
 				}
@@ -155,7 +157,7 @@
 			xmlmc.addParam("storedQuery", self.getRelatedArticlesSQ);
 			xmlmc.addParam("parameters", sqparams);
 			xmlmc.invoke("data", "invokeStoredQuery", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					if (params.rowData) {
 						if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
 							var rowArray = params.rowData.row;
@@ -171,7 +173,7 @@
 						deferred.resolve('');
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					deferred.resolve('');
 					wssLogging.logger(error, "ERROR", "KnowledgeService::getRelatedArticles", false, false);
 				}
@@ -187,7 +189,7 @@
 			var sqparams = "docRef=" + strDocRef;
 			xmlmc.addParam("parameters", sqparams);
 			xmlmc.invoke("data", "invokeStoredQuery", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					if (params.rowData) {
 						var strRelatedTypes = "";
 						if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
@@ -207,7 +209,7 @@
 						deferred.resolve('');
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					deferred.resolve('');
 					wssLogging.logger(error, "ERROR", "KnowledgeService::getRelatedTypes", false, false);
 				}
@@ -221,7 +223,7 @@
 			var xmlmc = new XMLMCService.MethodCall();
 			xmlmc.addParam("storedQuery", self.getDefSrchSettings);
 			xmlmc.invoke("data", "invokeStoredQuery", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					if (params.rowData.row.length != 4) {
 						wssLogging.sendToast('error', 'Error loading system settings. Please contact your Supportworks Administrator');
 						wssLogging.logger("Wrong number of system settings.", "ERROR", "KnowledgeService::getDefaultSearchSettings", false, false);
@@ -253,7 +255,7 @@
 						deferred.resolve(objSettings);
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					deferred.resolve('');
 					wssLogging.logger(error, "ERROR", "KnowledgeService::getDefaultSearchSettings", false, false);
 				}
@@ -266,10 +268,10 @@
 			var xmlmc = new XMLMCService.MethodCall();
 			xmlmc.addParam("docRef", strDocRef);
 			xmlmc.invoke("knowledgebase", "documentIncreaseAccessCounter", {
-				onSuccess: function () {
+				onSuccess: function onSuccess() {
 					//-- successfully incremneted access counter
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					wssLogging.logger(error, "ERROR", "KnowledgeService::incrementAccessCounter", false, false);
 				}
 			});
@@ -283,7 +285,7 @@
 			var sqparams = "pCode=" + strCode;
 			xmlmc.addParam("parameters", sqparams);
 			xmlmc.invoke("data", "invokeStoredQuery", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					if (params.rowData) {
 						strInfo = params.rowData.row.info;
 						deferred.resolve(strInfo);
@@ -292,7 +294,7 @@
 						wssLogging.logger("Profile Info Not Found", "ERROR", "KnowledgeService::getProfileInfo", false, false);
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					deferred.resolve('');
 					wssLogging.logger(error, "ERROR", "KnowledgeService::getProfileInfo", false, false);
 				}

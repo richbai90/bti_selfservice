@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -30,7 +32,7 @@
     //   //
     // });
 
-    let selectedCategory = [0, 0];
+    var selectedCategory = [0, 0];
     $scope.selectCategory = function (row, col) {
       $scope.currCat = _categories[row][col];
       $scope.categories[selectedCategory[0]][selectedCategory[1]].selected = false;
@@ -38,11 +40,11 @@
       selectedCategory = [row, col];
     };
 
-    const _categories = [];
-    let catTreeData = [];
+    var _categories = [];
+    var catTreeData = [];
 
     function addServicesToCategories(categories, services) {
-      for (let i = 0; i < categories.length; i++) {
+      var _loop = function _loop(i) {
         if (Array.isArray(categories[i])) {
           addServicesToCategories(categories[i], services);
         } else {
@@ -58,15 +60,19 @@
             return acc;
           }, []);
         }
+      };
+
+      for (var i = 0; i < categories.length; i++) {
+        _loop(i);
       }
     }
 
     //Check session, if active then get all services
-    $scope.getAllCustServices = () => {
-      SWSessionService.checkActiveSession().then(() => {
-        ServicesService.getCustServices().then(services => {
-          getCatTreeData().then(categories => {
-            _categories.push(categories.reduce((acc, cat) => {
+    $scope.getAllCustServices = function () {
+      SWSessionService.checkActiveSession().then(function () {
+        ServicesService.getCustServices().then(function (services) {
+          getCatTreeData().then(function (categories) {
+            _categories.push(categories.reduce(function (acc, cat) {
               if (!cat.hasOwnProperty('children')) {
                 cat.children = [];
               }
@@ -91,7 +97,7 @@
     };
 
     function getCatTreeData() {
-      const deferred = $q.defer();
+      var deferred = $q.defer();
       if (catTreeData.length === 0) {
         $scope.catServ.getTreeData().then(function (response) {
           catTreeData = response;
@@ -110,7 +116,7 @@
     };
 
     $scope.getCatTreeData = function () {
-      let deferred = $q.defer();
+      var deferred = $q.defer();
       if ($scope.catTreeData.length === 0) {
         $scope.catServ.getTreeData().then(function (response) {
           $scope.catTreeData = response;
@@ -131,13 +137,13 @@
     };
 
     $scope.openCategoryModal = function (size) {
-      let modalInstance = $uibModal.open({
+      var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'templates/services/services.searchwell.categorytree.tpl.html',
         controller: 'ModalTreeCtrl',
         size: size,
         resolve: {
-          items: function () {
+          items: function items() {
             $scope.treeDataModal = [];
             $scope.treeDataModal.currBranch = $scope.currTreeBranch;
             $scope.treeDataModal.objTree = $scope.catTreeData;
@@ -270,18 +276,18 @@
 
     $scope.addFav = function (subsId, servId) {
       $scope.custServices.addCustomerFavourite(subsId, servId).then(function (response) {}, function (error) {
-        let toastType = "error";
-        let toastBody = 'Adding this Service to your list of favourites failed.';
-        let toastTitle = "Service Favourite Failed!";
+        var toastType = "error";
+        var toastBody = 'Adding this Service to your list of favourites failed.';
+        var toastTitle = "Service Favourite Failed!";
         wssLogging.sendToast(toastType, toastBody, toastTitle);
       });
     };
 
     $scope.delFav = function (servId) {
       $scope.custServices.delCustomerFavourite(servId).then(function () {}, function (error) {
-        let toastType = "error";
-        let toastBody = 'Removing this Service from your list of favourites failed.';
-        let toastTitle = "Service Favourite Failed!";
+        var toastType = "error";
+        var toastBody = 'Removing this Service from your list of favourites failed.';
+        var toastTitle = "Service Favourite Failed!";
         wssLogging.sendToast(toastType, toastBody, toastTitle);
       });
     };
@@ -305,8 +311,8 @@
     //
     $scope.raiseRequest = function (service, requestClass) {
       store.remove("currDataForm");
-      let dfId = '0';
-      let dfClass = '';
+      var dfId = '0';
+      var dfClass = '';
       switch (requestClass) {
         case "Incident":
           if (angular.isDefined(service.fk_df_support) && service.fk_df_support > 0) {
@@ -332,7 +338,7 @@
       if (dfId !== '0') {
         //Get subscription details
         $scope.custServices.getSubscriptionRecord(service.subs_id).then(function (objSubscription) {
-          let objRequest = {
+          var objRequest = {
             dataFormID: dfId,
             requestClass: dfClass,
             serviceDetails: service,

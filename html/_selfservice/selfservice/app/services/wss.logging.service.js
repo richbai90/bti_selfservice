@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -56,10 +58,10 @@
       xmlmc.addParam("storedQuery", "query/wss/admin/admin.logging.insert");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           deferred.resolve(params);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           console.log(error);
           deferred.reject(error);
         }

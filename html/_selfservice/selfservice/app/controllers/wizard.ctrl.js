@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -474,7 +476,7 @@
       });
     };
 
-    $scope.cancelRequest = () => {
+    $scope.cancelRequest = function () {
       $ngConfirm({
         title: 'You are about to leave the page',
         content: '<strong>Your progress will be lost if you continue</strong>',
@@ -483,14 +485,14 @@
           okay: {
             text: 'Okay',
             btnClass: 'btn-danger',
-            action: function (scope, button) {
+            action: function action(scope, button) {
               $state.go(PreviousState.name, PreviousState.params);
             }
           },
           cancel: {
             text: 'Cancel',
             btnClass: 'btn-success',
-            action: function (scope, button) {
+            action: function action(scope, button) {
               // closes the modal
             }
           }

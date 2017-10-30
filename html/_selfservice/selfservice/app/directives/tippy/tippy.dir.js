@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * An Angular Wrapper for the Tippy library
  * Created by Rich Gordon
@@ -17,17 +19,17 @@
         tippy: '@',
         title: '@'
       },
-      link: function (scope, elem, attrs) {
-        const contents = scope.tippy || scope.title || '';
+      link: function link(scope, elem, attrs) {
+        var contents = scope.tippy || scope.title || '';
         if (contents !== '') {
-          const tooltip = angular.element('<div>' + contents + '</div>');
+          var tooltip = angular.element('<div>' + contents + '</div>');
           tippy(elem[0], { html: tooltip[0] });
           if (scope.title && scope.title !== '') {
-            elem.mouseover(() => {
+            elem.mouseover(function () {
               elem.attr('title', '');
             });
 
-            elem.mouseleave(() => {
+            elem.mouseleave(function () {
               elem.attr('title', scope.title);
             });
           }

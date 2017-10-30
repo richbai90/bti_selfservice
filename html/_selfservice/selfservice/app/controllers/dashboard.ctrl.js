@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -19,7 +21,9 @@
       $scope.twitterFeed = wssBranding.twitterFeed;
     }, function (error) {});
 
-    $scope.shortcutClass = row => 'col-sm-12 col-md-' + Math.floor(12 / row.length);
+    $scope.shortcutClass = function (row) {
+      return 'col-sm-12 col-md-' + Math.floor(12 / row.length);
+    };
 
     $scope.initDashboard = function () {
       $scope.canRaiseRequest = false;

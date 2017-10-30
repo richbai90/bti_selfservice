@@ -1,3 +1,5 @@
+'use strict';
+
 // Collapse Navbar on menu select click
 // Sourced from http://stackoverflow.com/questions/21203111/bootstrap-3-collapsed-menu-doesnt-close-on-click
 $(document).on('click', '.navbar-collapse.in', function (e) {
@@ -43,7 +45,7 @@ var Base64Binary = {
 	_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
 
 	/* will return a  Uint8Array type */
-	decodeArrayBuffer: function (input) {
+	decodeArrayBuffer: function decodeArrayBuffer(input) {
 		var bytes = input.length / 4 * 3;
 		var ab = new ArrayBuffer(bytes);
 		this.decode(input, ab);
@@ -51,7 +53,7 @@ var Base64Binary = {
 		return ab;
 	},
 
-	removePaddingChars: function (input) {
+	removePaddingChars: function removePaddingChars(input) {
 		var lkey = this._keyStr.indexOf(input.charAt(input.length - 1));
 		if (lkey == 64) {
 			return input.substring(0, input.length - 1);
@@ -59,7 +61,7 @@ var Base64Binary = {
 		return input;
 	},
 
-	decode: function (input, arrayBuffer) {
+	decode: function decode(input, arrayBuffer) {
 		//get last chars to see if are valid
 		input = this.removePaddingChars(input);
 		input = this.removePaddingChars(input);

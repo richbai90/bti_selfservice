@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
 	'use strict';
 	//-- CMBD status level icon filter for use with Affected Service Notification list - given a "cmdb status level" returns the relevant icon. 

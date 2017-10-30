@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -16,11 +18,11 @@
       'previousLogin': false
     };
 
-    self.keepAlive = strSessionId => {
+    self.keepAlive = function (strSessionId) {
       if (self.timeout) {
         $timeout.cancel(self.timeout);
       }
-      self.timeout = $timeout(() => {
+      self.timeout = $timeout(function () {
         $ngConfirm({
           title: 'Are you still there?',
           content: '<strong>Your session is about to end press okay if you wish to continue.</strong>',
@@ -29,14 +31,14 @@
             okay: {
               text: 'Okay',
               btnClass: 'btn-info',
-              action: function () {
+              action: function action() {
                 self.bindSession(strSessionId);
               }
             },
             cancel: {
               text: 'Logout',
               btnClass: 'btn-success hidden',
-              action: function (scope, button) {
+              action: function action(scope, button) {
                 self.logoff();
               }
             }
@@ -50,13 +52,13 @@
       var xmlmc = new XMLMCService.MethodCall();
       xmlmc.addParam("sessionId", strSessionID);
       xmlmc.invoke("session", "bindSession", {
-        onSuccess: function () {
+        onSuccess: function onSuccess() {
           store.set("sessionConfig", self.sessionConfig);
           $cookies.put("swSessionID", strSessionID);
           self.sessionLoggedOff = false;
           deferred.resolve('');
         },
-        onFailure: function (error, status) {
+        onFailure: function onFailure(error, status) {
           deferred.reject(error);
         }
       });
@@ -70,7 +72,7 @@
       xmlmc.addParam("customerId", ks);
       xmlmc.addPasswordParam("password", password);
       xmlmc.invoke("session", "selfServiceLogon", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           var oSessionConf = {};
           angular.forEach(params, function (oVal, oKey) {
             if (oKey !== 'sessionId') {
@@ -83,7 +85,7 @@
           deferred.resolve(params);
           self.keepAlive(params.sessionId);
         },
-        onFailure: function (error, status) {
+        onFailure: function onFailure(error, status) {
           var connErrorBody = "";
           var connErrorTitle = "";
           var connErrorType = "error";
@@ -125,7 +127,7 @@
       var deferred = $q.defer();
       var xmlmc = new XMLMCService.MethodCall();
       xmlmc.invoke("session", "selfServiceLogoff", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           //Remove cookies & localStorage
           self.normalLogoff = true;
           self.sessionEnded = false;
@@ -133,7 +135,7 @@
           self.removeSessionStorage();
           deferred.resolve(params);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           self.sessionEnded = true;
           self.removeSessionStorage();
           deferred.reject(error);
@@ -151,7 +153,7 @@
       xmlmc.addParam("storedQuery", "query/wss/get_customer_details.select");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             self.custDetails = params.rowData.row;
             store.set("custDetails", self.custDetails);
@@ -161,7 +163,7 @@
             deferred.reject('Customer Details could not be returned.');
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "SWSessionService::getCustomerDetails", false, false);
           deferred.reject(error);
         }
@@ -190,13 +192,13 @@
       xmlmc.addParam("table", "company");
       xmlmc.addParam("keyValue", org);
       xmlmc.invoke("data", "getRecord", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.record) {
             self.orgDetails = params.record;
             store.set("orgDetails", params.record);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "SWSessionService::getCustomerOrgDetails", false, false);
         }
       });
@@ -211,7 +213,7 @@
       xmlmc.addParam("storedQuery", "query/wss/get_wss_config.select");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             var intArrayLength = params.rowData.row.length;
             //obj is array
@@ -224,7 +226,7 @@
             deferred.reject('SelfService Configuration could not be returned.');
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "SWSessionService::getSelfServiceConfig", false, false);
           deferred.reject(error);
         }
@@ -240,15 +242,15 @@
         self.processSessionError();
       } else {
         var xmlmc = new XMLMCService.MethodCall();
-        let swSessionID = $cookies.get('swSessionID');
+        var swSessionID = $cookies.get('swSessionID');
         xmlmc.addParam("sessionId", swSessionID);
         xmlmc.invoke("session", "isSessionValid", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             //We have a valid session
             self.keepAlive(swSessionID);
             deferred.resolve(true);
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             //We don't have an active session, clean up and go to login
             self.sessionEnded = true;
             self.processSessionError();
@@ -333,13 +335,13 @@
       xmlmc.addParam("selfServiceId", self.selfServiceInstance);
       xmlmc.addParam("customerId", ks);
       xmlmc.invoke("selfservice", "requestPasswordReset", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           var messageTitle = "Password Reset Request Done!";
           var messageBody = "Please check your email for your password reset link, and follow the instructions contained within.";
           wssLogging.sendToast("success", messageBody, messageTitle);
           deferred.resolve(params);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           var connErrorType = "error";
           var connErrorBody = "An error has occurred during your password reset request. ";
           connErrorBody += "<br/>Please contact your system administrator.";

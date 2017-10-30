@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -28,49 +30,49 @@
 
     self.customerLookup = {
       custId: '',
-      getDetails: customer => {
+      getDetails: function getDetails(customer) {
         if (!customer) {
           return;
         }
-        let custId = customer.description.keysearch;
-        let xmlmc = new XMLMCService.MethodCall();
+        var custId = customer.description.keysearch;
+        var xmlmc = new XMLMCService.MethodCall();
         xmlmc.addParam("storedQuery", 'query/wss/customer/customer.get.details');
         xmlmc.addParam("parameters", 'custid=' + custId);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             if (params.rowData && params.rowData.row) {
               self.lookupData.customer = params.rowData.row;
               store.set('lookup', self.lookupData);
               if (self.lookup.hasOwnProperty('customer')) {
-                angular.forEach(self.lookup.customer, p => {
+                angular.forEach(self.lookup.customer, function (p) {
                   // Now that we have customer data we can resolve it
                   p[0].answer = WizardFilterService.processFilter(p[1], false);
                 });
               }
             }
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "ERROR", "WizardDataService::customerLookup", true, 'Customer Lookup Failed');
           }
         });
       },
-      lookup: customer => {
-        const deferred = $q.defer();
-        let custId = self.customerLookup.custId;
+      lookup: function lookup(customer) {
+        var deferred = $q.defer();
+        var custId = self.customerLookup.custId;
         self.customerLookup.custId = customer;
 
-        let xmlmc = new XMLMCService.MethodCall();
+        var xmlmc = new XMLMCService.MethodCall();
         xmlmc.addParam("storedQuery", 'query/wss/customer/customer.list');
         xmlmc.addParam("parameters", 'custid=' + customer);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: params => {
+          onSuccess: function onSuccess(params) {
             if (params.rowData && params.rowData.row) {
-              let data = Array.isArray(params.rowData.row) ? params.rowData.row : [params.rowData.row];
+              var data = Array.isArray(params.rowData.row) ? params.rowData.row : [params.rowData.row];
               self.customerLookup.customers = data;
               deferred.resolve(data);
             }
           },
-          onFailure: error => {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "ERROR", "WizardDataService::customerLookup", true, 'Customer Lookup Failed');
             deferred.reject(error);
           }
@@ -89,7 +91,7 @@
         controller: 'AdminTableController',
         size: 'lg',
         resolve: {
-          items: function () {
+          items: function items() {
             return '';
           }
         }
@@ -114,7 +116,7 @@
         controller: 'ModalCIPickerCtrl',
         size: size,
         resolve: {
-          items: function () {
+          items: function items() {
             return question;
           }
         }
@@ -211,7 +213,7 @@
       xmlmc.addParam("storedQuery", self.ciPicker[self.ciPicker.currListType].outputConfigObject.recordsStoredQuery);
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -225,7 +227,7 @@
           }
           deferred.resolve(itemArray);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           deferred.reject(error);
         }
       });
@@ -240,14 +242,14 @@
       xmlmc.addParam("storedQuery", "query/wss/services/services.dataform.get");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (angular.isObject(params.rowData.row)) {
             deferred.resolve(params.rowData.row);
           } else {
             deferred.reject(params);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardDataService::getDataform", false, false);
           deferred.reject(error);
         }
@@ -262,14 +264,14 @@
       xmlmc.addParam("storedQuery", "query/wss/wizards/wizard.get.main");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (angular.isObject(params.rowData.row)) {
             deferred.resolve(params.rowData.row);
           } else {
             deferred.reject(params);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardDataService::getWizard", false, false);
           deferred.reject(error);
         }
@@ -285,7 +287,7 @@
       xmlmc.addParam("storedQuery", "query/wss/wizards/wizard.get.stage");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (angular.isObject(params.rowData)) {
             if (angular.isObject(params.rowData.row)) {
               deferred.resolve(params.rowData.row);
@@ -299,7 +301,7 @@
             wssLogging.sendToast(connErrorType, connErrorBody, connErrorTitle, false, false);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           deferred.reject(error);
         }
       });
@@ -310,7 +312,7 @@
 
     self.handleDefaultValue = function (value, question) {
       if (value.match(/!\[(lookup\..*?)\]!/g)) {
-        let lookup = value.split('.');
+        var lookup = value.split('.');
         if (!Array.isArray(self.lookup[lookup[1]])) {
           self.lookup[lookup[1]] = [];
         }
@@ -322,14 +324,14 @@
     };
 
     self.getStageQuestions = function (intStage) {
-      const promises = [];
+      var promises = [];
       var deferred = $q.defer();
       var sqparams = "stage=" + intStage;
       var xmlmc = new XMLMCService.MethodCall();
       xmlmc.addParam("storedQuery", "query/wss/wizards/wizard.get.questions");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             var questionArray = [];
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
@@ -406,7 +408,7 @@
               questionArray[qKey].options = [];
               if (qVal.type === 'Selectbox' || qVal.type === 'Radiobox' || qVal.type === 'Checkbox') {
 
-                const gettingQuestionOptions = self.getQuestionOptions(qVal).then(function (respOptions) {
+                var gettingQuestionOptions = self.getQuestionOptions(qVal).then(function (respOptions) {
                   questionArray[qKey].options = respOptions;
 
                   //Cycle through question options, add to answer object if we match default value
@@ -427,7 +429,7 @@
               } else if (qVal.type === 'Custom Picker') {
                 if (qVal.pickername === 'Customer Organisations' || qVal.pickername === 'All Organisations') {
                   //Get cust Related Organisations
-                  const gettingOrgs = self.getOrgs(qVal.pickername).then(function (oOrgs) {
+                  var gettingOrgs = self.getOrgs(qVal.pickername).then(function (oOrgs) {
                     //Then set picker options
                     questionArray[qKey].options = oOrgs;
                     //Cycle through question options, add to answer object if we match default value
@@ -444,7 +446,7 @@
                   promises.push(gettingOrgs);
                 } else if (qVal.pickername === 'Category') {
                   //Get Probcodes
-                  const gettingCategories = self.getProfileTree().then(function (oCodes) {
+                  var gettingCategories = self.getProfileTree().then(function (oCodes) {
                     //Then set tree data to picker options
                     questionArray[qKey].options = oCodes;
                   }, function (error) {
@@ -456,14 +458,14 @@
                 }
               }
             });
-            $q.all(promises).then(() => {
+            $q.all(promises).then(function () {
               deferred.resolve(questionArray);
             });
           } else {
             deferred.reject('No Questions Found.');
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardDataService::getStageQuestions", false, false);
           deferred.reject(error);
         }
@@ -485,7 +487,7 @@
         xmlmc.addParam("storedQuery", "query/wss/customer/customer.get.allorgs");
       }
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -498,7 +500,7 @@
             deferred.resolve(oOrgs);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardDataService::getOrgs", false, false);
           deferred.reject(error);
         }
@@ -516,7 +518,7 @@
       xmlmc.addParam("storedQuery", "query/wss/wizards/wizard.q.options.static");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -542,7 +544,7 @@
             deferred.resolve(qOptions);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardDataService::getQuestionOptions", false, false);
           deferred.reject(error);
         }
@@ -572,7 +574,7 @@
       xmlmc.addParam("storedQuery", "query/wss/wizards/wizard.q.options.dynamic");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -585,7 +587,7 @@
             deferred.resolve(qOptions);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardDataService::getDynamicInputData", false, false);
           deferred.reject(error);
         }
@@ -601,7 +603,7 @@
       var xmlmc = new XMLMCService.MethodCall();
       xmlmc.addParam("returnFullTree", "true");
       xmlmc.invoke("selfservice", "customerGetProfileCodeTree", {
-        onSuccess: function (response) {
+        onSuccess: function onSuccess(response) {
           var catList = [];
           var inCatList = {};
           angular.forEach(response.ProfileChildNode, function (prVal, prKey) {
@@ -640,17 +642,19 @@
           });
           //Unflatten treeview data, and return;
           self.treeData = wssHelpers.unflattenTreeview(catList, 'name');
-          let xmlmc = new XMLMCService.MethodCall();
+          var xmlmc = new XMLMCService.MethodCall();
           xmlmc.addParam("storedQuery", "query/wss/wizards/wizard.q.categories.filter");
           xmlmc.invoke("data", "invokeStoredQuery", {
-            onSuccess: excluded => {
+            onSuccess: function onSuccess(excluded) {
               if (!Object.keys(excluded).length) {
                 deferred.resolve(self.treeData);
                 return;
               }
-              let rows = excluded.rowData.row;
+              var rows = excluded.rowData.row;
               rows = Array.isArray(rows) ? rows : [rows];
-              excluded = rows.map(r => r.code);
+              excluded = rows.map(function (r) {
+                return r.code;
+              });
               self.treeData = self.treeData.filter(function f(code) {
                 if (code.children.length) {
                   code.children = code.children.filter(f);
@@ -660,13 +664,13 @@
               });
               deferred.resolve(self.treeData);
             },
-            onFailure(err) {
+            onFailure: function onFailure(err) {
               wssLogging.logger(err, "ERROR", "WizardDataService::getProfileTree::Filter", false, true, "Could Not Filter Probcodes");
               deferred.resolve(self.treeData);
             }
           });
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardDataService::getProfileTree", false, false);
           deferred.reject(error);
         }
@@ -745,7 +749,7 @@
         xmlmc.addParam("storedQuery", "query/wss/wizards/wizard.q.options.dynamic");
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             if (params.rowData) {
               if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
                 var intArrayLength = params.rowData.row.length;
@@ -783,7 +787,7 @@
               deferred.resolve(qOptions);
             }
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "ERROR", "WizardDataService::loadOptionData-noParent", false, false);
             deferred.reject(error);
           }
@@ -812,7 +816,7 @@
         xmlmc.addParam("storedQuery", "query/wss/wizards/wizard.q.options.dynamic");
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             if (params.rowData) {
               if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
                 var intArrayLength = params.rowData.row.length;
@@ -858,7 +862,7 @@
               wssLogging.sendToast(connErrorType, connErrorBody, connErrorTitle);
             }
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "ERROR", "WizardDataService::loadOptionData-hasParent", true, false);
             deferred.reject(error);
           }
@@ -967,7 +971,7 @@
       xmlmc.addParam("storedQuery", "query/wss/sla/sla.servsub.get");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           var slaArray = [];
           if (angular.isObject(params.rowData)) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
@@ -982,7 +986,7 @@
           }
           deferred.resolve(slaArray);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardDataService::getServSubSLA", false, false);
           deferred.reject(error);
         }
@@ -1000,13 +1004,13 @@
       xmlmc.addParam("storedQuery", "query/wss/sla/sla.callclass.default.get");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (angular.isObject(params.rowData)) {
             slaId = params.rowData.row.fk_slad;
           }
           deferred.resolve(slaId);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "WARN", "WizardDataService::getClassDefaultSLA", false, false);
           deferred.resolve(slaId);
         }
@@ -1028,7 +1032,7 @@
         xmlmc.addParam("storedQuery", "query/wss/services/components.standard.get");
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             if (angular.isObject(params.rowData)) {
               if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
                 var intArrayLength = params.rowData.row.length;
@@ -1050,7 +1054,7 @@
                   xmlmc.addParam("storedQuery", "query/wss/services/components.alternate.get");
                   xmlmc.addParam("parameters", sqparams);
                   xmlmc.invoke("data", "invokeStoredQuery", {
-                    onSuccess: function (params) {
+                    onSuccess: function onSuccess(params) {
                       if (angular.isObject(params.rowData)) {
                         if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
                           var intArrayLength = params.rowData.row.length;
@@ -1064,7 +1068,7 @@
                       }
                       objStandardComponents[compKey].customComponents = self.buildStandardCompQuestion(objCustomisedComponents);
                     },
-                    onFailure: function (error) {
+                    onFailure: function onFailure(error) {
                       wssLogging.logger(error, "WARN", "WizardDataService::getStandardComponents-CustomisedComponents", false, false);
                     }
                   });
@@ -1079,7 +1083,7 @@
               deferred.resolve(objStandardComponentQuestion);
             }
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "WARN", "WizardDataService::getStandardComponents", false, false);
             deferred.resolve(false);
           }
@@ -1102,7 +1106,7 @@
         xmlmc.addParam("storedQuery", "query/wss/services/components.standard.get");
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             if (angular.isObject(params.rowData)) {
               if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
                 var intArrayLength = params.rowData.row.length;
@@ -1121,7 +1125,7 @@
               deferred.resolve(objStandardComponentQuestion);
             }
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "WARN", "WizardDataService::getOptionalComponents", false, false);
             deferred.resolve(false);
           }
@@ -1205,7 +1209,7 @@
       xmlmc.addParam("storedQuery", "query/wss/wizards/wizard.get.jumps");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           var jumpArray = [];
           if (angular.isObject(params.rowData)) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
@@ -1220,7 +1224,7 @@
           }
           deferred.resolve(jumpArray);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardDataService::getJumpRecords", false, false);
           deferred.reject(error);
         }

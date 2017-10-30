@@ -1,10 +1,12 @@
+'use strict';
+
 (function () {
   'use strict';
 
   angular.module('swSelfService').directive('onFinishRender', function () {
     return {
       restrict: 'A',
-      link: function (scope, element, attr) {
+      link: function link(scope, element, attr) {
         if (scope.$last === true) {
           scope.$evalAsync(attr.onFinishRender);
         }

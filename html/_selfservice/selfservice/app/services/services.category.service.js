@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -69,7 +71,7 @@
       xmlmc.addParam("storedQuery", self.catSubSQ);
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -85,7 +87,7 @@
             deferred.resolve('No Categories Returned.');
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "ServiceCategoryService::getCategorySubscriptions", false, false);
           deferred.reject(error);
         }
@@ -100,14 +102,14 @@
       xmlmc.addParam("storedQuery", self.catDetSQ);
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             deferred.resolve(params.rowData.row);
           } else {
             deferred.resolve('No Category Details Returned.');
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "ServiceCategoryService::getCategoryDetails", false, false);
           deferred.reject(error);
         }

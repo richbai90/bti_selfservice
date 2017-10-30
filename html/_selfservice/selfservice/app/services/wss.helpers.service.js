@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -95,7 +97,7 @@
       xmlmc.addParam("storedQuery", "query/wss/admin/admin.tablesettings.get");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData && !boolSchema) {
             $rootScope.adminModalNew = false;
             deferred.resolve(angular.fromJson(params.rowData.row.wss_config));
@@ -105,7 +107,7 @@
             deferred.resolve(objSettings);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           $rootScope.adminModalNew = true;
           wssLogging.logger(error, "ERROR", "wssHelpers::getTableSettings", false, false);
           deferred.reject(error);
@@ -123,10 +125,10 @@
       xmlmc.addParam("storedQuery", "query/wss/admin/admin.tablesettings.update");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           deferred.resolve(params);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "wssHelpers::updateTableSettings", false, false);
           deferred.reject(error);
         }
@@ -142,10 +144,10 @@
       xmlmc.addParam("storedQuery", "query/wss/admin/admin.tablesettings.reset");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           deferred.resolve(params);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "wssHelpers::resetTableSettings", false, false);
           deferred.reject(error);
         }
@@ -162,10 +164,10 @@
       xmlmc.addParam("storedQuery", "query/wss/admin/admin.tablesettings.insert");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           deferred.resolve(params);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "wssHelpers::insertTableSettings", false, false);
           deferred.reject(error);
         }

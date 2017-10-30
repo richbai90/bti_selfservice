@@ -1,3 +1,7 @@
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 (function () {
   'use strict';
 
@@ -22,10 +26,10 @@
           xmlmc.addParam("storedQuery", "query/wss/requests/request.update.rating");
           xmlmc.addParam("parameters", sqparams);
           xmlmc.invoke("data", "invokeStoredQuery", {
-            onSuccess: function (params) {
+            onSuccess: function onSuccess(params) {
               deferred.resolve("Request Rated Successfully");
             },
-            onFailure: function (error) {
+            onFailure: function onFailure(error) {
               wssLogging.logger(error, "ERROR", "RequestInteractService::updateRating", false, false);
               deferred.reject("Request Rating Failed:" + error);
             }
@@ -58,7 +62,7 @@
       xmlmc.addParam("updateSource", "Customer (" + self.custDetails.keysearch + ")");
       xmlmc.addParam("updateCode", updateCode);
 
-      if (angular.isDefined(objFileAttachments) && typeof objFileAttachments == "object") {
+      if (angular.isDefined(objFileAttachments) && (typeof objFileAttachments === 'undefined' ? 'undefined' : _typeof(objFileAttachments)) == "object") {
         for (var k in objFileAttachments) {
           var objAttachment = {};
           if (objFileAttachments.hasOwnProperty(k)) {
@@ -71,7 +75,7 @@
       }
 
       xmlmc.invoke("selfservice", "customerUpdateCall", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.callActionStatus.success == "false") {
             var updateFailMessage = params.callActionStatus.message;
             if (updateFailMessage.indexOf("Callref") === 0) {
@@ -82,7 +86,7 @@
             deferred.resolve("Request Updated Successfully");
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "RequestInteractService::updateRequest", false, false);
           deferred.reject(error);
         }
@@ -118,7 +122,7 @@
       xmlmc.addParam("updateSource", "Customer (" + self.custDetails.keysearch + ")");
       xmlmc.addParam("updateCode", updateCode);
       xmlmc.invoke("selfservice", "customerUpdateCall", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.callActionStatus.success == "false") {
             var updateFailMessage = params.callActionStatus.message;
             if (updateFailMessage.indexOf("Callref") === 0) {
@@ -139,18 +143,18 @@
             objAdditionalValues.opencall.bpm_execvpme = "1";
             xmlmc.addParam("additionalCallValues", objAdditionalValues);
             xmlmc.invoke("selfservice", "customerUpdateCallValues", {
-              onSuccess: function (params) {
+              onSuccess: function onSuccess(params) {
                 SWSessionService.numAuths--;
                 deferred.resolve("Authorisation Decision Applied Successfully");
               },
-              onFailure: function (error) {
+              onFailure: function onFailure(error) {
                 wssLogging.logger(error, "ERROR", "RequestInteractService::authoriseRequest", false, false);
                 deferred.reject(error);
               }
             });
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           deferred.reject(error);
         }
       });

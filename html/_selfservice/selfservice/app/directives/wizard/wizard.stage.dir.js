@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
     'use strict';
 
@@ -15,7 +17,7 @@
                 animation: "@"
             },
             template: "<ng-form name='stageForm' ng-show='isActive()'><ng-transclude></ng-transclude></ng-form>",
-            link: function ($scope, element, attrs, wizardCtrl) {
+            link: function link($scope, element, attrs, wizardCtrl) {
                 wizardCtrl.registerStage($scope);
                 $scope.isActive = function () {
                     return $scope == wizardCtrl.getCurrentStage();

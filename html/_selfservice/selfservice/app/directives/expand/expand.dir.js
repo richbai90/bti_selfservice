@@ -1,17 +1,21 @@
-(() => {
+'use strict';
 
-  angular.module('swSelfService').directive('expand', ['Resize', Resize => ({
-    link: (scope, elem, attr) => {
+(function () {
 
-      new Resize(elem, () => {
+  angular.module('swSelfService').directive('expand', ['Resize', function (Resize) {
+    return {
+      link: function link(scope, elem, attr) {
 
-        let h = 0;
-        [].slice.call(elem.children()).forEach(e => {
-          h += $(e).height();
+        new Resize(elem, function () {
+
+          var h = 0;
+          [].slice.call(elem.children()).forEach(function (e) {
+            h += $(e).height();
+          });
+          elem.css('max-height', h + 'px');
         });
-        elem.css('max-height', h + 'px');
-      });
-    }
-  })]);
+      }
+    };
+  }]);
 })();
 //# sourceMappingURL=expand.dir.js.map

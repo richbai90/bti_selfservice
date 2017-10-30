@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
 	'use strict';
 
@@ -26,7 +28,7 @@
 			xmlmc.addParam("storedQuery", self.getProfileDetailsSQ);
 			xmlmc.addParam("parameters", sqparams);
 			xmlmc.invoke("data", "invokeStoredQuery", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					if (params.rowData) {
 						userObj = params.rowData.row;
 						deferred.resolve(userObj);
@@ -34,7 +36,7 @@
 						deferred.resolve('');
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					wssLogging.logger(error, "ERROR", "ProfileService::getProfileDetails", false, false);
 				}
 			});
@@ -53,14 +55,14 @@
 			xmlmc.addData("mobiletel", user.mobiletel);
 			xmlmc.addData("location", user.location);
 			xmlmc.invoke("data", "updateRecord", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					if (params.rowsEffected === "0") {
 						//-- Nothing updated, so don't send toast
 					} else {
 						wssLogging.sendToast('success', 'Profile updated successfully!');
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					wssLogging.logger(error, "ERROR", "ProfileService::updateProfileDetails", false, false);
 				}
 			});
@@ -77,10 +79,10 @@
 			xmlmc.addData("fk_cat_name", category.name);
 
 			xmlmc.invoke("data", "addRecord", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					wssLogging.sendToast('success', 'Knowledge Base subscriptions updated successfully!');
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					wssLogging.logger(error, "ERROR", "ProfileService::addCustSub", false, false);
 				}
 			});
@@ -93,10 +95,10 @@
 			xmlmc.addParam("table", "userdb_kbnotif");
 			xmlmc.addParam("keyValue", id);
 			xmlmc.invoke("data", "deleteRecord", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					wssLogging.sendToast('success', 'Knowledge Base subscriptions updated successfully!');
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					wssLogging.logger(error, "ERROR", "ProfileService::removeCustSub", false, false);
 				}
 			});
@@ -134,7 +136,7 @@
 			xmlmc.addParam("storedQuery", self.getCustCIsSQ);
 			xmlmc.addParam("parameters", sqparams);
 			xmlmc.invoke("data", "invokeStoredQuery", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					if (params.rowData) {
 						if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
 							var intArrayLength = params.rowData.row.length;
@@ -150,7 +152,7 @@
 						deferred.resolve('');
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					wssLogging.logger(error, "ERROR", "ProfileService::getCustCIs", false, false);
 				}
 			});
@@ -167,7 +169,7 @@
 			xmlmc.addParam("storedQuery", self.getKBCatsSQ);
 			xmlmc.addParam("parameters", sqparams);
 			xmlmc.invoke("data", "invokeStoredQuery", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					if (params.rowData) {
 						if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
 							var rowArray = params.rowData.row;
@@ -183,7 +185,7 @@
 						deferred.resolve('');
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					wssLogging.logger(error, "ERROR", "ProfileService::getKBCatalogs", false, false);
 				}
 			});
@@ -200,7 +202,7 @@
 			xmlmc.addParam("storedQuery", self.getKBSubsSQ);
 			xmlmc.addParam("parameters", sqparams);
 			xmlmc.invoke("data", "invokeStoredQuery", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					if (params.rowData) {
 						if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
 							var rowArray = params.rowData.row;
@@ -216,7 +218,7 @@
 						deferred.resolve('');
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					wssLogging.logger(error, "ERROR", "ProfileService::getKBSubsCatIDs", false, false);
 				}
 			});
@@ -234,7 +236,7 @@
 			xmlmc.addParam("storedQuery", self.getKBSubsSQ);
 			xmlmc.addParam("parameters", sqparams);
 			xmlmc.invoke("data", "invokeStoredQuery", {
-				onSuccess: function (params) {
+				onSuccess: function onSuccess(params) {
 					if (params.rowData) {
 						var key = params.rowData.row.pk_auto_id;
 						deferred.resolve(key);
@@ -242,7 +244,7 @@
 						deferred.resolve('');
 					}
 				},
-				onFailure: function (error) {
+				onFailure: function onFailure(error) {
 					wssLogging.logger(error, "ERROR", "ProfileService::getKBSubKey", false, false);
 				}
 			});

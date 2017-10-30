@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -113,12 +115,12 @@
       xmlmc.addParam("storedQuery", "query/wss/services/services.details");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           //XMLC was succesfull
           deferred.resolve(params);
         },
 
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "ServicesService::getServiceDetails", false, false);
           //Send a toaster and change state back to Home?
           deferred.reject(error);
@@ -136,7 +138,7 @@
       xmlmc.addParam("storedQuery", "query/wss/services/services.activerequest");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           //XMLC was succesfull
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
@@ -154,7 +156,7 @@
           }
         },
 
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           //Send a toaster and change state back to Home?
           deferred.reject(error);
         }
@@ -172,7 +174,7 @@
       xmlmc.addParam("storedQuery", "query/wss/services/services.closerequest");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           //XMLC was succesfull
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
@@ -190,7 +192,7 @@
           }
         },
 
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           //Send a toaster and change state back to Home?
           deferred.reject(error);
         }
@@ -210,11 +212,11 @@
       xmlmc.addParam("storedQuery", self.addFavSQ);
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           self.favServices[servId] = true;
           deferred.resolve(params);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "ServicesService::addCustomerFavourite", false, false);
           deferred.reject(error);
         }
@@ -230,11 +232,11 @@
       xmlmc.addParam("storedQuery", self.delFavSQ);
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           self.favServices[servId] = false;
           deferred.resolve(params);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "ServicesService::delCustomerFavourite", false, false);
           deferred.reject(error);
         }
@@ -250,7 +252,7 @@
       xmlmc.addParam("storedQuery", self.getOwnSQ);
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -266,7 +268,7 @@
             deferred.resolve('No Services Returned.');
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "ServicesService::getCustomerManaged", false, false);
           deferred.reject(error);
         }
@@ -282,7 +284,7 @@
       xmlmc.addParam("storedQuery", self.getFavSQ);
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
               var intArrayLength = params.rowData.row.length;
@@ -298,7 +300,7 @@
             deferred.resolve('No Services Returned.');
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "ServicesService::getCustomerFavourites", false, false);
           deferred.reject(error);
         }
@@ -376,7 +378,7 @@
         xmlmc.addParam("storedQuery", self.currCountSQ);
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             if (params.rowData.row.cnt) {
               totalServices = params.rowData.row.cnt;
               deferred.resolve(totalServices);
@@ -384,7 +386,7 @@
               deferred.reject(params);
             }
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "ERROR", "ServicesService::getServiceCount", false, false);
             deferred.reject(error);
           }
@@ -429,7 +431,7 @@
         xmlmc.addParam("storedQuery", self.currPagedSQ);
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             if (params.rowData) {
               if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
                 var intArrayLength = params.rowData.row.length;
@@ -445,7 +447,7 @@
               deferred.resolve('No Requests Returned.');
             }
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "ERROR", "ServicesService::getServices(" + self.currPagedSQ + ")", false, false);
             deferred.reject(error);
           }
@@ -484,7 +486,7 @@
         xmlmc.addParam("storedQuery", self.custServResultsSQ);
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             if (params.rowData) {
               if (Object.prototype.toString.call(params.rowData.row) === '[object Array]') {
                 var intArrayLength = params.rowData.row.length;
@@ -500,7 +502,7 @@
               deferred.resolve('No Requests Returned.');
             }
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "ERROR", "ServicesService::getServices(" + self.currPagedSQ + ")", false, false);
             deferred.reject(error);
           }
@@ -519,13 +521,13 @@
       xmlmc.addParam("storedQuery", "query/wss/services/services.subscription.get");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (params.rowData) {
             objSubs = params.rowData.row;
           }
           deferred.resolve(objSubs);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "ServicesService::getSubscriptionRecord", false, false);
           deferred.resolve(objSubs);
         }

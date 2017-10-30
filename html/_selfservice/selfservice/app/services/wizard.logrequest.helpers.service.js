@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   'use strict';
 
@@ -17,9 +19,9 @@
       xmlmc.addParam("storedQuery", "query/wss/sla/sla.get");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (!Object.keys(params).length) {
-            let error = `No priority ${strPriority} exists in sla priority relationship table`;
+            var error = 'No priority ' + strPriority + ' exists in sla priority relationship table';
             wssLogging.logger(error, "ERROR", "WizardLogHelpersService::getPrioritySLA", true, true, "SLA Priority Error");
             deferred.reject(error);
           } else {
@@ -29,7 +31,7 @@
             deferred.resolve(objSLA);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardLogHelpersService::getPrioritySLA", false, false);
           deferred.reject(error);
         }
@@ -49,14 +51,14 @@
         xmlmc.addParam("storedQuery", "query/wss/sla/slamatrix.get");
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             if (angular.isDefined(params.rowData)) {
               arrMatrix.impact = params.rowData.row.fk_impact;
               arrMatrix.urgency = params.rowData.row.fk_urgency;
             }
             deferred.resolve(arrMatrix);
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             wssLogging.logger(error, "ERROR", "WizardLogHelpersService::getPriorityMatrix", false, false);
             deferred.reject(error);
           }
@@ -78,13 +80,13 @@
       xmlmc.addParam("storedQuery", "query/wss/sla/priority_from_matrix.get");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (angular.isDefined(params.rowData)) {
             strPriority = params.rowData.row.fk_priority;
           }
           deferred.resolve(strPriority);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardLogHelpersService::getPriorityFromMatrix", false, false);
           deferred.reject(strPriority);
         }
@@ -102,13 +104,13 @@
       xmlmc.addParam("storedQuery", "query/wss/sla/priority_from_service_sla.get");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (angular.isDefined(params.rowData)) {
             strPriority = params.rowData.row.priority;
           }
           deferred.resolve(strPriority);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardLogHelpersService::getPriorityFromSLAService", false, false);
           deferred.reject(strPriority);
         }
@@ -126,7 +128,7 @@
       xmlmc.addParam("storedQuery", "query/wss/sla/priority_from_subs_sla.get");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (angular.isDefined(params.rowData)) {
             if (Object.keys(params.rowData).length === 0) strPriority = "Not configured";else strPriority = params.rowData.row.priority;
 
@@ -145,7 +147,7 @@
             deferred.resolve(strPriority);
           }
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardLogHelpersService::getPriorityFromSLASubscription", false, false);
           deferred.reject(strPriority);
         }
@@ -162,13 +164,13 @@
       xmlmc.addParam("storedQuery", "query/wss/sla/priority_default_from_sla.get");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (angular.isDefined(params.rowData)) {
             strPriority = params.rowData.row.priority;
           }
           deferred.resolve(strPriority);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardLogHelpersService::getDefaultPriorityFromSLA", false, false);
           deferred.reject(error);
         }

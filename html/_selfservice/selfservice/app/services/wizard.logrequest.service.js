@@ -1,3 +1,7 @@
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 (function () {
   'use strict';
 
@@ -482,7 +486,7 @@
       xmlmc.addParam("updateCode", "New Support Request");
       xmlmc.addParam("updateSource", "Customer Portal");
 
-      if (angular.isDefined(self.fileAttachments) && typeof self.fileAttachments == "object") {
+      if (angular.isDefined(self.fileAttachments) && _typeof(self.fileAttachments) == "object") {
         for (var k in self.fileAttachments) {
           var objAttachment = {};
           if (self.fileAttachments.hasOwnProperty(k)) {
@@ -496,7 +500,7 @@
       }
       xmlmc.addParam("additionalCallValues", self.arrAdditionalCallValues);
       xmlmc.invoke("selfservice", "customerLogNewCall", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           if (self.arrCIs.length > 0) {
             self.attachCIs(params.callref, strCallClass);
           }
@@ -513,7 +517,7 @@
           }
           deferred.resolve(params);
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           wssLogging.logger(error, "ERROR", "WizardLogService::logRequest", false, false);
           deferred.reject(error);
         }
@@ -537,10 +541,10 @@
           xmlmc.addParam("storedQuery", "query/wss/requests/request.extoc.add");
           xmlmc.addParam("parameters", queryString);
           xmlmc.invoke("data", "invokeStoredQuery", {
-            onSuccess: function (params) {
+            onSuccess: function onSuccess(params) {
               //Do nothing!
             },
-            onFailure: function (error) {
+            onFailure: function onFailure(error) {
               //Output error to log
               wssLogging.logger(error, "ERROR", "WizardLogService::addExtOC", true, false);
             }
@@ -558,10 +562,10 @@
         xmlmc.addParam("storedQuery", "query/wss/requests/request.component.add");
         xmlmc.addParam("parameters", sqparams);
         xmlmc.invoke("data", "invokeStoredQuery", {
-          onSuccess: function (params) {
+          onSuccess: function onSuccess(params) {
             //Do nothing!
           },
-          onFailure: function (error) {
+          onFailure: function onFailure(error) {
             //Output error to log
             wssLogging.logger(error, "ERROR", "WizardLogService::attachCIs", true, false);
           }
@@ -584,10 +588,10 @@
       xmlmc.addParam("storedQuery", "query/wss/requests/request.ci.attach");
       xmlmc.addParam("parameters", sqparams);
       xmlmc.invoke("data", "invokeStoredQuery", {
-        onSuccess: function (params) {
+        onSuccess: function onSuccess(params) {
           //Do nothing!
         },
-        onFailure: function (error) {
+        onFailure: function onFailure(error) {
           //Output error to log
           wssLogging.logger(error, "ERROR", "WizardLogService::attachCIs", true, false);
         }
@@ -678,10 +682,10 @@
           xmlmc.addData("fk_callref", intCallref);
 
           xmlmc.invoke("data", "addRecord", {
-            onSuccess: function (params) {
+            onSuccess: function onSuccess(params) {
               //Do nothing!
             },
-            onFailure: function (error) {
+            onFailure: function onFailure(error) {
               //Output error to console
               wssLogging.logger(error, "ERROR", "WizardLogService::populateOCWiz", true, false);
             }
