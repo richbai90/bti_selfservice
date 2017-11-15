@@ -1,0 +1,9 @@
+{
+  "serverAddress": "",
+  "selfServiceInstance": "selfservice",
+  "ssoEnabled": true,
+  "type": "saml",
+  "ssoAddress": "sso/saml_auth.php",
+  "defaultSupportWizard": "Request Support",
+  "defaultRequestWizard": "Request Support"
+}

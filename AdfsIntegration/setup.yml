@@ -1,0 +1,34 @@
+--- 
+prereq: 
+  - "%SWSERVER%\\data\\_dd_data\\ITSM.ddf"
+  - "%SWSERVER%\\html\\_selfservice\\_itsm_default_v2_template"
+reg: 
+  - 
+    key: Path
+    path: "HKLLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager"
+    value: "+= ;%SWCS%\\Apache\\bin"
+  - 
+    key: OPENSSL_CONF
+    path: "HKLLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager"
+    value: "%SWCS%\\Apache\\bin\\openssl.cnf"
+scripts: 
+  - |
+      if (-not ("Win32.NativeMethods" -as [Type]))     {
+              Add-Type -Namespace Win32 -Name NativeMethods -MemberDefinition @"
+          [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+          public static extern IntPtr SendMessageTimeout(
+              IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam,
+              uint fuFlags, uint uTimeout, out UIntPtr lpdwResult);
+      "@
+          }
+       
+          $HWND_BROADCAST = [IntPtr] 0xffff;
+          $WM_SETTINGCHANGE = 0x1a;
+          $result = [UIntPtr]::Zero
+      
+          [Win32.Nativemethods]::SendMessageTimeout($HWND_BROADCAST, $WM_SETTINGCHANGE, [UIntPtr]::Zero, "Environment", 2, 5000, [ref] $result);
+  - "copy %SWCS%\\Apache\\conf\\cs\\ssl\\server.crt %SWSERVER%\\html\\simplesamlphp\\cert\\my.pem"
+  - "copy %SWCS%\\Apache\\conf\\cs\\ssl\\server.key %SWSERVER%\\html\\simplesamlphp\\cert\\my.key"
+  - 
+    cd: "%SWSERVER%\\html\\simplesamlphp\\cert"
+    cmd: "openssl x509 -inform der -in my.pem -out my.pem"
