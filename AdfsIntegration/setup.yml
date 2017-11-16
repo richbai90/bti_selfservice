@@ -31,4 +31,6 @@ scripts:
   - "copy %SWCS%\\Apache\\conf\\cs\\ssl\\server.key %SWSERVER%\\html\\simplesamlphp\\cert\\my.key"
   - 
     cd: "%SWSERVER%\\html\\simplesamlphp\\cert"
-    cmd: "openssl x509 -inform der -in my.pem -out my.pem"
+    cmd: 
+      - "openssl x509 -inform der -in my.pem -out my.pem"
+      - "openssl pkcs12 -export -out C:\\supportworks.pfx -inkey my.key -in my.pem"
