@@ -1,18 +1,20 @@
 --- 
+name: ADFS Integration
 prereq: 
-  - "%SWSERVER%\\data\\_dd_data\\ITSM.ddf"
-  - "%SWSERVER%\\html\\_selfservice\\_itsm_default_v2_template"
+  - '%SWSERVER%\data\_dd_data\ITSM.ddf'
+  - '%SWSERVER%\html\_selfservice\_itsm_default_v2_template'
 reg: 
-  - 
-    key: Path
-    path: "HKLLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager"
-    value: "+= ;%SWCS%\\Apache\\bin"
-  - 
-    key: OPENSSL_CONF
-    path: "HKLLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager"
-    value: "%SWCS%\\Apache\\bin\\openssl.cnf"
-scripts: 
+  path: 'HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
+  entries:
+    -
+      name: Path
+      value: '+= ;%SWCS%\Apache\bin'
+    - 
+      name: OPENSSL_CONF
+      value: '%SWCS%\Apache\bin\openssl.cnf'
+execute: 
   - |
+      # Notify command line of new path variables
       if (-not ("Win32.NativeMethods" -as [Type]))     {
               Add-Type -Namespace Win32 -Name NativeMethods -MemberDefinition @"
           [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
@@ -27,10 +29,10 @@ scripts:
           $result = [UIntPtr]::Zero
       
           [Win32.Nativemethods]::SendMessageTimeout($HWND_BROADCAST, $WM_SETTINGCHANGE, [UIntPtr]::Zero, "Environment", 2, 5000, [ref] $result);
-  - "copy %SWCS%\\Apache\\conf\\cs\\ssl\\server.crt %SWSERVER%\\html\\simplesamlphp\\cert\\my.pem"
-  - "copy %SWCS%\\Apache\\conf\\cs\\ssl\\server.key %SWSERVER%\\html\\simplesamlphp\\cert\\my.key"
+  - 'copy "%SWCS%\Apache\conf\cs\ssl\server.crt" "%SWSERVER%\html\simplesamlphp\cert\my.pem"' 
+  - 'copy "%SWCS%\Apache\conf\cs\ssl\server.key" "%SWSERVER%\html\simplesamlphp\cert\my.key"'
   - 
-    cd: "%SWSERVER%\\html\\simplesamlphp\\cert"
+    cwd: '%SWSERVER%\html\simplesamlphp\cert'
     cmd: 
-      - "openssl x509 -inform der -in my.pem -out my.pem"
-      - "openssl pkcs12 -export -out C:\\supportworks.pfx -inkey my.key -in my.pem"
+      - '(openssl x509 -inform der -in my.pem -out my.pem && (call ))  || echo "an error occured converting file to pem. Probable its already in pem format." && (call )'
+      - 'openssl pkcs12 -export -out D:\supportworks.pfx -inkey my.key -in my.pem -passin pass:<CHANGE_ME> -passout pass:<CHANGE_ME>'

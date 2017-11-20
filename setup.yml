@@ -1,8 +1,8 @@
 ---
 deploy:
-  -
-    package: ./SelfService
-    then: false
+#  -
+#    package: ./SelfService
+#    then: false
   -
     package: ./AdfsIntegration
     then: false

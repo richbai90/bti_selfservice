@@ -1,8 +1,0 @@
----
-deploy:
-  -
-    package: ./SelfService
-    then: false
-  -
-    package: ./SSO_ADFS
-    then: false
