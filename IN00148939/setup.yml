@@ -1,0 +1,16 @@
+---
+name: IN00148939
+execute:
+  - 
+    # CHANGE_ME 
+    # you need to download this filefrom https://files.hornbill.com/coreservices/Patches/PM00145656/CS601-patch.exe 
+    # and place it in the __CS__ folder within this folder. 
+    # Then delete this comment.
+    cmd: '%SWCS%\CS601-patch.exe' 
+    ignore_errors: true
+    type: nsis
+    if: reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Hornbill\Core Services" /f 6.0.0 /d
+  
+  - 
+    cmd: '%SWSERVER%\wcsetup.exe'
+    ignore_errors: true

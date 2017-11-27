@@ -4,5 +4,8 @@ deploy:
 #    package: ./SelfService
 #    then: false
   -
+    package: ./IN00148939
+    then: missing_scroll
+  -
     package: ./AdfsIntegration
     then: false
