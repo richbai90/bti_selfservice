@@ -33,6 +33,7 @@ execute:
   - 'copy "%SWCS%\Apache\conf\cs\ssl\server.key" "%SWSERVER%\html\simplesamlphp\cert\my.key"'
   - 
     cwd: '%SWSERVER%\html\simplesamlphp\cert'
+    new_shell: true
     cmd: 
       - 'openssl x509 -inform der -in my.pem -out my.pem'
       # The passout is the password the pfx file will be exported with.
@@ -40,5 +41,18 @@ execute:
       # Both of these need to be changed with appropriate values.
       # Passout can be anything you like, but passin must be the correct password that the key was created with.
       # If there is no password on the key to your knowledge, simply omit -passin.
-      - 'openssl pkcs12 -export -out D:\supportworks.pfx -inkey my.key -in my.pem -passout pass:<CHANGE_ME> -passin pass:<CHANGE_ME>'
+      # out needs to be changed to an appropriate out directory
+      - 'openssl pkcs12 -export -out <CHANGE_ME TO OUT DIRECTORY>\supportworks.pfx -inkey my.key -in my.pem -passout pass:CHANGE_ME -passin pass:CHANGE_ME'
     ignore_errors: true
+xml:
+  path: '%SWSERVER%\conf\SwServerService.xml'
+  map:
+    select: 'Config'
+    add_children:
+      child: |
+        <TrustedAuthentication>
+          <secretKey value="%RAND%"/>
+          <authorisedIpAddressNumber value="1"/>
+          <authorisedIpAddress1 value= "127.0.0.1"/>
+        </TrustedAuthentication>
+      loose_compare: true
