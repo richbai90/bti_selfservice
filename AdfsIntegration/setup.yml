@@ -33,7 +33,6 @@ execute:
   - 'copy "%SWCS%\Apache\conf\cs\ssl\server.key" "%SWSERVER%\html\simplesamlphp\cert\my.key"'
   - 
     cwd: '%SWSERVER%\html\simplesamlphp\cert'
-    new_shell: true
     cmd: 
       - 'openssl x509 -inform der -in my.pem -out my.pem'
       # The passout is the password the pfx file will be exported with.
