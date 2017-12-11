@@ -43,15 +43,15 @@ execute:
       # out needs to be changed to an appropriate out directory
       - '%SWCS%\Apache\bin\openssl.exe pkcs12 -export -out <CHANGE_ME TO OUT DIRECTORY>\supportworks.pfx -inkey my.key -in my.pem -passout pass:CHANGE_ME -passin pass:CHANGE_ME'
     ignore_errors: true
-xml:
-  path: '%SWSERVER%\conf\SwServerService.xml'
-  map:
-    select: 'Config'
-    add_children:
-      child: |
-        <TrustedAuthentication>
-          <secretKey value="%RAND%"/>
-          <authorisedIpAddressNumber value="1"/>
-          <authorisedIpAddress1 value= "127.0.0.1"/>
-        </TrustedAuthentication>
-      loose_compare: true
+#xml:
+#  path: '%SWSERVER%\conf\SwServerService.xml'
+#  map:
+#    select: 'Config'
+#    add_children:
+#      child: |
+#        <TrustedAuthentication>
+#          <secretKey value="%RAND%"/>
+#          <authorisedIpAddressNumber value="1"/>
+#          <authorisedIpAddress1 value= "127.0.0.1"/>
+#        </TrustedAuthentication>
+#      loose_compare: true
