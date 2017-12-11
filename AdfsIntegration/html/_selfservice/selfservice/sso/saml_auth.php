@@ -1,8 +1,9 @@
 <?php
-error_reporting(E_ALL);
+require_once('http_build_url.php');
 
 $location = $_GET['returnto'];
-$domain = parse_url($location, PHP_URL_HOST);
+$url = parse_url($location);
+$domain = $url['host'];
 if($domain === 'localhost' || $domain === '127.0.0.1') {
 	include_once('error/index.html.php');
 	die();
@@ -49,11 +50,8 @@ if (!$xmlmc->Invoke("session", "selfServiceLogon")) {
     $cred['assignGroup'] = $strGroup;
     $cred['assignAnalyst'] = $strAnalyst;
 }
-error_log($_SERVER['HTTP_REFERER']);
+empty($url['query']) ? $url['query'] = 'from_saml=1' : $url['query'] .= '&from_saml=1';
 $cred = base64_encode(json_encode($cred));
-
-
-setcookie('auth', $cred, false, "/", (($domain === 'localhost') ? false : $domain));
-
-header('Location: ' . $location, true, 303);
+setcookie('saml_auth', $cred, false, $url['path'], $url['host'], $url['scheme'] == 'https' );
+header('Location: ' . http_build_url($url, null, HTTP_URL_JOIN_QUERY), true, 303);
 die();

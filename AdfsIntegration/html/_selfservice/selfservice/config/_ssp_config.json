@@ -1,9 +1,10 @@
 {
-  "serverAddress": "",
+  "serverAddress": "https://10.0.3.4",
   "selfServiceInstance": "selfservice",
-  "ssoEnabled": false,
+  "ssoEnabled": true,
   "type": "saml",
   "ssoAddress": "sso/saml_auth.php",
   "defaultSupportWizard": "Request Support",
-  "defaultRequestWizard": "Request Support"
+  "defaultRequestWizard": "Request Support",
+  "returnAddress": "https://10.0.3.4/sw/selfservice"
 }
