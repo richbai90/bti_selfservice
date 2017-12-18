@@ -14,6 +14,7 @@
  */
 !function(e){var n=!1;if("function"==typeof define&&define.amd&&(define(e),n=!0),"object"==typeof exports&&(exports.Cookies=e(),n=!0),!n){var o=window.Cookies,t=window.Cookies=e();t.noConflict=function(){return window.Cookies=o,t}}}(function(){function e(){for(var e=0,n={};e<arguments.length;e++){var o=arguments[e];for(var t in o)n[t]=o[t]}return n}function n(o){function t(n,r,i){var c;if("undefined"!=typeof document){if(arguments.length>1){if("number"==typeof(i=e({path:"/"},t.defaults,i)).expires){var a=new Date;a.setMilliseconds(a.getMilliseconds()+864e5*i.expires),i.expires=a}i["max-age"]=i.expires?0:null,i.expires=i.expires?i.expires.toUTCString():"";try{c=JSON.stringify(r),/^[\{\[]/.test(c)&&(r=c)}catch(e){}r=o.write?o.write(r,n):encodeURIComponent(String(r)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent),n=(n=(n=encodeURIComponent(String(n))).replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent)).replace(/[\(\)]/g,escape);var s="";for(var f in i)(i[f]||0===i[f])&&(s+="; "+f,!0!==i[f]&&(s+="="+i[f]));return document.cookie=n+"="+r+s}n||(c={});for(var p=document.cookie?document.cookie.split("; "):[],d=/(%[0-9A-Z]{2})+/g,u=0;u<p.length;u++){var l=p[u].split("="),C=l.slice(1).join("=");this.json||'"'!==C.charAt(0)||(C=C.slice(1,-1));try{var g=l[0].replace(d,decodeURIComponent);if(C=o.read?o.read(C,g):o(C,g)||C.replace(d,decodeURIComponent),this.json)try{C=JSON.parse(C)}catch(e){}if(n===g){c=C;break}n||(c[g]=C)}catch(e){}}return c}}return t.set=t,t.get=function(e){return t.call(t,e)},t.getJSON=function(){return t.apply({json:!0},[].slice.call(arguments))},t.defaults={},t.remove=function(n,o){t(n,"",e(o,{expires:-1}))},t.withConverter=n,t}return n(function(){})});
 
+
   var dependencies = ['angular-storage', 'ngSanitize', 'ui.router', 'ngCookies', 'toaster', 'ngAnimate', 'angularUtils.directives.dirPagination', 'ui.bootstrap', 'ng-backstretch', 'angular-ladda', 'jcs-autoValidate', 'naif.base64', 'ct.ui.router.extras', 'angularBootstrapNavTree', 'daterangepicker', 'ng-fusioncharts', 'hierarchical-selector', 'angular-timeline', 'angular-json-editor', 'hbSwXmlmc', 'mp.deepBlur', 'cp.ngConfirm', 'angucomplete-alt'];
 
   var module = angular.module('swSelfService', dependencies);
@@ -38,7 +39,7 @@
     }).state('saml', {
       url: '/saml',
       controller: 'SamlLoginController',
-      templateUrl: 'templates/login.tpl.html',
+      templateUrl: 'templates/login.sso.tpl.html',
       data: {
         loginState: true
       },
@@ -347,15 +348,13 @@
   module.controller('swSelfServiceCtrl', function ($scope, store) {});
 
   $.getJSON('config/retrieve_config.php', function (ssoConfig) {
-    if (ssoConfig.type === 'saml' && !exports.Cookies.get('swSessionID')) {
-		var url = document.createElement('a');
-        url.href = ssoConfig.returnAddress;
-		var cookie_conf = {path: url.pathname}
+    if (ssoConfig.type === 'saml' && !exports.Cookies.get('ESPSessionState')) {
       if (location.search.match(/[?&]from_saml=/)) {
-		  exports.Cookies.remove('saml_auth', cookie_conf);
-          angular.bootstrap(document, ['swSelfService']);
-	  } else {
-        exports.Cookies.remove('saml_auth', cookie_conf);
+        angular.bootstrap(document, ['swSelfService']);
+      } else {
+        var url = document.createElement('a');
+        url.href = ssoConfig.returnAddress;
+        document.cookie = 'saml_auth=; Path=' + url.pathname + '; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'; // remove any saml_auth cookie currently existing
         window.location.href = (ssoConfig.serverAddress + '/sw/selfservice/' + ssoConfig.ssoAddress + '?wssinstance=' + encodeURIComponent(ssoConfig.selfServiceInstance) + '&returnto=' + encodeURIComponent(ssoConfig.returnAddress)).replace(/(http:|https:)?\/\//g, function ($0, $1) {
           return $1 ? $0 : '/';
         });
