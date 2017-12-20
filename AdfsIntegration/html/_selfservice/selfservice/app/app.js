@@ -45,7 +45,8 @@
       },
       params: {
         saml: {
-          claim: ''
+          claim: '',
+          config: {},
         }
       }
     }).state('new_password', {
@@ -348,9 +349,11 @@
   module.controller('swSelfServiceCtrl', function ($scope, store) {});
 
   $.getJSON('config/retrieve_config.php', function (ssoConfig) {
-    if (ssoConfig.type === 'saml' && !exports.Cookies.get('ESPSessionState')) {
+    if (ssoConfig.type === 'saml' && ssoConfig.ssoEnabled && !exports.Cookies.get('ESPSessionState')) {
       if (location.search.match(/[?&]from_saml=/)) {
         angular.bootstrap(document, ['swSelfService']);
+      } else if(location.search.match(/[?&]LogoutState/)) {
+          angular.bootstrap(document, ['swSelfService']);
       } else {
         var url = document.createElement('a');
         url.href = ssoConfig.returnAddress;

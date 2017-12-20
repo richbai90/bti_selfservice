@@ -15,7 +15,7 @@
     if (angular.isDefined(sspConfig.ssoEnabled) && sspConfig.ssoEnabled === true) {
       if (sspConfig.type === 'saml') {
         $timeout(function () {
-          $state.go('saml', { saml: { claim: saml_auth } });
+          $state.go('saml', { saml: { claim: saml_auth, config: sspConfig } });
         });
       } else {
         $timeout(function () {

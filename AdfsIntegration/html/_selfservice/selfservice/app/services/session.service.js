@@ -5,9 +5,9 @@
 
   angular.module('swSelfService').service('SWSessionService', SWSessionService);
 
-  SWSessionService.$inject = ['$ngConfirm', '$timeout', '$q', 'XMLMCService', '$cookies', 'store', '$rootScope', '$state', 'wssHelpers', '$http', 'wssLogging', 'RequestService'];
+  SWSessionService.$inject = ['$ngConfirm', '$timeout', '$q', 'XMLMCService', '$cookies', 'store', '$rootScope', '$state', 'wssHelpers', '$http', 'wssLogging', 'RequestService', '$window'];
 
-  function SWSessionService($ngConfirm, $timeout, $q, XMLMCService, $cookies, store, $rootScope, $state, wssHelpers, $http, wssLogging, RequestService) {
+  function SWSessionService($ngConfirm, $timeout, $q, XMLMCService, $cookies, store, $rootScope, $state, wssHelpers, $http, wssLogging, RequestService, $window) {
     var self = {
       'selfServiceConfig': {},
       'custDetails': [],
@@ -15,7 +15,8 @@
       'normalLogoff': false,
       'sessionEnded': false,
       'sessionLoggedOff': false,
-      'previousLogin': false
+      'previousLogin': false,
+      'ssoConfig': {}
     };
 
     self.keepAlive = function (strSessionId) {
@@ -122,10 +123,11 @@
       return deferred.promise;
     };
 
-    self.ssoLogin = function (quote) {
+    self.ssoLogin = function (quote, config) {
+
+      self.ssoConfig = config;
 
       var deferred = $q.defer();
-
       if (angular.isDefined(quote)) {
         if (typeof quote === 'string') {
           try {
@@ -161,7 +163,7 @@
           }
           wssLogging.sendToast(connErrorType, connErrorBody, connErrorTitle);
 
-          deferred.resolve(false);
+          throw connErrorBody;
         } else {
           self.username = quote.data.custid;
           self.sessionId = quote.data.sessionId;
@@ -193,34 +195,52 @@
                   } else {
                     deferred.resolve(true);
                   }
+                }).catch(function (e) {
+                  deferred.reject(e)
                 });
+              }).catch(function (e) {
+                deferred.reject(e);
               });
+            }).catch(function (e) {
+              deferred.reject(e);
             });
+          }).catch(function (e) {
+            deferred.reject(e);
           });
         }
       }
       return deferred.promise;
     };
 
-    self.logoff = function () {
+    self.logoff = function (samlReady) {
       $timeout.cancel(self.timeout);
       var deferred = $q.defer();
-      var xmlmc = new XMLMCService.MethodCall();
-      xmlmc.invoke("session", "selfServiceLogoff", {
-        onSuccess: function onSuccess(params) {
-          //Remove cookies & localStorage
-          self.normalLogoff = true;
-          self.sessionEnded = false;
-          self.sessionLoggedOff = true;
-          self.removeSessionStorage();
-          deferred.resolve(params);
-        },
-        onFailure: function onFailure(error) {
-          self.sessionEnded = true;
-          self.removeSessionStorage();
-          deferred.reject(error);
-        }
-      });
+      if (angular.isDefined(self.ssoConfig.type) && self.ssoConfig.type === 'saml' && !samlReady) {
+        $window.location.href = (self.ssoConfig.serverAddress +
+        '/sw/selfservice/' + self.ssoConfig.ssoAddress + '?logoff=1&returnto=' +
+        encodeURIComponent(self.ssoConfig.returnAddress))
+          .replace(/(http:|https:)?\/\//g, function ($0, $1) {
+            return $1 ? $0 : '/';
+          });
+        deferred.reject('samlLogoffFirst')
+      } else {
+        var xmlmc = new XMLMCService.MethodCall();
+        xmlmc.invoke("session", "selfServiceLogoff", {
+          onSuccess: function onSuccess(params) {
+            //Remove cookies & localStorage
+            self.normalLogoff = true;
+            self.sessionEnded = false;
+            self.sessionLoggedOff = true;
+            self.removeSessionStorage();
+            deferred.resolve(params);
+          },
+          onFailure: function onFailure(error) {
+            self.sessionEnded = true;
+            self.removeSessionStorage();
+            deferred.reject(error);
+          }
+        });
+      }
       return deferred.promise;
     };
 
@@ -358,7 +378,7 @@
       $cookies.remove("swSessionID");
       $cookies.remove("ESPSessionState");
       var now = new Date(),
-          exp = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+        exp = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
       $cookies.put('ESPSessionState', '', {
         path: '/sw',
         expires: exp
@@ -463,10 +483,10 @@
         }
         //XMLMC succes
         else {
-            var messageTitle = "Reset password success!";
-            var messageBody = "You can now log back in to SelfService.";
-            wssLogging.sendToast(messageBody, messageTitle);
-          }
+          var messageTitle = "Reset password success!";
+          var messageBody = "You can now log back in to SelfService.";
+          wssLogging.sendToast(messageBody, messageTitle);
+        }
       }, function (error) {
         var connErrorBody = "Please report this to your system administrator.";
         var connErrorTitle = "Password Reset Request Error!";
