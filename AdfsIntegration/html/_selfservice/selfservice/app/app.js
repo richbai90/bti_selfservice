@@ -1,20 +1,9 @@
 'use strict';
 
+
 (function () {
 
   'use strict';
-  
-  var exports = {};
-  /*!
- * JavaScript Cookie v2.2.0
- * https://github.com/js-cookie/js-cookie
- *
- * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
- * Released under the MIT license
- */
-!function(e){var n=!1;if("function"==typeof define&&define.amd&&(define(e),n=!0),"object"==typeof exports&&(exports.Cookies=e(),n=!0),!n){var o=window.Cookies,t=window.Cookies=e();t.noConflict=function(){return window.Cookies=o,t}}}(function(){function e(){for(var e=0,n={};e<arguments.length;e++){var o=arguments[e];for(var t in o)n[t]=o[t]}return n}function n(o){function t(n,r,i){var c;if("undefined"!=typeof document){if(arguments.length>1){if("number"==typeof(i=e({path:"/"},t.defaults,i)).expires){var a=new Date;a.setMilliseconds(a.getMilliseconds()+864e5*i.expires),i.expires=a}i["max-age"]=i.expires?0:null,i.expires=i.expires?i.expires.toUTCString():"";try{c=JSON.stringify(r),/^[\{\[]/.test(c)&&(r=c)}catch(e){}r=o.write?o.write(r,n):encodeURIComponent(String(r)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent),n=(n=(n=encodeURIComponent(String(n))).replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent)).replace(/[\(\)]/g,escape);var s="";for(var f in i)(i[f]||0===i[f])&&(s+="; "+f,!0!==i[f]&&(s+="="+i[f]));return document.cookie=n+"="+r+s}n||(c={});for(var p=document.cookie?document.cookie.split("; "):[],d=/(%[0-9A-Z]{2})+/g,u=0;u<p.length;u++){var l=p[u].split("="),C=l.slice(1).join("=");this.json||'"'!==C.charAt(0)||(C=C.slice(1,-1));try{var g=l[0].replace(d,decodeURIComponent);if(C=o.read?o.read(C,g):o(C,g)||C.replace(d,decodeURIComponent),this.json)try{C=JSON.parse(C)}catch(e){}if(n===g){c=C;break}n||(c[g]=C)}catch(e){}}return c}}return t.set=t,t.get=function(e){return t.call(t,e)},t.getJSON=function(){return t.apply({json:!0},[].slice.call(arguments))},t.defaults={},t.remove=function(n,o){t(n,"",e(o,{expires:-1}))},t.withConverter=n,t}return n(function(){})});
-
-
   var dependencies = ['angular-storage', 'ngSanitize', 'ui.router', 'ngCookies', 'toaster', 'ngAnimate', 'angularUtils.directives.dirPagination', 'ui.bootstrap', 'ng-backstretch', 'angular-ladda', 'jcs-autoValidate', 'naif.base64', 'ct.ui.router.extras', 'angularBootstrapNavTree', 'daterangepicker', 'ng-fusioncharts', 'hierarchical-selector', 'angular-timeline', 'angular-json-editor', 'hbSwXmlmc', 'mp.deepBlur', 'cp.ngConfirm', 'angucomplete-alt'];
 
   var module = angular.module('swSelfService', dependencies);
@@ -82,7 +71,7 @@
         loginState: true
       }
     }).state('home', {
-      url: '/',
+      url: '/home',
       controller: 'DashboardController',
       templateUrl: 'templates/dashboard/dashboard.tpl.html',
       data: {
@@ -229,7 +218,7 @@
       controller: 'RequestListManAuthCtrl',
       template: '<request-list-auth></request-list-auth>'
     });
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/login');
 
     JSONEditorProvider.configure({
       defaults: {
@@ -247,13 +236,15 @@
 
     $rootScope.goToPath = '';
     $rootScope.goToPath = $location.path();
-    SWSessionService.getSSPSetup().then(function (sspResponse) {
-      $state.go('home');
-    }, function (error) {
-      wssLogging.logger(error, 'ERROR', 'app::init', true, true, 'Initialization Error');
-    });
+    //SWSessionService.getSSPSetup().then(function (sspResponse) {
+      //$state.go('home');
+    //}, function (error) {
+    //  wssLogging.logger(error, 'ERROR', 'app::init', true, true, 'Initialization Error');
+    //});
 
     $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
+		console.log([toState, fromState]);
+		
       if ($location.path() !== '/login' && $location.path() !== '/loginmanual' && $location.path() !== '/loginsso' && $location.path() !== '/new_password' && $location.path().indexOf('saml') === -1) {
         //Store the location path in rootScope - when hitting a login controller
         //we can then route to this state - accessing Requests and Services directly!
@@ -320,7 +311,7 @@
       } else if (toState.name === 'login' || toState.name === 'loginmanual' || toState.name === 'loginsso' || toState.name === 'new_password' || toState.name === 'saml') {
 
         //Trying to get to login state - already logged in?
-        if ($cookies.get('swSessionID')) {
+        if ($cookies.get('ESPSessionState')) {
           //If already logged in, go home
           e.preventDefault();
           $state.go('home');
@@ -347,24 +338,5 @@
   });
 
   module.controller('swSelfServiceCtrl', function ($scope, store) {});
-
-  $.getJSON('config/retrieve_config.php', function (ssoConfig) {
-    if (ssoConfig.type === 'saml' && ssoConfig.ssoEnabled && !exports.Cookies.get('ESPSessionState')) {
-      if (location.search.match(/[?&]from_saml=/)) {
-        angular.bootstrap(document, ['swSelfService']);
-      } else if(location.search.match(/[?&]LogoutState/)) {
-          angular.bootstrap(document, ['swSelfService']);
-      } else {
-        var url = document.createElement('a');
-        url.href = ssoConfig.returnAddress;
-        document.cookie = 'saml_auth=; Path=' + url.pathname + '; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'; // remove any saml_auth cookie currently existing
-        window.location.href = (ssoConfig.serverAddress + '/sw/selfservice/' + ssoConfig.ssoAddress + '?wssinstance=' + encodeURIComponent(ssoConfig.selfServiceInstance) + '&returnto=' + encodeURIComponent(ssoConfig.returnAddress)).replace(/(http:|https:)?\/\//g, function ($0, $1) {
-          return $1 ? $0 : '/';
-        });
-      }
-    } else {
-      angular.bootstrap(document, ['swSelfService']);
-    }
-  });
 })();
 //# sourceMappingURL=app.js.map

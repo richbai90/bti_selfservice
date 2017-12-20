@@ -41,7 +41,6 @@ execute:
       # Passout can be anything you like, but passin must be the correct password that the key was created with.
       # If there is no password on the key to your knowledge, simply omit -passin.
       # out needs to be changed to an appropriate out directory
-      - '%SWCS%\Apache\bin\openssl.exe pkcs12 -export -out D:\supportworks.pfx -inkey my.key -in my.pem -passout pass:Password1'
     ignore_errors: true
 #xml:
 #  path: '%SWSERVER%\conf\SwServerService.xml'

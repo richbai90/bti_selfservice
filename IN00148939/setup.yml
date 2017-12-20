@@ -1,8 +1,8 @@
 ---
 name: IN00148939
 execute:
-  - 
-    # CHANGE_ME 
+  -
+    # CHANGE_ME
     # you need to download this file from https://files.hornbill.com/coreservices/Patches/PM00145656/CS601-patch.exe 
     # and place it in the __CS__ folder within this folder. 
     # Then delete this comment.

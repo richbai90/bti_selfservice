@@ -1,6 +1,6 @@
 <?php
+error_reporting(E_ALL);
 require_once('http_build_url.php');
-
 $location = $_GET['returnto'];
 $url = parse_url($location);
 $domain = $url['host'];
@@ -20,7 +20,6 @@ if (isset($_GET['logoff'])) {
         'ReturnStateStage' => 'MyLogoutState',
     ));
 } else {
-    require_once "php5Requirements.php";
     $strInstanceID = $_GET['wssinstance'];
     $as->requireAuth();
     $attributes = $as->getAttributes();
@@ -31,13 +30,15 @@ if (isset($_GET['logoff'])) {
     include_once("itsm_default/xmlmc/helpers/resultparser.php");
 
     //-- turn into xmldom
+	$strXmFilePath = 	sw_getcfgstring("InstallPath")."\conf\swserverservice.xml";
+	$xmlfp = file_get_contents($strXmFilePath);
     $_trustedkeyfromconfig = "";
     $xmlDoc = domxml_open_mem(utf8_encode($xmlfp));
     $root = $xmlDoc->document_element();
     $arrItems = $root->get_elements_by_tagname("secretKey");
     $uid = $attributes['uid'][0];
     $upn = $attributes['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn'][0];
-
+	
     if($arrItems[0])$_trustedkeyfromconfig = $arrItems[0]->get_attribute("value");
 
     if($_trustedkeyfromconfig=="")
@@ -49,13 +50,13 @@ if (isset($_GET['logoff'])) {
         //--
         //-- call xmlmc to login
         $xmlmc = new XmlMethodCall();
-        $xmlmc->SetParam("userId", $strInstanceID);
-        $xmlmc->SetParam("customerId", 'admin');
+        $xmlmc->SetParam("userId", 'admin');
         $xmlmc->SetParam("secretKey ", $_trustedkeyfromconfig);
 
         $loginResult   = $xmlmc->Invoke('session', 'analystLogonTrust');
         if(!$loginResult)
         {
+			error_log($xmlmc->_lasterror);
             $password = strtolower($upn);
         }
         else
@@ -67,7 +68,7 @@ if (isset($_GET['logoff'])) {
                 $xmlmc->reset();
                 $arrData = $xmlmc->xmlDom->get_elements_by_tagname("row");
                 $row = $arrData[0];
-                $password = _getxml_childnode_content('password');
+                $password = _getxml_childnode_content($row,'password');
                 $xmlmc->Invoke('session', 'analystLogoff');
             } else {
                 $password = strtolower($upn);
@@ -78,9 +79,11 @@ if (isset($_GET['logoff'])) {
 
 
     $xmlmc = new XmlMethodCall();
+	error_log($uid);
+	error_log($password);
     $xmlmc->SetParam("selfServiceInstance", $strInstanceID);
     $xmlmc->SetParam("customerId", $uid);
-    $xmlmc->SetParam("password ", base64_encode($upn));
+    $xmlmc->SetParam("password ", base64_encode($password));
     if (!$xmlmc->Invoke("session", "selfServiceLogon")) {
         //Session creation failed - pass back an error
         $cred = array('error' => 'API Call Failed!');
