@@ -16,9 +16,10 @@
         $location.path('/'); // restart this process
       }
       $timeout(function () {
-        if (angular.isDefined($location.search().LogoutState)) {
+        if (angular.isDefined($location.search().LogoutState) && $location.search().LogoutState !== -1) {
           SWSessionService.logout(true);
           $scope.loginFailed = true;
+		  $location.search('LogoutState', -1);
         }
         SWSessionService.ssoLogin($stateParams.saml.claim, $stateParams.saml.config).then(function (auth) {
           if (auth) {
