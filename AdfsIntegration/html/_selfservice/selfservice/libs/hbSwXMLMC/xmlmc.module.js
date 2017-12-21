@@ -6,11 +6,11 @@
 
 'use strict';
 
-var dependencies = [];
+var dependencies = ['ngCookies',];
 angular.module('hbSwXmlmc', dependencies)
   .factory('XMLMCService', XmlmcService);
-  XmlmcService.$inject = ['$http','$q','$window','$rootScope'];
-  function XmlmcService($http, $q, $window, $rootScope)
+  XmlmcService.$inject = ['$http','$q','$window','$rootScope', '$cookies'];
+  function XmlmcService($http, $q, $window, $rootScope, $cookies)
   {
 
     this.serverUrl = '';
@@ -247,6 +247,12 @@ angular.module('hbSwXmlmc', dependencies)
         };
 
         this.invoke = function(service, method, handlers){
+			
+			if(!$cookies.get('ESPSessionState')) {
+				if(method != 'selfServiceLogon' && method != 'bindSession') {
+					return $q.reject('Establish a session first');
+				}
+			}
 
             var me = this;
             var paramObj = {};
