@@ -54,7 +54,13 @@
       xmlmc.addParam("sessionId", strSessionID);
       xmlmc.invoke("session", "bindSession", {
         onSuccess: function onSuccess() {
-          store.set("sessionConfig", self.sessionConfig);
+		  if(angular.isDefined(self.sessionConfig)) {
+			store.set("sessionConfig", self.sessionConfig);  
+		  } else if(store.get('sessionConfig')) {
+			  self.sessionConfig = store.get('sessionConfig');
+		  } else {
+			  self.logoff(true);
+		  }
           $cookies.put("swSessionID", strSessionID);
           self.sessionLoggedOff = false;
           deferred.resolve('');
@@ -122,6 +128,31 @@
       });
       return deferred.promise;
     };
+	
+	self.getSessionInfo = function(sessionId) {
+		var deferred = $q.defer();
+		var xmlmc = new XMLMCService.MethodCall();
+		if(sessionId) {
+			xmlmc.addParam("sessionId", sessionId);
+		}
+      xmlmc.invoke("session", "getSessionInfo2", {
+		  onSuccess: function(params) {
+			  if(params['sessionId']) {
+				  if(!$cookies.get('swSessionID')) {
+				      $cookies.put('swSessionID', params['sessionId']);
+				  }
+				  deferred.resolve(params);
+			  } else {
+				  deferred.reject(false);
+			  }
+		  },
+		  onFailure: function() {
+			  deferred.reject(false);
+		  },
+	  })
+	  
+	  return deferred.promise;
+	}
 
     self.ssoLogin = function (quote, config) {
 

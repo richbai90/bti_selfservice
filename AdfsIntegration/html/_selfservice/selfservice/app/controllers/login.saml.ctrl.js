@@ -5,18 +5,19 @@
 
   angular.module('swSelfService').controller('SamlLoginController', SamlLoginController);
 
-  SamlLoginController.$inject = ['$scope', '$state', '$timeout', 'SWSessionService', '$location', '$stateParams', '$cookies',];
+  SamlLoginController.$inject = ['$scope', '$state', '$timeout', 'SWSessionService', '$location', '$stateParams', '$cookies', '$window',];
 
-  function SamlLoginController($scope, $state, $timeout, SWSessionService, $location, $stateParams, $cookies) {
+  function SamlLoginController($scope, $state, $timeout, SWSessionService, $location, $stateParams, $cookies, $window) {
     $scope.loginFailed = false;
     $scope.login = function () {
       $cookies.remove('saml_auth');
       if ($scope.loginFailed) {
         $scope.loginFailed = false;
-        $location.path('/'); // restart this process
+        SWSessionService.getSSPSetup().then(function (config) {
+			$window.location.href = config.returnAddress;
+		})
       }
-      $timeout(function () {
-        if (angular.isDefined($location.search().LogoutState) && $location.search().LogoutState !== -1) {
+        if (location.search.match(/[?&](LogoutState=)[^-].+)) {
           SWSessionService.logout(true);
           $scope.loginFailed = true;
 		  $location.search('LogoutState', -1);
@@ -37,7 +38,7 @@
           $scope.loginFailed = true;
 
         });
-      }, 500);
+      
     };
 
     $scope.login();

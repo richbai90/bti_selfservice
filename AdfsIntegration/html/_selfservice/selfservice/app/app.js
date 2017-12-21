@@ -10,15 +10,15 @@
 
   module.config(function ($stateProvider, $urlRouterProvider, paginationTemplateProvider, JSONEditorProvider) {
 
-	var $delegate = $stateProvider.state;
-        $stateProvider.state = function(name, definition) {
-            if (!definition.resolve) {
-                definition.resolve = {};
-            }
+    var $delegate = $stateProvider.state;
+    $stateProvider.state = function (name, definition) {
+      if (!definition.resolve) {
+        definition.resolve = {};
+      }
 
-            return $delegate.apply(this, arguments);
-        };
-  
+      return $delegate.apply(this, arguments);
+    };
+
     $stateProvider.state('login', {
       url: '/login',
       controller: 'LoginController',
@@ -245,34 +245,37 @@
     $rootScope.goToPath = '';
     $rootScope.goToPath = $location.path();
     //SWSessionService.getSSPSetup().then(function (sspResponse) {
-      //$state.go('home');
+    //$state.go('home');
     //}, function (error) {
     //  wssLogging.logger(error, 'ERROR', 'app::init', true, true, 'Initialization Error');
     //});
 
     $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
-		toState.resolve.promise = [
-        'SWSessionService','$cookies',
-        function(SWSessionService, $cookies) {
-            if($cookies.get('swSessionID') && toState.data && toState.data.requiresLogin) {
-				return SWSessionService.bindSession($cookies.get('swSessionID')).then(function () {
-					return true;
-				}).catch(function () {
-					e.preventDefault();
-					$state.go('login')
-				});
-			} else {
-				e.preventDefault();
-				$state.go('login');
-			}
-        }
-    ]
-		if(store.get('stateTransitionInProgres')) {
-			// e.preventDefault();
-		} else {
-			store.set('stateTransitionInProgres', true);
-		}
-      if ($location.path() !== '/login' && $location.path() !== '/loginmanual' && $location.path() !== '/loginsso' && $location.path() !== '/new_password' && $location.path().indexOf('saml') === -1) {
+      toState.resolve.promise = [
+        'SWSessionService', '$cookies',
+        function (SWSessionService, $cookies) {
+          if ($cookies.get('swSessionID') && toState.data && toState.data.requiresLogin) {
+            return SWSessionService.bindSession($cookies.get('swSessionID'));
+          } else if ($cookies.get('ESPSessionState') && toState.data && toState.data.requiresLogin) {
+            return SWSessionService.getSessionInfo().then(function () {
+              if ($cookies.get('swSessionID')) {
+                SWSessionService.bindSession($cookies.get('swSessionID'));
+              }
+            })
+          } else {
+            e.preventDefault();
+            $location.search('LogoutState', 1);
+            $state.go('home');
+          }
+          ;
+        }]
+
+      if (store.get('stateTransitionInProgres')) {
+        // e.preventDefault();
+      } else {
+        store.set('stateTransitionInProgres', true);
+      }
+      if ($location.path() !== '/' && $location.path() !== '/login' && $location.path() !== '/loginmanual' && $location.path() !== '/loginsso' && $location.path() !== '/new_password' && $location.path().indexOf('saml') === -1) {
         //Store the location path in rootScope - when hitting a login controller
         //we can then route to this state - accessing Requests and Services directly!
 
@@ -302,7 +305,7 @@
     });
 
     $rootScope.$on('$stateChangeSuccess', function (e, toState, toParams, fromState, fromParams) {
-		store.set('stateTransitionInProgres', false);
+      store.set('stateTransitionInProgres', false);
       //Refresh the counter of the authorisation if the session exits
       //Storaging in the session service and the local storage
       if ($cookies.get('swSessionID')) {
@@ -326,7 +329,7 @@
           // Do not refresh wizard page as Angular data for current wizard will be lost!
           $state.go('home');
         } else if (newState !== '') {
-			store.set('refreshing', true)
+          store.set('refreshing', true)
           //this is a page refresh - go to state immediately prior to refresh
           // var newStateParams = store.get('newStateParams');
           // $state.go(newState, newStateParams);
@@ -349,7 +352,7 @@
       }
     });
 
-    //Add custom validation messages
+//Add custom validation messages
     defaultErrorMessageResolver.getErrorMessages().then(function (errorMessages) {
       errorMessages.updateTextMinimum = 'Your update is too short!';
       errorMessages.updateTextRequired = 'You need to provide a description when updating requests!';
@@ -363,8 +366,8 @@
       errorMessages.wizardDateSelect = 'Please select a date, above';
       errorMessages.wizardDateRangeSelect = 'Please select a date range, above';
     });
-  });
 
-  module.controller('swSelfServiceCtrl', function ($scope, store) {});
+    module.controller('swSelfServiceCtrl', function ($scope, store) {});
+  })
 })();
 //# sourceMappingURL=app.js.map
