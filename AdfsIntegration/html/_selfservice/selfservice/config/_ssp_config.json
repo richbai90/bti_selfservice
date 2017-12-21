@@ -1,10 +1,10 @@
 {
-  "serverAddress": "https://10.0.3.4",
+  "serverAddress": "https://supportworkslab.sw.test",
   "selfServiceInstance": "selfservice",
-  "ssoEnabled": true,
+  "ssoEnabled": false,
   "type": "saml",
   "ssoAddress": "sso/saml_auth.php",
   "defaultSupportWizard": "Request Support",
   "defaultRequestWizard": "Request Support",
-  "returnAddress": "https://10.0.3.4/sw/selfservice"
+  "returnAddress": "https://supportworkslab.sw.test/sw/selfservice"
 }

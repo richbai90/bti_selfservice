@@ -24,7 +24,12 @@
           if (auth) {
             auth === true ? $state.go('home') : $location.path(auth);
           } else {
-            $scope.loginFailed = true;
+			  if(auth === '') {
+				  $state.go('home');
+			  } else {
+					$scope.loginFailed = true;
+			  }
+           
           }
         }).catch(function () {
 

@@ -10,6 +10,15 @@
 
   module.config(function ($stateProvider, $urlRouterProvider, paginationTemplateProvider, JSONEditorProvider) {
 
+	var $delegate = $stateProvider.state;
+        $stateProvider.state = function(name, definition) {
+            if (!definition.resolve) {
+                definition.resolve = {};
+            }
+
+            return $delegate.apply(this, arguments);
+        };
+  
     $stateProvider.state('login', {
       url: '/login',
       controller: 'LoginController',
@@ -242,8 +251,19 @@
     //});
 
     $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
+		toState.resolve.promise = [
+        'SWSessionService','$cookies',
+        function(SWSessionService, $cookies) {
+            if($cookies.get('swSessionID')) {
+				return SWSessionService.bindSession($cookies.get('swSessionID'));
+			} else {
+				e.preventDefault();
+				$state.go('login');
+			}
+        }
+    ]
 		if(store.get('stateTransitionInProgres')) {
-			e.preventDefault();
+			// e.preventDefault();
 		} else {
 			store.set('stateTransitionInProgres', true);
 		}
