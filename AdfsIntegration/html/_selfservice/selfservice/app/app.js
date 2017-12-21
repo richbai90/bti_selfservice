@@ -255,21 +255,39 @@
         'SWSessionService', '$cookies',
         function (SWSessionService, $cookies) {
 			if(toState.data && toState.data.requiresLogin) {
-          if ($cookies.get('swSessionID')) {
-            return SWSessionService.bindSession($cookies.get('swSessionID'));
-          } else if ($cookies.get('ESPSessionState')) {
-            return SWSessionService.getSessionInfo().then(function () {
-              if ($cookies.get('swSessionID')) {
-                SWSessionService.bindSession($cookies.get('swSessionID'));
-              }
-            })
+                if ($cookies.get('swSessionID')) {
+                    return SWSessionService.bindSession($cookies.get('swSessionID')).then(function () {
+						if(!store.get('custDetails')) {
+							SWSessionService.getCustomerDetails().then(function (data) {
+								store.set('custDetails', data);
+							})
+						}
+					}).catch(function () {
+						e.preventDefault();
+						$state.go('login');
+					});
+                } else if ($cookies.get('ESPSessionState')) {
+                    return SWSessionService.getSessionInfo().then(function () {
+                    if ($cookies.get('swSessionID')) {
+                        SWSessionService.bindSession($cookies.get('swSessionID')).then(function () {
+							if(!store.get('custDetails')) {
+							SWSessionService.getCustomerDetails().then(function (data) {
+								store.set('custDetails', data);
+							})
+						}
+						});
+						
+                    }
+                }).catch(function () {
+					e.preventDefault();
+					$state.go('login');
+				})
           } else {
             e.preventDefault();
             $location.search('LogoutState', 1);
             $state.go('login');
           }
-          ;
-        }
+            }
 		}]
 
       if (store.get('stateTransitionInProgres')) {

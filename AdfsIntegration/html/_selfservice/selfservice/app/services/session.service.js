@@ -278,6 +278,13 @@
     };
 
     self.getCustomerDetails = function (ks, idFld) {
+	  if(!ks) {
+		  ks = self.customerId;
+	  }
+	  
+	  if(!idFld) {
+		  idFld = self.wssConfig.ac_id;
+	  }
       self.custDetails = [];
       var deferred = $q.defer();
       var xmlmc = new XMLMCService.MethodCall();
@@ -369,10 +376,11 @@
 
     self.checkActiveSession = function (sessionId) {
       var deferred = $q.defer();
-      if (!$cookies.get('swSessionID')) {
+      if (!$cookies.get('swSessionID') || !$cookies.get('ESPSessionState')) {
+		  deferred.reject(false);
         //Haven't got a cookie - a clean up and go to login
-        self.sessionEnded = true;
-        self.processSessionError();
+        // self.sessionEnded = true;
+        // self.processSessionError();
       } else {
         var xmlmc = new XMLMCService.MethodCall();
         var swSessionID = $cookies.get('swSessionID');
@@ -385,8 +393,8 @@
           },
           onFailure: function onFailure(error) {
             //We don't have an active session, clean up and go to login
-            self.sessionEnded = true;
-            self.processSessionError();
+            // self.sessionEnded = true;
+            // self.processSessionError();
             deferred.reject(false);
           }
         });
