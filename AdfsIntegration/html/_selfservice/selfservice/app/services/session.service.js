@@ -191,13 +191,15 @@
                   if ($rootScope.goToPath !== '/' && $rootScope.goToPath !== '/login' && $rootScope.goToPath !== '/loginsso' && $rootScope.goToPath !== '/loginmanual' && $rootScope.goToPath.indexOf('/saml') === -1) {
                     var newPath = $rootScope.goToPath;
                     $rootScope.goToPath = '';
+					if(newPath) {
                     deferred.resolve(newPath);
+					} else {
+						deferred.resolve(true);
+					}
                   } else {
                     deferred.resolve(true);
                   }
-                }).catch(function (e) {
-                  deferred.reject(e)
-                });
+                })
               }).catch(function (e) {
                 deferred.reject(e);
               });

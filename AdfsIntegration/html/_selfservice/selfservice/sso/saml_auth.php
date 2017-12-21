@@ -38,6 +38,10 @@ if (isset($_GET['logoff'])) {
     $arrItems = $root->get_elements_by_tagname("secretKey");
     $uid = $attributes['uid'][0];
     $upn = $attributes['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn'][0];
+
+	if($uid === 'Administrator') {
+		$uid = 'alanc';
+	}
 	
     if($arrItems[0])$_trustedkeyfromconfig = $arrItems[0]->get_attribute("value");
 
@@ -79,14 +83,12 @@ if (isset($_GET['logoff'])) {
 
 
     $xmlmc = new XmlMethodCall();
-	error_log($uid);
-	error_log($password);
     $xmlmc->SetParam("selfServiceInstance", $strInstanceID);
     $xmlmc->SetParam("customerId", $uid);
     $xmlmc->SetParam("password ", base64_encode($password));
     if (!$xmlmc->Invoke("session", "selfServiceLogon")) {
         //Session creation failed - pass back an error
-        $cred = array('error' => 'API Call Failed!');
+        $cred = array('error' => 'API Call Failed!', 'xmlmc_error' => $xmlmc->_lasterror);
     } else {
         //Session creation success - build an array containing session information
         //so that calling AngularJS app can bind to SW session

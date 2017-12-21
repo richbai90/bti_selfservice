@@ -232,8 +232,7 @@
     });
   });
   //Request Service needed to check the counter of the authorisations
-  module.run(function ($rootScope, $state, $cookies, SWSessionService, RequestService, defaultErrorMessageResolver, $location, store, wssLogging) {
-
+  module.run(function ($rootScope, $state, $cookies, SWSessionService, RequestService, defaultErrorMessageResolver, $location, store, wssLogging, $timeout) {
     $rootScope.goToPath = '';
     $rootScope.goToPath = $location.path();
     //SWSessionService.getSSPSetup().then(function (sspResponse) {
@@ -243,8 +242,11 @@
     //});
 
     $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
-		console.log([toState, fromState]);
-		
+		if(store.get('stateTransitionInProgres')) {
+			e.preventDefault();
+		} else {
+			store.set('stateTransitionInProgres', true);
+		}
       if ($location.path() !== '/login' && $location.path() !== '/loginmanual' && $location.path() !== '/loginsso' && $location.path() !== '/new_password' && $location.path().indexOf('saml') === -1) {
         //Store the location path in rootScope - when hitting a login controller
         //we can then route to this state - accessing Requests and Services directly!
@@ -253,7 +255,7 @@
       }
       if (toState.data && toState.data.requiresLogin) {
         //If the page requires login, and the sessionID is not in the cookies, return to login page
-        if (!$cookies.get('swSessionID')) {
+        if (!$cookies.get('ESPSessionState')) {
           e.preventDefault();
           if (SWSessionService.normalLogoff !== true) {
             SWSessionService.sessionEnded = true;
@@ -267,7 +269,7 @@
         // If state doesn't require login - it's a login page!
         // If we have a current active session, just go back home
         // To prevent customers attempting to get to one of the login pages when they already have a session
-        if ($cookies.get('swSessionID') && toState.data && toState.data.loginState) {
+        if ($cookies.get('ESPSessionState') && toState.data && toState.data.loginState) {
           e.preventDefault();
           $state.go('home');
         }
@@ -275,7 +277,7 @@
     });
 
     $rootScope.$on('$stateChangeSuccess', function (e, toState, toParams, fromState, fromParams) {
-
+		store.set('stateTransitionInProgres', false);
       //Refresh the counter of the authorisation if the session exits
       //Storaging in the session service and the local storage
       if ($cookies.get('swSessionID')) {
@@ -299,9 +301,10 @@
           // Do not refresh wizard page as Angular data for current wizard will be lost!
           $state.go('home');
         } else if (newState !== '') {
+			store.set('refreshing', true)
           //this is a page refresh - go to state immediately prior to refresh
-          var newStateParams = store.get('newStateParams');
-          $state.go(newState, newStateParams);
+          // var newStateParams = store.get('newStateParams');
+          // $state.go(newState, newStateParams);
         }
       } else if (toState.name !== 'login' && toState.name !== 'loginmanual' && toState.name !== 'loginsso' && toState.name !== 'saml') {
         //Set current page state in localStorage when change successful
