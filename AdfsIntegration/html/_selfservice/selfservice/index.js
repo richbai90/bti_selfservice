@@ -7,7 +7,7 @@
       if (ssoConfig.type === 'saml' && ssoConfig.ssoEnabled && !Cookies.get('ESPSessionState')) {
         if (location.search.match(/[?&]from_saml=/)) {
           return init();
-        } else if (location.search.match(/[?&]LogoutState/)) {
+        } else if (location.search.match(/[?&](LogoutState=)([^-]).+/)) {
           return init();
         } else {
           var url = document.createElement('a');

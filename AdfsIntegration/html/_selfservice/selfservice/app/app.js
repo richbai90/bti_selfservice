@@ -254,8 +254,13 @@
 		toState.resolve.promise = [
         'SWSessionService','$cookies',
         function(SWSessionService, $cookies) {
-            if($cookies.get('swSessionID')) {
-				return SWSessionService.bindSession($cookies.get('swSessionID'));
+            if($cookies.get('swSessionID') && toState.data && toState.data.requiresLogin) {
+				return SWSessionService.bindSession($cookies.get('swSessionID')).then(function () {
+					return true;
+				}).catch(function () {
+					e.preventDefault();
+					$state.go('login')
+				});
 			} else {
 				e.preventDefault();
 				$state.go('login');
@@ -289,7 +294,7 @@
         // If state doesn't require login - it's a login page!
         // If we have a current active session, just go back home
         // To prevent customers attempting to get to one of the login pages when they already have a session
-        if ($cookies.get('ESPSessionState') && toState.data && toState.data.loginState) {
+        if ($cookies.get('ESPSessionState') && toState.data && toState.data.loginState && (!location.search.match(/[?&](LogoutState=)([^-]).+/))) {
           e.preventDefault();
           $state.go('home');
         }
