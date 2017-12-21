@@ -17,7 +17,7 @@
 			$window.location.href = config.returnAddress;
 		})
       }
-        if (location.search.match(/[?&](LogoutState=)[^-].+)) {
+        if (location.search.match(/[?&](LogoutState=)[^-].+/)) {
           SWSessionService.logout(true);
           $scope.loginFailed = true;
 		  $location.search('LogoutState', -1);
