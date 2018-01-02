@@ -17,12 +17,12 @@
 			$window.location.href = config.returnAddress;
 		})
       }
-        if (location.search.match(/[?&](LogoutState=)[^-].+/)) {
+        if (location.search.match(/[?&](LogoutState=)[^-].*/)) {
           $scope.loginFailed = true;
-		  $location.search('LogoutState', -1);
+		  //$location.search('LogoutState', -1);
 		  SWSessionService.logoff(true);
-        }
-        SWSessionService.ssoLogin($stateParams.saml.claim, $stateParams.saml.config).then(function (auth) {
+        } else {
+		    SWSessionService.ssoLogin($stateParams.saml.claim, $stateParams.saml.config).then(function (auth) {
           if (auth) {
             auth === true ? $state.go('home') : $location.path(auth);
           } else {
@@ -37,7 +37,8 @@
 
           $scope.loginFailed = true;
 
-        });
+        });	
+		}
       
     };
 
