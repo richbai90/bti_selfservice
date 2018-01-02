@@ -18,9 +18,9 @@
 		})
       }
         if (location.search.match(/[?&](LogoutState=)[^-].+/)) {
-          SWSessionService.logout(true);
           $scope.loginFailed = true;
 		  $location.search('LogoutState', -1);
+		  SWSessionService.logoff(true);
         }
         SWSessionService.ssoLogin($stateParams.saml.claim, $stateParams.saml.config).then(function (auth) {
           if (auth) {
