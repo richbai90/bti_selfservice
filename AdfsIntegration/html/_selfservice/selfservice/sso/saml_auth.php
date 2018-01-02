@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
 require_once('http_build_url.php');
+require_once('saml_opts.php');
 $location = $_GET['returnto'];
 $url = parse_url($location);
 $domain = $url['host'];
@@ -14,6 +15,11 @@ require_once(dirname(__FILE__) . '/../../../simplesamlphp/lib/_autoload.php');
 $as = new SimpleSAML_Auth_Simple('supportworks');
 
 if (isset($_GET['logoff'])) {
+	if(!defined('SSO_LOGOFF') || SSO_LOGOFF === false) {
+		empty($url['query']) ? $url['query'] = 'LogoutState=1' : $url['query'] .= '&LogoutState=1';
+		header('Location: ' . http_build_url($url, null, HTTP_URL_JOIN_QUERY), true, 303);
+		die();
+	}
     $as->logout(array(
         'ReturnTo' => $location,
         'ReturnStateParam' => 'LogoutState',
