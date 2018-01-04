@@ -3,6 +3,10 @@ name: ADFS Integration
 prereq: 
   - '%SWSERVER%\data\_dd_data\ITSM.ddf'
   - '%SWSERVER%\html\_selfservice\_itsm_default_v2_template'
+queries:
+   swdata:
+     # make random password for users
+     - "update userdb set password = (select TO_BASE64(substring(MD5(RAND()), -20)));"
 reg: 
   path: 'HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
   entries:
